@@ -1,15 +1,14 @@
 package Boundary;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
-public class menuApp {
+public class menuAppOld {
 
     private static Scanner sc;
 
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) {
 
-        // initialize();
+        initialize();
 
         int menuChoice;
         boolean exitMenu = false;
@@ -60,17 +59,12 @@ public class menuApp {
 
     }
 
-    // private static void initialize() {
-    // create cinema, cineplex and other presets
-    // }
+    private static void initialize() {
+        // create cinema, cineplex and other presets
+    }
 
     public static void adminLoginMenu() {
-        LoginUIAdmin admin_login = new LoginUIAdmin();
-        boolean loggedIn = admin_login.main();
         // admin login menu
-        if (loggedIn) {
-            // do nothing
-        }
 
         int adminChoice;
         boolean exitMenu = false;
@@ -121,7 +115,7 @@ public class menuApp {
         // movie goer menu
         int movieGoerChoice;
         boolean exitMenu = false;
-        ;
+        
 
         do {
             System.out.println("----------------------");
@@ -169,7 +163,7 @@ public class menuApp {
                     System.out.println("Exiting...");
                     System.out.println("");
                     break;
-
+                    
                 default:
                     System.out.println("Please enter a correct number");
                     System.out.println("");
@@ -178,9 +172,7 @@ public class menuApp {
         } while (!exitMenu);
     }
 
-    public static void registerAdminAccountMenu() throws NoSuchAlgorithmException {
+    public static void registerAdminAccountMenu() {
         // register new admin menu
-        RegisterUIAdmin registerUI = new RegisterUIAdmin();
-        registerUI.main();
     }
 }
