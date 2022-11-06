@@ -29,7 +29,10 @@ public class RegisterUIAdmin {
         while (noOftimes > 0) {
             if (consistentPassword) {
                 adminsCtrl.create(email, password);
-                System.out.println("You have registered successfully");
+                if (AdminsControl.valid == 1) {
+                    System.out.println("You have registered successfully");
+                    break;
+                }
                 break;
             } else {
                 noOftimes -= 1;

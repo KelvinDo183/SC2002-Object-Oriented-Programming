@@ -68,14 +68,11 @@ public class menuApp {
 
     public static void adminLoginMenu() throws IOException {
         LoginUIAdmin admin_login = new LoginUIAdmin();
-
-//        boolean loggedIn = admin_login.main();
-    // during development, disable check for logged in
-        
+        boolean loggedIn = admin_login.main();
         // admin login menu
-//        if (loggedIn) {
-//            // do nothing
-//        }
+        if (loggedIn) {
+            // do nothing
+        }
 
         int adminChoice;
         boolean exitMenu = false;
@@ -95,15 +92,14 @@ public class menuApp {
             adminChoice = sc.nextInt();
 
             System.out.println("");
-            
 
             switch (adminChoice) {
                 case 1:
-                	// run the MovieController class
-//                	MovieController();
+                    // run the MovieController class
+                    // MovieController();
                     MovieController movController = new MovieController();
-                	movController.main();
-                	
+                    movController.main();
+
                     break;
 
                 case 2:
@@ -191,7 +187,7 @@ public class menuApp {
 
     public static void registerAdminAccountMenu() throws NoSuchAlgorithmException {
         // register new admin menu
-        RegisterUIAdmin registerUI = new RegisterUIAdmin();
-        registerUI.main();
+        RegisterUIAdmin registerUIAdmin = new RegisterUIAdmin();
+        registerUIAdmin.main();
     }
 }
