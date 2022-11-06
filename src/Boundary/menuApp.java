@@ -173,6 +173,7 @@ public class menuApp {
 
             switch (movieGoerChoice) {
                 case 1:
+		    SearchMovieListing.display();
                     break;
 
                 case 2:
