@@ -8,28 +8,46 @@ public class Movie implements Serializable {
 	private int id;
 	private String title;
 	private MovieType type;
-	private String synopsis;
+	private MovieStatus status;
+	private String description;
 	private String rating;
 	private double duration;
-	private LocalDate movieReleaseDate;
-	private LocalDate movieEndDate;
-	private String director;
-	private ArrayList<String> cast;
+	private LocalDate releaseDate;
+	private LocalDate endDate;
+	private String directorName;
+	private ArrayList<String> castMembers;
 	private ArrayList<Review> reviews;
 
+	// Constructor for movie
+	public Movie(
+            int id, String title, MovieType type, String description, double duration, String rating, 
+            LocalDate releaseDate, LocalDate endDate, String directorName, ArrayList<String> castMembers
+    ){
+        this.id = id;
+        this.title = title;
+        this.type = type;
+        this.description = description;
+        this.duration = duration; 
+        this.rating = rating;
+        this.releaseDate = releaseDate;
+        this.endDate = endDate;
+        this.directorName = directorName;
+        this.castMembers = castMembers;
+        this.reviews = new ArrayList<Review>();
+    }
+	
+	
+	
 	public int getID() {
-		// TODO - implement Movie.getID
-		throw new UnsupportedOperationException();
+		return this.id;
 	}
-
-	/**
-	 * 
-	 * @param id
-	 */
-	public void setID(int id) {
-		// TODO - implement Movie.setID
-		throw new UnsupportedOperationException();
+	
+	// this setter method will be used upon successful update of movie listing
+	public void setID(int ID)
+	{
+		this.id = ID;
 	}
+	
 
 	public String getTitle() {
 		return this.title;
@@ -41,6 +59,18 @@ public class Movie implements Serializable {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public MovieStatus getStatus() {
+		return this.status;
+	}
+
+	/**
+	 * 
+	 * @param status
+	 */
+	public void setStatus(MovieStatus status) {
+		this.status = status;
 	}
 
 	public MovieType getType() {
@@ -55,16 +85,16 @@ public class Movie implements Serializable {
 		this.type = type;
 	}
 
-	public String getSynopsis() {
-		return this.synopsis;
+	public String getDescription() {
+		return this.description;
 	}
 
 	/**
 	 * 
 	 * @param synopsis
 	 */
-	public void setSynopsis(String synopsis) {
-		this.synopsis = synopsis;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getRating() {
@@ -91,16 +121,16 @@ public class Movie implements Serializable {
 		this.duration = duration;
 	}
 
-	public LocalDate getMovieReleaseDate() {
-		return this.movieReleaseDate;
+	public LocalDate getReleaseDate() {
+		return this.releaseDate;
 	}
 
 	/**
 	 * 
 	 * @param movieReleaseDate
 	 */
-	public void setMovieReleaseDate(LocalDate movieReleaseDate) {
-		this.movieReleaseDate = movieReleaseDate;
+	public void setReleaseDate(LocalDate releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 
 	public String getMovieReleaseDateToString() {
@@ -113,40 +143,40 @@ public class Movie implements Serializable {
 		throw new UnsupportedOperationException();
 	}
 
-	public LocalDate getMovieEndDate() {
-		return this.movieEndDate;
+	public LocalDate getEndDate() {
+		return this.endDate;
 	}
 
 	/**
 	 * 
 	 * @param movieEndDate
 	 */
-	public void setMovieEndDate(LocalDate movieEndDate) {
-		this.movieEndDate = movieEndDate;
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
 	}
 
-	public String getDirector() {
-		return this.director;
+	public String getDirectorName() {
+		return this.directorName;
 	}
 
 	/**
 	 * 
 	 * @param director
 	 */
-	public void setDirector(String director) {
-		this.director = director;
+	public void setDirectorName(String directorName) {
+		this.directorName = directorName;
 	}
 
-	public ArrayList<String> getCast() {
-		return this.cast;
+	public ArrayList<String> getCastMembers() {
+		return this.castMembers;
 	}
 
 	/**
 	 * 
 	 * @param cast
 	 */
-	public void setCast(ArrayList<String> cast) {
-		this.cast = cast;
+	public void setCastMembers(ArrayList<String> castMembers) {
+		this.castMembers = castMembers;
 	}
 
 	public ArrayList<Review> getReviews() {

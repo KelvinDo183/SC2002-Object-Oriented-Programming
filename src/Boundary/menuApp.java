@@ -1,13 +1,15 @@
 package Boundary;
 
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
+import Controller.*;
 
 public class menuApp {
 
     private static Scanner sc;
 
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 
         // initialize();
 
@@ -64,13 +66,16 @@ public class menuApp {
     // create cinema, cineplex and other presets
     // }
 
-    public static void adminLoginMenu() {
+    public static void adminLoginMenu() throws IOException {
         LoginUIAdmin admin_login = new LoginUIAdmin();
-        boolean loggedIn = admin_login.main();
+
+//        boolean loggedIn = admin_login.main();
+    // during development, disable check for logged in
+        
         // admin login menu
-        if (loggedIn) {
-            // do nothing
-        }
+//        if (loggedIn) {
+//            // do nothing
+//        }
 
         int adminChoice;
         boolean exitMenu = false;
@@ -90,9 +95,15 @@ public class menuApp {
             adminChoice = sc.nextInt();
 
             System.out.println("");
+            
 
             switch (adminChoice) {
                 case 1:
+                	// run the MovieController class
+//                	MovieController();
+                    MovieController movController = new MovieController();
+                	movController.main();
+                	
                     break;
 
                 case 2:
