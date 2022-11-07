@@ -161,6 +161,8 @@ public class menuApp {
                     break;
 
                 case 3:
+                    ViewMovieDetails viewMovieDetails = new ViewMovieDetails();
+                    viewMovieDetails.main();
                     break;
 
                 case 4:

@@ -15,7 +15,7 @@ public class SearchMovieUI {
 		//controller
 	}
 	
-	public void display() {
+	public void main() {
 		do {
 	        System.out.println("1. Search by title");
 	        System.out.println("2. Search by type");
