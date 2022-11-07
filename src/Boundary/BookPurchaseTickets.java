@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import Controller.*;
 
-public class SearchMovie {
+public class BookPurchaseTickets {
 
     private static Scanner sc;
 

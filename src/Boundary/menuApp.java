@@ -160,11 +160,11 @@ public class menuApp {
                     break;
 
                 case 4:
-                    SearchMovie searchMovie = new SearchMovie();
-                    searchMovie.main();
                     break;
 
                 case 5:
+                    BookPurchaseTickets bookPurchaseTickets = new BookPurchaseTickets()
+                    bookPurchaseTickets.main();
                     break;
 
                 case 6:
