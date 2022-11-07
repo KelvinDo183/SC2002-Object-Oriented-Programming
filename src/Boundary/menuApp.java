@@ -183,6 +183,8 @@ public class menuApp {
                     break;
 
                 case 7:
+                    RateMovieUI rateMovie = new RateMovieUI();
+                    rateMovie.main();
                     break;
 
                 case 8:
