@@ -163,7 +163,7 @@ public class menuApp {
                     break;
 
                 case 5:
-                    BookPurchaseTickets bookPurchaseTickets = new BookPurchaseTickets()
+                    BookPurchaseTickets bookPurchaseTickets = new BookPurchaseTickets();
                     bookPurchaseTickets.main();
                     break;
 
