@@ -1,67 +1,71 @@
 package model_Classes;
 
+import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+@SuppressWarnings("serial")
 public class User implements Serializable {
 
 	private String email;
+
 	private String passwordHashed;
+
 	private int role;
+
+	public static final int MOVIE_GOER = 1, ADMIN = 2;
+
+	public User(String email, String password, int role) {
+		this.email = email;
+		this.passwordHashed = PasswordSHA256(password, email); // using SHA-256 to hash password to ensure security
+		this.role = role;
+	}
+
+	public boolean validatePassword(String passwordToCompare) {
+		return this.passwordHashed.equals(PasswordSHA256(passwordToCompare, this.email));
+	}
 
 	public String getEmail() {
 		return this.email;
-	}
-
-	/**
-	 * 
-	 * @param email
-	 */
-	public void setEmail(int email) {
-		// TODO - implement User.setEmail
-		throw new UnsupportedOperationException();
 	}
 
 	public String getPasswordHashed() {
 		return this.passwordHashed;
 	}
 
-	/**
-	 * 
-	 * @param passwordHashed
-	 */
-	public void setPasswordHashed(int passwordHashed) {
-		// TODO - implement User.setPasswordHashed
-		throw new UnsupportedOperationException();
-	}
-
 	public int getRole() {
 		return this.role;
 	}
 
-	/**
-	 * 
-	 * @param role
-	 */
-	public void setRole(int role) {
-		this.role = role;
+	public void updatePassword(String currentPassword, String newPassword) {
+		if (this.validatePassword(currentPassword))
+			this.passwordHashed = PasswordSHA256(newPassword, this.getEmail());
 	}
 
-	public boolean validatePassword() {
-		// TODO - implement User.validatePassword
-		throw new UnsupportedOperationException();
-	}
-
-	public void updatePassword() {
-		// TODO - implement User.updatePassword
-		throw new UnsupportedOperationException();
-	}
-
-	public String passwordSHA256() {
-		// TODO - implement User.passwordSHA256
-		throw new UnsupportedOperationException();
+	public String PasswordSHA256(String passwordToHash, String salt) {
+		String generatedPassword = null;
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-512");
+			md.update(salt.getBytes(StandardCharsets.UTF_8));
+			byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < bytes.length; i++) {
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			generatedPassword = sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return generatedPassword;
 	}
 
 	public String toString() {
-		// TODO - implement User.toString
-		throw new UnsupportedOperationException();
+		String toReturn = "";
+		toReturn += "Username: " + getEmail() + "\n"
+				+ "Hashed Password: " + getPasswordHashed() + "\n"
+				+ "Role: " + getRole();
+		return toReturn;
 	}
 
 }
