@@ -162,6 +162,8 @@ public class menuApp {
                     break;
 
                 case 4:
+                    ViewAvailableSeats viewAvailableSeats = new ViewAvailableSeats();
+                    viewAvailableSeats.main();
                     break;
 
                 case 5:
