@@ -151,6 +151,8 @@ public class menuApp {
 
             switch (movieGoerChoice) {
                 case 1:
+                    SearchMovieUI searchMovieUI = new SearchMovieUI();
+                    searchMovieUI.main();
                     break;
 
                 case 2:
