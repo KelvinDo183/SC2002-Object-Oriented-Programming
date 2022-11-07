@@ -2,7 +2,7 @@ package Boundary;
 
 import java.util.Scanner;
 
-public class BookPurchaseTickets {
+public class BookingAndPurchaseTickets {
 
     private static Scanner sc;
 
@@ -13,9 +13,9 @@ public class BookPurchaseTickets {
         sc = new Scanner(System.in);
 
         do {
-            System.out.println("-----------------------------------");
-            System.out.println("-----Book and Purchase Tickets-----");
-            System.out.println("-----------------------------------");
+            System.out.println("-------------------------------------");
+            System.out.println("-----Book and Purchase Ticket(s)-----");
+            System.out.println("-------------------------------------");
             System.out.println("Available Movies: ");
             System.out.println("(1)");
             System.out.println("(2)");
@@ -56,31 +56,31 @@ public class BookPurchaseTickets {
     }
     
     public void showAvailableMovies() {
-
+        //TODO
     }
 
     public void showAvailableCineplexes() {
-
+        //TODO
     }
 
     public void showAvailableSessions() {
-
+        //TODO
     }
 
     public void pickSession() {
-
-    }
+        //TODO
+    }   
 
     public void priceCalculation() {
-
+        //TODO
     }
 
     public void seatSelection() {
-
+        //TODO
     }
 
     public void makeBooking() {
-
+        //TODO
     }
 
 }

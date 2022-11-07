@@ -154,6 +154,8 @@ public class menuApp {
                     break;
 
                 case 2:
+                    ViewTopMovies viewTopMovies = new ViewTopMovies();
+                    viewTopMovies.main();
                     break;
 
                 case 3:
@@ -163,11 +165,13 @@ public class menuApp {
                     break;
 
                 case 5:
-                    BookPurchaseTickets bookPurchaseTickets = new BookPurchaseTickets();
-                    bookPurchaseTickets.main();
+                    BookingAndPurchaseTickets bookingAndPurchaseTickets = new BookingAndPurchaseTickets();
+                    bookingAndPurchaseTickets.main();
                     break;
 
                 case 6:
+                    ViewBookingAndPurchasedHistory viewBookingAndPurchasedHistory = new ViewBookingAndPurchasedHistory();
+                    viewBookingAndPurchasedHistory.main();
                     break;
 
                 case 7:
