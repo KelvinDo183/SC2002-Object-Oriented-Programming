@@ -1,9 +1,6 @@
 package Boundary;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
-import Controller.*;
 
 public class BookPurchaseTickets {
 
