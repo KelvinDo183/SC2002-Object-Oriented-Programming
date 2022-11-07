@@ -1,7 +1,7 @@
 package Boundary;
 
 import Controller.*;
-import Model.*;
+import model_Classes.*;
 
 public class LoginUIAdmin {
     private String email;
