@@ -109,6 +109,8 @@ public class menuApp {
                     break;
 
                 case 4:
+                    ViewMovieDetailUI viewMovieDetailUI = new ViewMovieDetailUI();
+                    viewMovieDetailUI.main();
                     break;
 
                 case 5:

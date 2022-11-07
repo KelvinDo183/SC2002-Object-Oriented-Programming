@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-import Model.*;
+import model_Classes.*;
 
 public class AdminsControl {
     public final static String FILENAME = "src/datastorage/admins.txt";
