@@ -85,7 +85,8 @@ public class MainMenuUI {
             System.out.println("(2) Create/Update/Delete Movie Session");
             System.out.println("(3) Search Movie Listings");
             System.out.println("(4) View Movie Details");
-            System.out.println("(5) Log Out");
+            System.out.println("(5) Configure System Settings");
+            System.out.println("(6) Log Out");
             System.out.println("");
             System.out.print("Select choice: ");
 
@@ -116,6 +117,11 @@ public class MainMenuUI {
                     break;
 
                 case 5:
+                    ConfigSettingsUI configSettings = new ConfigSettingsUI();
+                    configSettings.main();
+                    break;
+
+                case 6:
                     exitMenu = true;
                     System.out.println("Logging Out...");
                     System.out.println("");

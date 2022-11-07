@@ -2,7 +2,7 @@ package Boundary;
 
 import java.util.Scanner;
 
-public class RateMovieUI {
+public class ConfigSettingsUI {
     
     private static Scanner sc;
 
@@ -14,9 +14,9 @@ public class RateMovieUI {
 
         do {
             System.out.println("--------------------------------------------------");
-            System.out.println("------------------- Rate Movie -------------------");
+            System.out.println("------------- ADMIN CONFIG SETTINGS --------------");
             System.out.println("--------------------------------------------------");
-            System.out.println("(1) Enter your booking ID to rate the movie");
+            System.out.println("(1) ");
             System.out.println("(2) Return to menu");
             System.out.println("");
             System.out.print("Select choice: ");
