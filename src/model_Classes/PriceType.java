@@ -1,17 +1,19 @@
 package model_Classes;
 
-public enum PriceType implements PriceChanger {
-	STUDENT,
-	SENIOR_CITIZEN,
-	NORMAL,
-	HOLIDAY,
-	WEEKEND;
+public enum PriceType implements PriceChanger{
+    STUDENT("Student"),
+    SENIOR_CITIZEN("Senior"),
+    NORMAL("Normal"),
+    HOLIDAY("Holiday"), 
+    WEEKEND("Weekend");
 
-	private String text;
+    private final String text;
 
-	public String toString() {
-		// TODO - implement PriceType.toString
-		throw new UnsupportedOperationException();
-	}
+    private PriceType(String text) {
+        this.text = text;
+    }
 
+    public String toString(){
+        return text;
+    }
 }
