@@ -1,10 +1,21 @@
 package Boundary;
 
+import Controller.*;
+import model_Classes.*;
 import java.util.Scanner;
 
-public class ViewMovieDetails {
-    
+public class ViewMovieDetailsUI {
+
     private static Scanner sc;
+    private MovieController moviesCtrl;
+
+    ViewMovieDetailsUI() {
+        this.moviesCtrl = new MovieController();
+    }
+
+    ViewMovieDetailsUI(MovieController moviesCtrl) {
+        this.moviesCtrl = moviesCtrl;
+    }
 
     public void main() {
 
@@ -13,9 +24,9 @@ public class ViewMovieDetails {
         sc = new Scanner(System.in);
 
         do {
-            System.out.println("----------------------------");
-            System.out.println("-----View Movie Details-----");
-            System.out.println("----------------------------");
+            System.out.println("--------------------------------------------------");
+            System.out.println("--------------- View Movie Details ---------------");
+            System.out.println("--------------------------------------------------");
             System.out.println("(1) Enter movie ID to view more details");
             System.out.println("(2) Return to menu");
             System.out.println("");
@@ -44,9 +55,23 @@ public class ViewMovieDetails {
         }
 
         while (!exitMenu);
+
     }
 
     public void viewMovieDetails() {
-        //TODO
+
+        System.out.print("Enter Movie ID: ");
+        int id = InputController.getIntFromUser();
+        if (id == -1) {
+            return;
+        }
+        Movie movie = moviesCtrl.readSpecificID(id);
+        if (movie == null) {
+            System.out.println("Movie ID doesn't exist!\n");
+        } else {
+            String movieString = movie.toString();
+            System.out.println(movieString);
+        }
+
     }
 }

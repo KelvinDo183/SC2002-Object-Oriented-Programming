@@ -2,7 +2,7 @@ package Boundary;
 
 import java.util.Scanner;
 
-public class BookingAndPurchaseTickets {
+public class BookingAndPurchaseTicketsUI {
 
     private static Scanner sc;
 
@@ -13,9 +13,9 @@ public class BookingAndPurchaseTickets {
         sc = new Scanner(System.in);
 
         do {
-            System.out.println("-------------------------------------");
-            System.out.println("-----Book and Purchase Ticket(s)-----");
-            System.out.println("-------------------------------------");
+            System.out.println("--------------------------------------------------");
+            System.out.println("----------- Book and Purchase Tickets ------------");
+            System.out.println("--------------------------------------------------");
             System.out.println("Available Movies: ");
             System.out.println("(1)");
             System.out.println("(2)");

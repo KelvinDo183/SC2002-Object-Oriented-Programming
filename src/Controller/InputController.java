@@ -29,7 +29,7 @@ public class InputController {
             if (input.matches(format)) {
                 validInput = true;
             } else {
-                System.out.println("Must match email format!");
+                System.out.print("Please enter a correct email format: ");
             }
         }
         return input;
@@ -44,7 +44,7 @@ public class InputController {
             if (input.matches(format) && (input.startsWith("9") || input.startsWith("8"))) {
                 validInput = true;
             } else {
-                System.out.println("Must be valid mobile number (8 digits long, starts with either 8 or 9)");
+                System.out.println("Please enter a valid mobile number (8 digits long, starting with either 8 or 9): ");
             }
         }
         return input;
@@ -58,7 +58,7 @@ public class InputController {
             if (input == 0 || input == 1) {
                 validInput = true;
             } else {
-                System.out.println("Must be either 0 or 1");
+                System.out.println("Please enter be either 0 or 1: ");
             }
         }
         return input;
@@ -72,7 +72,7 @@ public class InputController {
                 input = sc.nextInt();
                 validInput = true;
             } else {
-                System.out.println("Wrong input!");
+                System.out.println("Please enter a correct input: ");
             }
             sc.nextInt();
         }
@@ -88,7 +88,7 @@ public class InputController {
                 if (input > 0)
                     validInput = true;
             } else {
-                System.out.println("Wrong input!");
+                System.out.println("Please enter a positive number: ");
             }
             sc.nextLine();
         }
@@ -104,7 +104,7 @@ public class InputController {
                 if (input >= 0 && input <= 5) {
                     validInput = true;
                 } else {
-                    System.out.println("Must be within range 0-5! ");
+                    System.out.println("Please enter a number between 0-5:  ");
                 }
             } else {
                 System.out.println("Must be double type! (decimal number)");

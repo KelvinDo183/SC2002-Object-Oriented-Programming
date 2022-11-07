@@ -2,10 +2,10 @@ package Boundary;
 
 import java.util.Scanner;
 
-public class ViewAvailableSeats {
+public class ViewBookingAndPurchasedHistoryUI {
 
     private static Scanner sc;
-    
+
     public void main() {
 
         int menuChoice;
@@ -13,10 +13,10 @@ public class ViewAvailableSeats {
         sc = new Scanner(System.in);
 
         do {
-            System.out.println("------------------------------");
-            System.out.println("-----View Available Seats-----");
-            System.out.println("------------------------------");
-            System.out.println("(1) Select Session");
+            System.out.println("--------------------------------------------------");
+            System.out.println("--------- Booking and Purchased History ---------- ");
+            System.out.println("--------------------------------------------------");
+            System.out.println("(1) Enter booking ID to retrieve purchase history");
             System.out.println("(2) Return to menu");
             System.out.println("");
             System.out.print("Select choice:");
@@ -27,6 +27,7 @@ public class ViewAvailableSeats {
 
             switch (menuChoice) {
                 case 1:
+                    retrieve();
                     break;
 
                 case 2:
@@ -45,4 +46,14 @@ public class ViewAvailableSeats {
         while (!exitMenu);
 
     }
+
+    public void retrieve() {
+        //TODO
+        
+    }
+
+    public void displayHistory() { 
+        //TODO
+    }
+    
 }

@@ -2,10 +2,10 @@ package Boundary;
 
 import java.util.Scanner;
 
-public class ViewTopMovies {
-    
-    private static Scanner sc;
+public class ViewAvailableSeatsUI {
 
+    private static Scanner sc;
+    
     public void main() {
 
         int menuChoice;
@@ -13,12 +13,11 @@ public class ViewTopMovies {
         sc = new Scanner(System.in);
 
         do {
-            System.out.println("-------------------------");
-            System.out.println("-----View Top Movies-----");
-            System.out.println("-------------------------");
-            System.out.println("(1) View top 5 movies by ticket sales");
-            System.out.println("(2) View top 5 movies by ratings");
-            System.out.println("(3) Return to menu");
+            System.out.println("--------------------------------------------------");
+            System.out.println("-------------- View Available Seats --------------");
+            System.out.println("--------------------------------------------------");
+            System.out.println("(1) Select Session");
+            System.out.println("(2) Return to menu");
             System.out.println("");
             System.out.print("Select choice:");
 
@@ -28,14 +27,9 @@ public class ViewTopMovies {
 
             switch (menuChoice) {
                 case 1:
-                    viewByTicketSales();
                     break;
 
                 case 2:
-                    viewByRatings();
-                    break;
-
-                case 3:
                     exitMenu = true;
                     System.out.println("Returning to menu...");
                     System.out.println("");
@@ -49,13 +43,6 @@ public class ViewTopMovies {
         }
 
         while (!exitMenu);
-    }
 
-    public void viewByTicketSales() {
-        //TODO
-    }
-
-    public void viewByRatings() {
-        //TODO
     }
 }

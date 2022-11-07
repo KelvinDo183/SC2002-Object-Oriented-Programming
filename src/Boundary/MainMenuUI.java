@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import Controller.*;
 
-public class menuApp {
+public class MainMenuUI {
 
     private static Scanner sc;
 
@@ -18,15 +18,15 @@ public class menuApp {
         sc = new Scanner(System.in);
 
         do {
-            System.out.println("----------------------");
-            System.out.println("-----MOBLIMA MENU-----");
-            System.out.println("----------------------");
+            System.out.println("--------------------------------------------------");
+            System.out.println("------------------ MOBLIMA MENU ------------------");
+            System.out.println("--------------------------------------------------");
             System.out.println("(1) Admin ");
             System.out.println("(2) Movie Goer");
             System.out.println("(3) Register New Admin Account");
             System.out.println("(4) Exit");
             System.out.println("");
-            System.out.print("Select choice:");
+            System.out.print("Select choice: ");
 
             menuChoice = sc.nextInt();
 
@@ -47,7 +47,7 @@ public class menuApp {
 
                 case 4:
                     exitMenu = true;
-                    System.out.println("Terminating...");
+                    System.out.println("Terminating App...");
                     System.out.println("");
                     break;
 
@@ -78,16 +78,16 @@ public class menuApp {
         boolean exitMenu = false;
 
         do {
-            System.out.println("----------------------");
-            System.out.println("--MOBLIMA ADMIN MENU--");
-            System.out.println("----------------------");
+            System.out.println("--------------------------------------------------");
+            System.out.println("--------------- MOBLIMA ADMIN MENU ---------------");
+            System.out.println("--------------------------------------------------");
             System.out.println("(1) Create/Update/Delete Movie Listing");
             System.out.println("(2) Create/Update/Delete Movie Session");
-            System.out.println("(3) Search Movie Listing(s)");
+            System.out.println("(3) Search Movie Listings");
             System.out.println("(4) View Movie Details");
             System.out.println("(5) Log Out");
             System.out.println("");
-            System.out.print("Select choice:");
+            System.out.print("Select choice: ");
 
             adminChoice = sc.nextInt();
 
@@ -106,11 +106,13 @@ public class menuApp {
                     break;
 
                 case 3:
+                    SearchMovieUI searchMovie = new SearchMovieUI();
+                    searchMovie.main();
                     break;
 
                 case 4:
-                    ViewMovieDetailUI viewMovieDetailUI = new ViewMovieDetailUI();
-                    viewMovieDetailUI.main();
+                    ViewMovieDetailsUI viewMovieDetail = new ViewMovieDetailsUI();
+                    viewMovieDetail.main();
                     break;
 
                 case 5:
@@ -133,10 +135,10 @@ public class menuApp {
         ;
 
         do {
-            System.out.println("----------------------");
-            System.out.println("--MOBLIMA MOVIE MENU--");
-            System.out.println("----------------------");
-            System.out.println("(1) Search Movie Listing");
+            System.out.println("--------------------------------------------------");
+            System.out.println("--------------- MOBLIMA MOVIE MENU ---------------");
+            System.out.println("--------------------------------------------------");
+            System.out.println("(1) Search Movie Listings");
             System.out.println("(2) View Top 5 Movies");
             System.out.println("(3) View Movie Details");
             System.out.println("(4) Check Available Seats");
@@ -145,7 +147,7 @@ public class menuApp {
             System.out.println("(7) Rate Movie");
             System.out.println("(8) Exit");
             System.out.println("");
-            System.out.print("Select choice:");
+            System.out.print("Select choice: ");
 
             movieGoerChoice = sc.nextInt();
 
@@ -153,32 +155,32 @@ public class menuApp {
 
             switch (movieGoerChoice) {
                 case 1:
-                    SearchMovieUI searchMovieUI = new SearchMovieUI();
-                    searchMovieUI.main();
+                    SearchMovieUI searchMovie = new SearchMovieUI();
+                    searchMovie.main();
                     break;
 
                 case 2:
-                    ViewTopMovies viewTopMovies = new ViewTopMovies();
+                    ViewTopMoviesUI viewTopMovies = new ViewTopMoviesUI();
                     viewTopMovies.main();
                     break;
 
                 case 3:
-                    ViewMovieDetails viewMovieDetails = new ViewMovieDetails();
+                    ViewMovieDetailsUI viewMovieDetails = new ViewMovieDetailsUI();
                     viewMovieDetails.main();
                     break;
 
                 case 4:
-                    ViewAvailableSeats viewAvailableSeats = new ViewAvailableSeats();
+                    ViewAvailableSeatsUI viewAvailableSeats = new ViewAvailableSeatsUI();
                     viewAvailableSeats.main();
                     break;
 
                 case 5:
-                    BookingAndPurchaseTickets bookingAndPurchaseTickets = new BookingAndPurchaseTickets();
+                    BookingAndPurchaseTicketsUI bookingAndPurchaseTickets = new BookingAndPurchaseTicketsUI();
                     bookingAndPurchaseTickets.main();
                     break;
 
                 case 6:
-                    ViewBookingAndPurchasedHistory viewBookingAndPurchasedHistory = new ViewBookingAndPurchasedHistory();
+                    ViewBookingAndPurchasedHistoryUI viewBookingAndPurchasedHistory = new ViewBookingAndPurchasedHistoryUI();
                     viewBookingAndPurchasedHistory.main();
                     break;
 

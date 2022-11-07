@@ -16,28 +16,53 @@ public class SearchMovieUI {
 	}
 
 	public void main() {
-		do {
-			System.out.println("1. Search by title");
-			System.out.println("2. Search by type");
-			System.out.println("3. List all titles");
-			System.out.println("4. Exit");
-			switch (choice = sc.nextInt()) {
+
+		int menuChoice;
+        boolean exitMenu = false;
+        sc = new Scanner(System.in);
+
+        do {
+			System.out.println("--------------------------------------------------");
+			System.out.println("----------------- Search Movies ------------------");
+			System.out.println("--------------------------------------------------");
+			System.out.println("(1) Search by title");
+			System.out.println("(2) Search by type");
+			System.out.println("(3) List all titles");
+			System.out.println("(4) Return to menu");
+            System.out.println("");
+            System.out.print("Select choice: ");
+
+            menuChoice = sc.nextInt();
+
+            System.out.println("");
+
+            switch (menuChoice) {
 				case 1:
 					searchTitle();
 					break;
+
 				case 2:
 					searchType();
 					break;
+
 				case 3:
 					listAll();
 					break;
-				case 4:
-					System.out.println("Exit from Search-Movie successful");
-					return;
-				default:
-					System.out.println("Invalid input! Please try again.");
-			}
-		} while (choice != 4);
+
+                case 4:
+                    exitMenu = true;
+                    System.out.println("Returning to menu...");
+                    System.out.println("");
+                    break;
+
+                default:
+                    System.out.println("Please enter a correct number");
+                    System.out.println("");
+            }
+        }
+
+        while (!exitMenu);
+
 	}
 
 	public boolean searchTitle() {

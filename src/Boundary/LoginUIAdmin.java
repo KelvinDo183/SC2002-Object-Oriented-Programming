@@ -23,24 +23,31 @@ public class LoginUIAdmin {
             result = verify();
             if (!result) {
                 System.out.println("Wrong password or email.");
+                System.out.println("");
                 System.out.println("1. Enter again");
-                System.out.println("2. Exit");
+                System.out.println("2. Return to menu");
+                System.out.println("");
+                System.out.print("Select choice: ");
                 if (InputController.getIntFromUser() == 2) {
                     exit = true;
                 }
             }
         } while (!result && !exit);
         if (result) {
-            System.out.println("You have logged in sucessfully.\n\n");
+            System.out.println("You have logged in sucessfully");
+            System.out.println("");
             return true;
         }
         return false;
     }
 
     public boolean verify() {
-        System.out.println("Please enter your email: ");
+        System.out.println("--------------------------------------------------");
+        System.out.println("------------------ ADMIN LOGIN -------------------");
+        System.out.println("--------------------------------------------------");
+        System.out.print("Please enter your email: ");
         email = InputController.getStringFromUser();
-        System.out.println("Password: ");
+        System.out.print("Password: ");
         password = InputController.getStringFromUser();
         Admin user = adminsCtrl.readByEmail(email);
         if (user == null) {

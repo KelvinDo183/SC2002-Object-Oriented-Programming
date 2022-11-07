@@ -43,15 +43,15 @@ public class MovieController {
 		boolean exitMenu = false;
 		while (!exitMenu)
 		{
-        	System.out.println("----------------------");
-		    System.out.println("-----Admin View: Movie Listings System-----");
-		    System.out.println("----------------------");
+        	System.out.println("--------------------------------------------------");
+		    System.out.println("------- Admin View: Movie Listings System --------");
+		    System.out.println("--------------------------------------------------");
 		    System.out.println("(1) Create New Movie Listing ");
 		    System.out.println("(2) Update Existing Movie Listing ");
 		    System.out.println("(3) Delete a Movie Listing ");
-		    System.out.println("(4) Return to Previous Menu");
+		    System.out.println("(4) Return to Menu");
 		    System.out.println("");
-		    System.out.print("Select choice:");
+		    System.out.print("Select choice: ");
 
 
 		    Scanner sc = new Scanner(System.in);
@@ -65,9 +65,9 @@ public class MovieController {
 		    switch (menuChoice) {
 		    // create new movie listing
 		    case 1:
-			System.out.println("----------------------");
-			System.out.println("-----Details of the movie listing to create-----");
-			System.out.println("----------------------");
+			System.out.println("--------------------------------------------------");
+			System.out.println("----- Details of the movie listing to create -----");
+			System.out.println("--------------------------------------------------");
 			System.out.println("Enter Movie Title: ");
 		//                String movieTitle = sc.nextLine();
 			String movieTitle = string_scanner.next();
@@ -161,7 +161,7 @@ public class MovieController {
 		    // return to previous
 		    case 4:
 			exitMenu = true;
-			System.out.println("Returning to previous menu ...");
+			System.out.println("Returning to menu ...");
 			System.out.println("");
 			break;
 
@@ -235,9 +235,9 @@ public class MovieController {
             if (m.getID() == ID)
             {
             	// print out details of movie selected by User
-            	System.out.println("----------------------");
-                System.out.println("-----Details of the movie you have selected to amend-----");
-                System.out.println("----------------------");
+            	System.out.println("--------------------------------------------------");
+                System.out.println("-- Details of movie you have selected to amend ---");
+                System.out.println("--------------------------------------------------");
                 System.out.println("Movie Title: " + m.getTitle());
                 System.out.println("Movie Type: " + m.getType());
                 System.out.println("Synopsis: " + m.getDescription());
@@ -253,9 +253,9 @@ public class MovieController {
                 Scanner sc = new Scanner(System.in);
                 int menuChoice;
             	
-            	System.out.println("----------------------");
-                System.out.println("-----Select the attribute you wish to amend-----");
-                System.out.println("----------------------");
+            	System.out.println("--------------------------------------------------");
+                System.out.println("----- Select the attribute you wish to amend -----");
+                System.out.println("--------------------------------------------------");
                 System.out.println("(1) Movie Title ");
                 System.out.println("(2) Movie Type ");
                 System.out.println("(3) Synopsis ");
@@ -266,7 +266,7 @@ public class MovieController {
                 System.out.println("(8) Director ");
                 System.out.println("(9) Cast Members ");
                 System.out.println("");
-                System.out.print("Enter choice:");
+                System.out.print("Enter choice: ");
 
                 menuChoice = sc.nextInt();
 
@@ -279,19 +279,19 @@ public class MovieController {
                 
                 	// to modify Movie Title
                 	case 1:
-                        System.out.println("----------------------");
+                        System.out.println("--------------------------------------------------");
                         System.out.println("");
-                        System.out.print("Enter movie title to amend to:");
+                        System.out.print("Enter movie title to amend to: ");
                         String newTitle = sc.next();
                         
                 		m.setTitle(newTitle);
                 		System.out.println("Movie listing has new title: " + m.getTitle());
-                		System.out.println("----------------------");
+                		System.out.println("--------------------------------------------------");
                 		break;
                         
                 	// to modify Movie Type
                 	case 2:
-                        System.out.println("----------------------");
+                        System.out.println("--------------------------------------------------");
                         System.out.println("");
                         System.out.println("Enter movie type to amend to:");
                         System.out.println("(1) Blockbuster ");
@@ -319,86 +319,86 @@ public class MovieController {
                         // check that admin's changes are registered by system
                 		m.setType(movieType);
                 		System.out.println("Movie listing has new type: " + m.getType());
-                		System.out.println("----------------------");
+                		System.out.println("--------------------------------------------------");
                 
                 	// to modify Movie Description
                 	case 3:
-                        System.out.println("----------------------");
+                        System.out.println("--------------------------------------------------");
                         System.out.println("");
-                        System.out.print("Enter movie synopsis to amend to:");
+                        System.out.print("Enter movie synopsis to amend to: ");
                         String newDescription = sc.next();
                         
                 		m.setDescription(newDescription);
                 		System.out.println("Movie listing has new synopsis: \n" + m.getDescription());
-                		System.out.println("----------------------");
+                		System.out.println("--------------------------------------------------");
                 		break;
                         
                 	// to modify Movie Duration
                 	case 4:
-                        System.out.println("----------------------");
+                        System.out.println("--------------------------------------------------");
                         System.out.println("");
-                        System.out.print("Enter screening duration to amend to:");
+                        System.out.print("Enter screening duration to amend to: ");
                         Double newDuration = Double.parseDouble(sc.next());
                         
                 		m.setDuration(newDuration);
                 		System.out.println("Movie listing has new screening duration of: " + m.getDuration() + " minutes");
-                		System.out.println("----------------------");
+                		System.out.println("--------------------------------------------------");
                 		break;
                 		
                 		
             		// to modify Movie Rating
                 	case 5:
-                        System.out.println("----------------------");
+                        System.out.println("--------------------------------------------------");
                         System.out.println("");
-                        System.out.print("Enter movie rating to amend to:");
+                        System.out.print("Enter movie rating to amend to: ");
                         String newRating = sc.next();
                         
                 		m.setRating(newRating);
                 		System.out.println("Movie listing has new rating: " + m.getRating());
-                		System.out.println("----------------------");
+                		System.out.println("--------------------------------------------------");
                 		break;
                         
                 	// to modify Movie Release Date
                 	case 6:
-                        System.out.println("----------------------");
+                        System.out.println("--------------------------------------------------");
                         System.out.println("");
-                        System.out.println("Enter release date to amend to (format d-Mmm-yyyy):");
+                        System.out.println("Enter release date to amend to (format d-Mmm-yyyy): ");
 
                         LocalDate newReleaseDate = LocalDate.parse(sc.next(), formatter);
                         
                 		m.setReleaseDate(newReleaseDate);
                 		System.out.println("Movie listing has new release date: " + m.getReleaseDate());
-                		System.out.println("----------------------");
+                		System.out.println("--------------------------------------------------");
                 		break;
                 
                 	// to modify End of Screening Date for Movie
                 	case 7:
-                        System.out.println("----------------------");
+                        System.out.println("--------------------------------------------------");
                         System.out.println("");
-                        System.out.print("Enter end of screening date to amend to (format d-Mmm-yyyy):");
+                        System.out.print("Enter end of screening date to amend to (format d-Mmm-yyyy): ");
                         
                         LocalDate newEndDate = LocalDate.parse(sc.next(), formatter);
                         
                 		m.setEndDate(newEndDate);
                 		System.out.println("Movie listing has new end of screening date: " + m.getEndDate());
-                		System.out.println("----------------------");
+                		System.out.println("--------------------------------------------------");
                 		break;
                         
                 	// to modify Director Name
                 	case 8:
-                        System.out.println("----------------------");
+                        System.out.println("--------------------------------------------------");
                         System.out.println("");
-                        System.out.print("Enter Director's name to amend to:");
+                        System.out.print("Enter Director's name to amend to: ");
                         String newDirectorName = sc.next();
                         
                 		m.setDirectorName(newDirectorName);
                 		System.out.println("Movie listing has new Director: " + m.getDirectorName());
-                		System.out.println("----------------------");
+                		System.out.println("--------------------------------------------------");
                 		break;
                 		
                 	// to modify Cast Members
                 	case 9:
-                        System.out.println("----------------------");
+                        System.out.println("--------------------------------------------------");
                         System.out.println("");
                         System.out.println("Enter updated list of cast members (new line for each cast member):");
                         System.out.println("Type _@ to end input of cast member names");
@@ -414,7 +414,7 @@ public class MovieController {
                         
                         m.setCastMembers(newCastMembersAL);
                 		System.out.println("Movie listing has new Cast Members: " + m.getCastMembers());
-                		System.out.println("----------------------");
+                		System.out.println("--------------------------------------------------");
                 		break;
                 
                 }

@@ -18,11 +18,14 @@ public class RegisterUIAdmin {
     }
 
     public void main() throws NoSuchAlgorithmException {
-        System.out.println("Please enter your email: ");
+        System.out.println("--------------------------------------------------");
+        System.out.println("----------- REGISTER NEW ADMIN ACCOUNT -----------");
+        System.out.println("--------------------------------------------------");
+        System.out.print("Please enter your email: ");
         email = InputController.getEmailFromUser();
-        System.out.println("Password: ");
+        System.out.print("Password: ");
         password = InputController.getStringFromUser();
-        System.out.println("Confirmation of password: ");
+        System.out.print("Confirmation of password: ");
         password2 = InputController.getStringFromUser();
         consistentPassword = password.equals(password2);
         noOftimes = 5;

@@ -115,6 +115,7 @@ public class AdminsControl {
 
         if (isExistingUser(username)) {
             System.out.println("Username existed! Please try another username!");
+            System.out.println("");
             isValid = false;
             valid = 0;
         }
@@ -145,6 +146,7 @@ public class AdminsControl {
                 "A-Z]{2,7}$";
         if (email == null) {
             System.out.println("Email address is invalid!");
+            System.out.println("");
         }
         return email.matches(regex);
     }
