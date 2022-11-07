@@ -160,6 +160,8 @@ public class menuApp {
                     break;
 
                 case 4:
+                    SearchMovie searchMovie = new SearchMovie();
+                    searchMovie.main();
                     break;
 
                 case 5:
