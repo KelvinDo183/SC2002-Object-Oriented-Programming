@@ -1,17 +1,15 @@
-package model_Classes;
+package Model;
 
 public enum MovieType implements PriceChanger {
-    TWO_D("2D"),
-    THREE_D("3D"),
-    BLOCKBUSTER("Blockbuster");
+	TWO_D,
+	THREE_D,
+	BLOCKBUSTER;
 
-    private final String text;
+	private String text;
 
-    private MovieType(String text) {
-        this.text = text;
-    }
+	public String toString() {
+		// TODO - implement MovieType.toString
+		throw new UnsupportedOperationException();
+	}
 
-    public String toString(){
-        return text;
-    }
 }

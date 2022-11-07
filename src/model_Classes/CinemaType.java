@@ -1,14 +1,16 @@
 package model_Classes;
 
-public enum CinemaType implements PriceChanger {
-	STANDARD,
-	PREMIUM;
+public enum CinemaType implements PriceChanger{
+    STANDARD("Standard"),
+    PREMIUM("Premium");
 
-	private String text;
+    private final String text;
 
-	public String toString() {
-		// TODO - implement CinemaType.toString
-		throw new UnsupportedOperationException();
-	}
+    private CinemaType(String text) {
+        this.text = text;
+    }
 
+    public String toString(){
+        return text;
+    }
 }

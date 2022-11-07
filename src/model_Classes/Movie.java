@@ -20,34 +20,29 @@ public class Movie implements Serializable {
 
 	// Constructor for movie
 	public Movie(
-            int id, String title, MovieType type, String description, double duration, String rating, 
-            LocalDate releaseDate, LocalDate endDate, String directorName, ArrayList<String> castMembers
-    ){
-        this.id = id;
-        this.title = title;
-        this.type = type;
-        this.description = description;
-        this.duration = duration; 
-        this.rating = rating;
-        this.releaseDate = releaseDate;
-        this.endDate = endDate;
-        this.directorName = directorName;
-        this.castMembers = castMembers;
-        this.reviews = new ArrayList<Review>();
-    }
-	
-	
-	
+			int id, String title, MovieType type, String description, double duration, String rating,
+			LocalDate releaseDate, LocalDate endDate, String directorName, ArrayList<String> castMembers) {
+		this.id = id;
+		this.title = title;
+		this.type = type;
+		this.description = description;
+		this.duration = duration;
+		this.rating = rating;
+		this.releaseDate = releaseDate;
+		this.endDate = endDate;
+		this.directorName = directorName;
+		this.castMembers = castMembers;
+		this.reviews = new ArrayList<Review>();
+	}
+
 	public int getID() {
 		return this.id;
 	}
-	
+
 	// this setter method will be used upon successful update of movie listing
-	public void setID(int ID)
-	{
+	public void setID(int ID) {
 		this.id = ID;
 	}
-	
 
 	public String getTitle() {
 		return this.title;
@@ -60,7 +55,7 @@ public class Movie implements Serializable {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+
 	public MovieStatus getStatus() {
 		return this.status;
 	}
