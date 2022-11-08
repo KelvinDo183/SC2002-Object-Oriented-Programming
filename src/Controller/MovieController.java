@@ -4,6 +4,9 @@ import model_Classes.Movie;
 import model_Classes.MovieType;
 import model_Classes.MovieStatus;
 import Boundary.CreateMovieListingUI;
+import Boundary.AdminMovieListingSystemMenuUI;
+import Boundary.DetailsMovieToAmendMenuUI;
+import Boundary.SelectAttributeToAmendMenuUI;
 import Boundary.RegisterUIAdmin;
 import exceptions.ExistingMovieException;
 import exceptions.ReleasePastEndException;
@@ -42,64 +45,13 @@ public class MovieController {
 	
 	// To print the following menu options upon loading of menu
 	public void main() throws IOException, NoSuchAlgorithmException {
-		boolean exitMenu = false;
-		while (!exitMenu)
-		{
-        	System.out.println("--------------------------------------------------");
-		    System.out.println("------- Admin View: Movie Listings System --------");
-		    System.out.println("--------------------------------------------------");
-		    System.out.println("(1) Create New Movie Listing ");
-		    System.out.println("(2) Update Existing Movie Listing ");
-		    System.out.println("(3) Delete a Movie Listing ");
-		    System.out.println("(4) Return to Menu");
-		    System.out.println("");
-		    System.out.print("Select choice: ");
 
+		// display menu UI for Admin to interact with Movie Listing System
+		adminMovieListingSystemMenuUI();
 
-		    Scanner sc = new Scanner(System.in);
-//		    Scanner string_scanner = new Scanner(System.in).useDelimiter("\n");
-		    int menuChoice = sc.nextInt();
-
-
-		    System.out.println("");
-
-
-		    switch (menuChoice) {
-		    // create new movie listing
-		    case 1:
-		    	createMovieListingUIMenu();
-		    	break;
-
-		    // update existing movie listing
-		    case 2:
-			break;
-
-		    // delete a movie listing
-		    case 3:
-			break;
-
-		    // return to previous
-		    case 4:
-			exitMenu = true;
-			System.out.println("Returning to menu ...");
-			System.out.println("");
-			break;
-
-		    default:
-			System.out.println("Please enter a correct number");
-			System.out.println("");
-		}
-		} while (!exitMenu);
-
-
-
-
-		}
+	}
 	
 	
-	
-	// To append new movie to database of movies if it is valid
-	// For the first movie created, a new file is also created to save it
 	
 
 	/*
@@ -109,6 +61,10 @@ public class MovieController {
 	 * (3) Delete/Remove
 	 */
 	
+	
+	
+	// To append new movie to database of movies if it is valid
+	// For the first movie created, a new file is also created to save it
 	public void create(String title, MovieType type, String description, double duration, String rating,
 					LocalDate releaseDate, LocalDate endDate, String directorName, ArrayList<String> castMembers)
 	{
@@ -141,7 +97,7 @@ public class MovieController {
 	}
 	
 	@SuppressWarnings("unchecked")
-    public void updateById(int col, int ID, Object newValue) {
+    public void updateById(int col, int ID, Object newValue) throws NoSuchAlgorithmException {
         ArrayList<Movie> allMovies = read();
         ArrayList<Movie> remainingMovies = new ArrayList<Movie>();
 
@@ -153,193 +109,13 @@ public class MovieController {
             if (m.getID() == ID)
             {
             	// print out details of movie selected by User
-            	System.out.println("--------------------------------------------------");
-                System.out.println("-- Details of movie you have selected to amend ---");
-                System.out.println("--------------------------------------------------");
-                System.out.println("Movie Title: " + m.getTitle());
-                System.out.println("Movie Type: " + m.getType());
-                System.out.println("Synopsis: " + m.getDescription());
-                System.out.println("Screening Duration: " + m.getDuration());
-                System.out.println("Rating: " + m.getRating());
-                System.out.println("Release Date: " + m.getReleaseDate());
-                System.out.println("End of Screening Date: " + m.getEndDate());
-                System.out.println("Director: " + m.getDirectorName());
-                System.out.println("Cast Members: " + m.getCastMembers());
-                System.out.println("");
+            	detailsMovieToAmendUIMenu(m);
             	
-            	
-                Scanner sc = new Scanner(System.in);
-                int menuChoice;
-            	
-            	System.out.println("--------------------------------------------------");
-                System.out.println("----- Select the attribute you wish to amend -----");
-                System.out.println("--------------------------------------------------");
-                System.out.println("(1) Movie Title ");
-                System.out.println("(2) Movie Type ");
-                System.out.println("(3) Synopsis ");
-                System.out.println("(4) Screening Duration ");
-                System.out.println("(5) Rating ");
-                System.out.println("(6) Release Date ");
-                System.out.println("(7) End of Screening Date ");
-                System.out.println("(8) Director ");
-                System.out.println("(9) Cast Members ");
-                System.out.println("");
-                System.out.print("Enter choice: ");
-
-                menuChoice = sc.nextInt();
-
-                System.out.println("");
+            	// allow User to amend attributes of the selected Movie
+                Movie updatedMovieCopy = selectAttributeToAmendUIMenu(m);
                 
-
-            	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-Mmm-yyyy");
-            	// make changes to movie here
-                switch(menuChoice) {
-                
-                	// to modify Movie Title
-                	case 1:
-                        System.out.println("--------------------------------------------------");
-                        System.out.println("");
-                        System.out.print("Enter movie title to amend to: ");
-                        String newTitle = sc.next();
-                        
-                		m.setTitle(newTitle);
-                		System.out.println("Movie listing has new title: " + m.getTitle());
-                		System.out.println("--------------------------------------------------");
-                		break;
-                        
-                	// to modify Movie Type
-                	case 2:
-                        System.out.println("--------------------------------------------------");
-                        System.out.println("");
-                        System.out.println("Enter movie type to amend to:");
-                        System.out.println("(1) Blockbuster ");
-                        System.out.println("(2) 2D ");
-                        System.out.println("(3) 3D ");
-                        int newType = sc.nextInt();
-                        // convert user input to MOVIE TYPE
-                        MovieType movieType = m.getType();
-                        
-                        switch(newType) {
-                        	case 1:
-                        		movieType = MovieType.BLOCKBUSTER;
-                        		break;
-                        	case 2:
-                        		movieType = MovieType.TWO_D;
-                        		break;
-                        	case 3:
-                        		movieType = MovieType.THREE_D;
-                        		break;
-                    		default:
-                    			movieType = m.getType();
-                        
-                        }
-                  
-                        // check that admin's changes are registered by system
-                		m.setType(movieType);
-                		System.out.println("Movie listing has new type: " + m.getType());
-                		System.out.println("--------------------------------------------------");
-                
-                	// to modify Movie Description
-                	case 3:
-                        System.out.println("--------------------------------------------------");
-                        System.out.println("");
-                        System.out.print("Enter movie synopsis to amend to: ");
-                        String newDescription = sc.next();
-                        
-                		m.setDescription(newDescription);
-                		System.out.println("Movie listing has new synopsis: \n" + m.getDescription());
-                		System.out.println("--------------------------------------------------");
-                		break;
-                        
-                	// to modify Movie Duration
-                	case 4:
-                        System.out.println("--------------------------------------------------");
-                        System.out.println("");
-                        System.out.print("Enter screening duration to amend to: ");
-                        Double newDuration = Double.parseDouble(sc.next());
-                        
-                		m.setDuration(newDuration);
-                		System.out.println("Movie listing has new screening duration of: " + m.getDuration() + " minutes");
-                		System.out.println("--------------------------------------------------");
-                		break;
-                		
-                		
-            		// to modify Movie Rating
-                	case 5:
-                        System.out.println("--------------------------------------------------");
-                        System.out.println("");
-                        System.out.print("Enter movie rating to amend to: ");
-                        String newRating = sc.next();
-                        
-                		m.setRating(newRating);
-                		System.out.println("Movie listing has new rating: " + m.getRating());
-                		System.out.println("--------------------------------------------------");
-                		break;
-                        
-                	// to modify Movie Release Date
-                	case 6:
-                        System.out.println("--------------------------------------------------");
-                        System.out.println("");
-                        System.out.println("Enter release date to amend to (format d-Mmm-yyyy): ");
-
-                        LocalDate newReleaseDate = LocalDate.parse(sc.next(), formatter);
-                        
-                		m.setReleaseDate(newReleaseDate);
-                		System.out.println("Movie listing has new release date: " + m.getReleaseDate());
-                		System.out.println("--------------------------------------------------");
-                		break;
-                
-                	// to modify End of Screening Date for Movie
-                	case 7:
-                        System.out.println("--------------------------------------------------");
-                        System.out.println("");
-                        System.out.print("Enter end of screening date to amend to (format d-Mmm-yyyy): ");
-                        
-                        LocalDate newEndDate = LocalDate.parse(sc.next(), formatter);
-                        
-                		m.setEndDate(newEndDate);
-                		System.out.println("Movie listing has new end of screening date: " + m.getEndDate());
-                		System.out.println("--------------------------------------------------");
-                		break;
-                        
-                	// to modify Director Name
-                	case 8:
-                        System.out.println("--------------------------------------------------");
-                        System.out.println("");
-                        System.out.print("Enter Director's name to amend to: ");
-                        String newDirectorName = sc.next();
-                        
-                		m.setDirectorName(newDirectorName);
-                		System.out.println("Movie listing has new Director: " + m.getDirectorName());
-                		System.out.println("--------------------------------------------------");
-                		break;
-                		
-                	// to modify Cast Members
-                	case 9:
-                        System.out.println("--------------------------------------------------");
-                        System.out.println("");
-                        System.out.println("Enter updated list of cast members (new line for each cast member):");
-                        System.out.println("Type _@ to end input of cast member names");
-                       
-                        String newCastMember = sc.next();
-                        ArrayList<String> newCastMembersAL = new ArrayList<String>();
-                        
-                        while (newCastMember != "_@")
-                        {
-                        	newCastMembersAL.add(newCastMember);
-                        	newCastMember = sc.next();
-                        }
-                        
-                        m.setCastMembers(newCastMembersAL);
-                		System.out.println("Movie listing has new Cast Members: " + m.getCastMembers());
-                		System.out.println("--------------------------------------------------");
-                		break;
-                
-                }
          
             	// create new movie listing (with updated attribute values) with new ID
-
-                Movie updatedMovieCopy = m;
                 updatedMovieCopy.setID(getLatestId());
                 remainingMovies.add(updatedMovieCopy);
 
@@ -350,7 +126,6 @@ public class MovieController {
                 remainingMovies.remove(m.getID());
             	
             }
-
             	
 //            returnData.add(updatedMovieCopy);
         }
@@ -388,7 +163,7 @@ public class MovieController {
             objInputStream.close();
             return movieListing;
         } catch (ClassNotFoundException | IOException e) {
-            System.out.println(e.getMessage());
+//            System.out.println(e.getMessage());
         } 
         return new ArrayList<Movie>();
     }
@@ -404,7 +179,7 @@ public class MovieController {
 		// make use of for loop to include only movies with status of "NOW_SHOWING" and "PREVIEW"
 		for (Movie movie : allMovies)
 		{
-			MovieStatus status = movie.getShowStatus();
+			MovieStatus status = movie.getStatus();
 			if (status == MovieStatus.NOW_SHOWING || status == MovieStatus.PREVIEW)
 			{
 				allScreeningMovies.add(movie);
@@ -443,7 +218,7 @@ public class MovieController {
 		{
 			Movie movie = allMovies.get(i);
 			// check for matching movie ID
-			if (movieID == movie.getID())
+			if (movie.getID() == movieID)
 			{
 				return movie;
 			}
@@ -548,12 +323,27 @@ public class MovieController {
         }
     }
     
-    public void createMovieListingUIMenu() throws NoSuchAlgorithmException {
-        // Create new Movie Listing menu
-    	CreateMovieListingUI createML_UI = new CreateMovieListingUI();
-    	Movie newMovie = createML_UI.main();
-    	this.create(newMovie.getTitle(), newMovie.getType(), newMovie.getDescription(), newMovie.getDuration(), newMovie.getRating(), 
-    			newMovie.getReleaseDate(), newMovie.getEndDate(), newMovie.getDirectorName(), newMovie.getCastMembers());
+//    public void createMovieListingUIMenu() throws NoSuchAlgorithmException {
+//        // Create new Movie Listing menu
+//    	CreateMovieListingUI createML_UI = new CreateMovieListingUI();
+//    	Movie newMovie = createML_UI.main();
+//    	this.create(newMovie.getTitle(), newMovie.getType(), newMovie.getDescription(), newMovie.getDuration(), newMovie.getRating(), 
+//    			newMovie.getReleaseDate(), newMovie.getEndDate(), newMovie.getDirectorName(), newMovie.getCastMembers());
+//    }
+    
+    public void detailsMovieToAmendUIMenu(Movie m) throws NoSuchAlgorithmException {
+    	DetailsMovieToAmendMenuUI detailsAmendMenu = new DetailsMovieToAmendMenuUI(m);
+    	detailsAmendMenu.main();
+    }
+    
+    public Movie selectAttributeToAmendUIMenu(Movie m) throws NoSuchAlgorithmException {
+    	SelectAttributeToAmendMenuUI attributeAmendMenu = new SelectAttributeToAmendMenuUI(m);
+    	return attributeAmendMenu.main();
+    }
+    
+    public void adminMovieListingSystemMenuUI() throws NoSuchAlgorithmException {
+    	AdminMovieListingSystemMenuUI adminSystemMenu = new AdminMovieListingSystemMenuUI();
+    	adminSystemMenu.main();
     }
         
 	
