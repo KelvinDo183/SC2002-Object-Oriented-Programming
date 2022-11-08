@@ -101,6 +101,7 @@ public class SearchMovieUI {
 		}
 	}
 
+
 	// lists all movies (Admin view)
 	public void listAll() throws FileNotFoundException {
 		ArrayList<Movie> allMovies = MovieController.read();
@@ -121,11 +122,12 @@ public class SearchMovieUI {
 	}
 	
 	// lists all screening movies (for movie-goer)
-	public void listAvailableScreeningMovies() throws FileNotFoundException {
+	public boolean listAvailableScreeningMovies() throws FileNotFoundException {
 		ArrayList<Movie> allMovies = MovieController.readAllScreeningMovies();
 
 		if (allMovies.isEmpty()) {
 			System.out.println("No movies found.");
+			return false;
 		}
 
 		else {
@@ -135,8 +137,7 @@ public class SearchMovieUI {
 			for (int i = 0; i < allMovies.size(); i++) {
 				System.out.println(allMovies.get(i).toString());
 			}
+			return true;
 		}
-
 	}
-	
 }
