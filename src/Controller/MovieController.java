@@ -286,6 +286,23 @@ public class MovieController {
 		return false;
     }
 	
+	//like isExistingMovie but returns Movie object
+    public static Movie findExistingMovie(String title){
+	    ArrayList<Movie> allMovies;
+		try {
+			allMovies = MovieController.read();
+			
+			for (Movie movie : allMovies) {
+			    if (movie.getTitle().equals(title))
+				return movie;
+			}
+			return null;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+    }
     
     public static boolean isValidScreeningDate(LocalDate releaseDate, LocalDate endDate){
         if (releaseDate.isBefore(endDate)){
