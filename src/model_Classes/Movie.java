@@ -2,7 +2,9 @@ package model_Classes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Movie implements Serializable {
 
 	private int id;
@@ -196,10 +198,10 @@ public class Movie implements Serializable {
 		throw new UnsupportedOperationException();
 	}
 
-	public MovieStatus getShowStatus() {
-		// TODO - implement Movie.getShowStatus
-		throw new UnsupportedOperationException();
-	}
+//	public MovieStatus getShowStatus() {
+//		// TODO - implement Movie.getShowStatus
+//		throw new UnsupportedOperationException();
+//	}
 
 	/**
 	 * 
