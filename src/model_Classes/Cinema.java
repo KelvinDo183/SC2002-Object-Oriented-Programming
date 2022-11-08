@@ -1,68 +1,66 @@
 package model_Classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cinema {
+@SuppressWarnings("serial")
+public class Cinema implements Serializable {
 
 	private String code;
 	private CinemaType cinemaType;
-	private SeatingPlan seatingPlan;
+	protected SeatingPlan seatingPlan;
 	private ArrayList<Session> sessions;
-
+	
+	public Cinema (String code, CinemaType cinemaType, SeatingPlan seatingPlan) {
+		this.code = code;
+		this.cinemaType = cinemaType;
+		this.seatingPlan = seatingPlan;
+		this.sessions = new ArrayList<Session>();
+	}
+	
 	public String getCode() {
-		return this.code;
+		return code;
 	}
-
-	/**
-	 * 
-	 * @param code
-	 */
-	public void setCode(int code) {
-		// TODO - implement Cinema.setCode
-		throw new UnsupportedOperationException();
+	
+	public void setCode(String code) {
+		this.code = code;
 	}
-
+	
 	public CinemaType getCinemaType() {
-		return this.cinemaType;
+		return cinemaType;
 	}
-
-	/**
-	 * 
-	 * @param cinemaType
-	 */
-	public void setCinemaType(int cinemaType) {
-		// TODO - implement Cinema.setCinemaType
-		throw new UnsupportedOperationException();
+	
+	public void setCinemaType(CinemaType cinemaClass) {
+		this.cinemaType = cinemaClass;
 	}
 
 	public SeatingPlan getSeatingPlan() {
-		return this.seatingPlan;
+		return seatingPlan;
 	}
 
-	/**
-	 * 
-	 * @param seatingPlan
-	 */
-	public void setSeatingPlan(int seatingPlan) {
-		// TODO - implement Cinema.setSeatingPlan
-		throw new UnsupportedOperationException();
+	public void setSeatingPlan(SeatingPlan seatingPlan) {
+		this.seatingPlan = seatingPlan;
 	}
 
 	public ArrayList<Session> getSessions() {
-		return this.sessions;
+		return sessions;
 	}
 
-	/**
-	 * 
-	 * @param sessions
-	 */
 	public void setSessions(ArrayList<Session> sessions) {
 		this.sessions = sessions;
 	}
 
-	public String toString() {
-		// TODO - implement Cinema.toString
-		throw new UnsupportedOperationException();
-	}
-
+	public String toString(){
+		String sessionsString = "";
+		for (int i=0; i<sessions.size(); i++)
+			sessionsString = sessionsString.concat("-----" + sessions.get(i) + "\n");
+		sessionsString = sessionsString.substring(0, sessionsString.length());
+		
+		String details = "";
+		details += "Cinema code: " + getCode() + "\n"
+				+ "Cinema type: " + getCinemaType() + "\n"
+				+ "Sessions: " + getSessions().size() +"\n" 
+				+ sessionsString;
+		return details;
+	}	
 }

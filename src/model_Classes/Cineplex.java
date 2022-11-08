@@ -1,53 +1,44 @@
 package model_Classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class Cineplex implements Serializable {
 
 	private String name;
-	private ArrayList<Cinema> cinemas;
-
-	public String getName() {
-		return this.name;
+	private ArrayList<Cinema> cinemas;  // at least 3 cinemas
+	
+	public Cineplex(String name, ArrayList<Cinema> cinemas) {
+		this.name = name;
+		this.cinemas = cinemas;
 	}
-
-	/**
-	 * 
-	 * @param name
-	 */
+	
+	public String getName() {
+		return name;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	public ArrayList<Cinema> getCinemas() {
-		return this.cinemas;
+		return cinemas;
 	}
-
-	/**
-	 * 
-	 * @param cinemas
-	 */
+	
 	public void setCinemas(ArrayList<Cinema> cinemas) {
 		this.cinemas = cinemas;
 	}
 
-	public String getTID() {
-		// TODO - implement Cineplex.getTID
-		throw new UnsupportedOperationException();
-	}
+	public String toString(){
+        String cinemaString = "";
+        for (int i=0; i<getCinemas().size(); i++)
+			cinemaString = cinemaString.concat(getCinemas().get(i) + ",\n");
+		cinemaString = cinemaString.substring(0, cinemaString.length()-2);
 
-	/**
-	 * 
-	 * @param TID
-	 */
-	public void setTID(String TID) {
-		// TODO - implement Cineplex.setTID
-		throw new UnsupportedOperationException();
-	}
-
-	public String toString() {
-		// TODO - implement Cineplex.toString
-		throw new UnsupportedOperationException();
-	}
-
+        String details = "";
+        details += "Name: " + getName() + "\n"
+				+ cinemaString; 
+        return details;
+    }
 }
