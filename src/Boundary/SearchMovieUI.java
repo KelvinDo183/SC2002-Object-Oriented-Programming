@@ -101,8 +101,27 @@ public class SearchMovieUI {
 		}
 	}
 
-	// lists all screening movies
+	// lists all movies (Admin view)
 	public void listAll() throws FileNotFoundException {
+		ArrayList<Movie> allMovies = MovieController.read();
+
+		if (allMovies.isEmpty()) {
+			System.out.println("No movies found.");
+		}
+
+		else {
+			System.out.println("--------------------------------------------------");
+			System.out.println("[Admin View] All movies are listed below: ");
+			System.out.println("--------------------------------------------------");
+			for (int i = 0; i < allMovies.size(); i++) {
+				System.out.println(allMovies.get(i).toString());
+			}
+		}
+
+	}
+	
+	// lists all screening movies (for movie-goer)
+	public void listAvailableScreeningMovies() throws FileNotFoundException {
 		ArrayList<Movie> allMovies = MovieController.readAllScreeningMovies();
 
 		if (allMovies.isEmpty()) {
@@ -111,7 +130,7 @@ public class SearchMovieUI {
 
 		else {
 			System.out.println("--------------------------------------------------");
-			System.out.println("Movies found are listed below: ");
+			System.out.println("The following movies are currently screening: ");
 			System.out.println("--------------------------------------------------");
 			for (int i = 0; i < allMovies.size(); i++) {
 				System.out.println(allMovies.get(i).toString());
@@ -119,4 +138,5 @@ public class SearchMovieUI {
 		}
 
 	}
+	
 }

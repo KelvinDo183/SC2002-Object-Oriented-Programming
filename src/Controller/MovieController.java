@@ -160,6 +160,7 @@ public class MovieController {
             {
             	Movie m = movieListing.get(i);
             	m.setID(1001 + i); 
+            	m.adjustStatusByDates();
             	returnMovieList.add(m);
             }
             

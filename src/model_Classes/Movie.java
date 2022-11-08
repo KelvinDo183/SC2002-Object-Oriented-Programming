@@ -1,5 +1,6 @@
 package model_Classes;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.Serializable;
@@ -228,6 +229,44 @@ public class Movie implements Serializable {
 				
 		return toReturn;
 		
+	}
+	
+	public void adjustStatusByDates() {
+		
+		LocalDate todayDate = LocalDate.now();
+		
+		if (todayDate.isBefore(this.releaseDate))
+		{
+			
+			Long daysBetweenReleaseToday = this.releaseDate.toEpochDay() - todayDate.toEpochDay();
+			
+			// Case 1a: today is BEFORE the release date of movie (more than 7 days)
+			if (daysBetweenReleaseToday > 7)
+			{
+				this.setStatus(MovieStatus.COMING_SOON);
+			}
+			
+			// Case 1b: today is BEFORE the release date of movie (7 days or fewer)
+			else
+			{
+				this.setStatus(MovieStatus.PREVIEW);
+			}
+			
+		}
+		
+		// Case 2: today is BETWEEN release date of movie & end date of movie
+		else if ((todayDate.isAfter(this.releaseDate) || todayDate.isEqual(this.releaseDate)) 
+				&& (todayDate.isBefore(endDate) || todayDate.isEqual(this.endDate))
+				)
+		{
+			this.setStatus(MovieStatus.NOW_SHOWING);	
+		}
+		
+		// Case 3: today is AFTER release date of movie
+		else if (todayDate.isAfter(endDate))
+		{
+			this.setStatus(MovieStatus.END_OF_SHOWING);
+		}				
 	}
 	
 	

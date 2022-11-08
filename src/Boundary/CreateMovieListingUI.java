@@ -34,7 +34,6 @@ public class CreateMovieListingUI {
 		System.out.println("(2) 2D ");
 		System.out.println("(3) 3D ");
 		MovieType movieType = MovieType.BLOCKBUSTER;
-		System.out.println("The initial movie type is " + movieType);
 
 		int movTypeInput = sc.nextInt();
 			// convert user input to MOVIE TYPE
@@ -42,19 +41,15 @@ public class CreateMovieListingUI {
 		switch(movTypeInput) {
 			case 1:
 				movieType = MovieType.BLOCKBUSTER;
-				System.out.println("The movie type is " + movieType);
 				break;
 			case 2:
 				movieType = MovieType.TWO_D;
-				System.out.println("The movie type is " + movieType);
 				break;
 			case 3:
 				movieType = MovieType.THREE_D;
-				System.out.println("The movie type is " + movieType);
 				break;
 			default:
 				movieType = MovieType.BLOCKBUSTER;
-				System.out.println("The movie type is " + movieType);
 		}
 
 
