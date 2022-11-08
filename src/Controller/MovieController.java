@@ -3,6 +3,8 @@ package Controller;
 import model_Classes.Movie;
 import model_Classes.MovieType;
 import model_Classes.MovieStatus;
+import Boundary.CreateMovieListingUI;
+import Boundary.RegisterUIAdmin;
 import exceptions.ExistingMovieException;
 import exceptions.ReleasePastEndException;
 import exceptions.IncompleteMovieInputException;
@@ -39,7 +41,7 @@ public class MovieController {
 	}
 	
 	// To print the following menu options upon loading of menu
-	public void main() throws IOException {
+	public void main() throws IOException, NoSuchAlgorithmException {
 		boolean exitMenu = false;
 		while (!exitMenu)
 		{
@@ -55,7 +57,7 @@ public class MovieController {
 
 
 		    Scanner sc = new Scanner(System.in);
-		    Scanner string_scanner = new Scanner(System.in).useDelimiter("\n");
+//		    Scanner string_scanner = new Scanner(System.in).useDelimiter("\n");
 		    int menuChoice = sc.nextInt();
 
 
@@ -65,90 +67,8 @@ public class MovieController {
 		    switch (menuChoice) {
 		    // create new movie listing
 		    case 1:
-			System.out.println("--------------------------------------------------");
-			System.out.println("----- Details of the movie listing to create -----");
-			System.out.println("--------------------------------------------------");
-			System.out.println("Enter Movie Title: ");
-		//                String movieTitle = sc.nextLine();
-			String movieTitle = string_scanner.next();
-			System.out.println("Enter Movie Type: ");
-			System.out.println("(1) Blockbuster ");
-			System.out.println("(2) 2D ");
-			System.out.println("(3) 3D ");
-			MovieType movieType = MovieType.BLOCKBUSTER;
-			int movTypeInput = sc.nextInt();
-					// convert user input to MOVIE TYPE
-
-					switch(movTypeInput) {
-						case 1:
-							movieType = MovieType.BLOCKBUSTER;
-							break;
-						case 2:
-							movieType = MovieType.TWO_D;
-							break;
-						case 3:
-							movieType = MovieType.THREE_D;
-							break;
-						default:
-							movieType = MovieType.BLOCKBUSTER;
-
-					}
-
-
-			System.out.println("Enter Synopsis: ");
-		//                String movieDescription = sc.nextLine();
-			String movieDescription = string_scanner.next();
-			System.out.println("");
-
-			System.out.println("Enter Screening Duration: ");
-			String durationStringInput = string_scanner.next();
-			Double movieDuration = Double.parseDouble(durationStringInput);
-			System.out.println("Enter Rating: ");
-			String movieRating = string_scanner.next();
-			System.out.println("Enter Release Date (format yyyy-mm-dd): ");
-			String releaseDateStringInput = sc.next();
-		//            	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-Mmm-yyyy");
-		//                LocalDate movieReleaseDate = LocalDate.parse(releaseDateStringInput, formatter);
-		//                LocalDate movieReleaseDate = LocalDate.parse("26-Oct-2022", formatter);
-			LocalDate movieReleaseDate = LocalDate.parse(releaseDateStringInput);
-			System.out.println("Enter End of Screening Date (format yyyy-mm-dd): ");
-
-			String endDateStringInput = sc.next();
-			LocalDate movieEndDate = LocalDate.parse(endDateStringInput);
-		//                LocalDate movieEndDate = LocalDate.parse(endDateStringInput, formatter);
-			System.out.println("Enter Director Name: ");
-		//                String movieDirectorName = sc.nextLine();
-			String movieDirectorName = string_scanner.next();
-			System.out.println("Enter list of Cast Members (new line for each cast member): ");
-			System.out.println("Type 'N' to end input of cast member names");
-
-			String newCastMember = sc.nextLine();
-		//                String newCastMember = string_scanner.next();
-			ArrayList<String> newCastMembersAL = new ArrayList<String>();
-
-			Boolean continueLooping = true;
-
-			do
-			{
-				newCastMembersAL.add(newCastMember);
-				String additionalCast = sc.next();
-				if (additionalCast.toUpperCase().matches("N")) 
-					{
-						System.out.println("No more cast members to add.");
-						continueLooping = false;
-					}
-
-			} while (continueLooping);
-
-
-			System.out.println("");
-			Movie movielisting = new Movie(MovieController.getLatestId()+1, movieTitle, movieType, movieDescription,
-								movieDuration, movieRating, movieReleaseDate, movieEndDate, movieDirectorName, newCastMembersAL);
-
-			System.out.println("Movie listing with ID #" + movielisting.getID() + " and title '" 
-							+ movielisting.getTitle() + "' has been created.");
-
-			break;
+		    	createMovieListingUIMenu();
+		    	break;
 
 		    // update existing movie listing
 		    case 2:
@@ -195,6 +115,7 @@ public class MovieController {
 		// append new movie to database of movies after validation
 		if (isValidMovie(title, type, description, duration, rating, releaseDate, endDate, directorName, castMembers))
 		{
+			try {
 			Movie movie = new Movie(getLatestId() + 1, title, type, description, duration, rating, 
 					releaseDate, endDate, directorName, castMembers);
 			
@@ -206,18 +127,15 @@ public class MovieController {
 			{
 				allMovies = read();
 			}
-			else {
-				try {
-					ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(FILENAME));
-					allMovies.add(movie);
-					output.writeObject(allMovies);
-					output.flush();
-					output.close();
-				}
-				catch (IOException e) {
-					// unable to access specified directory
-	                System.out.println(e.getMessage());
-				}
+				ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(FILENAME));
+				allMovies.add(movie);
+				output.writeObject(allMovies);
+				output.flush();
+				output.close();
+			}
+			catch (IOException e) {
+				// unable to access specified directory
+                System.out.println(e.getMessage());
 			}
 		}	
 	}
@@ -478,7 +396,7 @@ public class MovieController {
     
     // this method lists all movies in database (including title & ID so it is easier for user to identify movies)
     // which are currently screening
-	public ArrayList<Movie> readAllScreeningMovies() 
+	public static ArrayList<Movie> readAllScreeningMovies() 
 	{
 		ArrayList<Movie> allMovies = read();
 		ArrayList<Movie> allScreeningMovies = new ArrayList<Movie>();
@@ -495,6 +413,26 @@ public class MovieController {
 		
 		return allScreeningMovies;
 	}
+	
+	public static ArrayList<Movie> readAllMoviesOfType(String type) 
+	{
+		ArrayList<Movie> allMovies = read();
+		ArrayList<Movie> allApplicableMovieType = new ArrayList<Movie>();
+		
+		// make use of for loop to include only movies which match the MovieType (String) provided by user
+		for (Movie movie : allMovies)
+		{
+			String movieType = movie.getType().toString();
+			if (movieType.equals(type))
+			{
+				allApplicableMovieType.add(movie);
+			}
+		}
+		
+		return allApplicableMovieType;
+	}
+	
+	
     
     
     // this method returns a particular movie specified by the ID provided by user
@@ -606,8 +544,17 @@ public class MovieController {
             output.flush();
             output.close();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+        	e.printStackTrace();
         }
     }
+    
+    public void createMovieListingUIMenu() throws NoSuchAlgorithmException {
+        // Create new Movie Listing menu
+    	CreateMovieListingUI createML_UI = new CreateMovieListingUI();
+    	Movie newMovie = createML_UI.main();
+    	this.create(newMovie.getTitle(), newMovie.getType(), newMovie.getDescription(), newMovie.getDuration(), newMovie.getRating(), 
+    			newMovie.getReleaseDate(), newMovie.getEndDate(), newMovie.getDirectorName(), newMovie.getCastMembers());
+    }
+        
 	
 }

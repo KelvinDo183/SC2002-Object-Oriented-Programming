@@ -82,31 +82,30 @@ public class SearchMovieUI {
 		System.out.println("Enter movie type(Case sensitive): ");
 		type = sc.nextLine();
 
-		ArrayList<Movie> movieArray;
+		ArrayList<Movie> movieTypeArray = new ArrayList<Movie>();
+		
+		// update movieTypeArray value if readAllMoviesOfType function returns array of movies
+		movieTypeArray = MovieController.readAllMoviesOfType(type);
+		
 
-		if (Movie.getType() == type) {
-			movieArray.add(Movie);
-		}
-
-		if (movieArray.isEmpty()) {
+		if (movieTypeArray.isEmpty()) {
 			System.out.println("No movies of type " + type + " found.");
 			return false;
 		} else {
 			System.out.println("Movie(s) of type " + type + " found!");
-			for (int i = 0; i < movieArray.size(); i++) {
-				System.out.println(movieArray.get(i).toString());
+			for (int i = 0; i < movieTypeArray.size(); i++) {
+				System.out.println(movieTypeArray.get(i).toString());
 			}
 			return true;
 		}
 	}
 
 	// lists all screening movies
-	public boolean listAll() {
+	public void listAll() {
 		ArrayList<Movie> allMovies = MovieController.readAllScreeningMovies();
 
 		if (allMovies.isEmpty()) {
 			System.out.println("No movies found.");
-			return false;
 		}
 
 		else {

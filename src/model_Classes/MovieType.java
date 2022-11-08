@@ -1,4 +1,4 @@
-package Model;
+package model_Classes;
 
 public enum MovieType implements PriceChanger {
 	TWO_D,

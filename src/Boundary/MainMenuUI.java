@@ -66,7 +66,7 @@ public class MainMenuUI {
     // create cinema, cineplex and other presets
     // }
 
-    public static void adminLoginMenu() throws IOException {
+    public static void adminLoginMenu() throws IOException, NoSuchAlgorithmException {
         LoginUIAdmin admin_login = new LoginUIAdmin();
         boolean loggedIn = admin_login.main();
         // admin login menu
@@ -97,10 +97,7 @@ public class MainMenuUI {
             switch (adminChoice) {
                 case 1:
                     // run the MovieController class
-                    // MovieController();
-                    MovieController movController = new MovieController();
-                    movController.main();
-
+                    movieControllerMenu();
                     break;
 
                 case 2:
@@ -214,4 +211,11 @@ public class MainMenuUI {
         RegisterUIAdmin registerUIAdmin = new RegisterUIAdmin();
         registerUIAdmin.main();
     }
+    
+    public static void movieControllerMenu() throws NoSuchAlgorithmException, IOException {
+        // Movie Controller menu
+        MovieController movController = new MovieController();
+        movController.main();
+    }
+    
 }
