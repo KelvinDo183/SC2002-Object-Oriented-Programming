@@ -1,45 +1,38 @@
 package model_Classes;
 
+import java.io.Serializable;
+
+/**
+ * Represents a Seat in the SeatingPlan
+ */
+@SuppressWarnings("serial")
 public class Seat implements Serializable {
 
-	private boolean occupied = false;
 	private int seatID;
-
-	/**
-	 * 
-	 * @param id
-	 */
+	private boolean occupied = false;
+	
 	public Seat(int id) {
-		// TODO - implement Seat.Seat
-		throw new UnsupportedOperationException();
+		seatID = id;
 	}
-
-	/**
-	 * 
-	 * @param id
-	 * @param occupied
-	 */
-	public Seat(int id, boolean occupied) {
-		// TODO - implement Seat.Seat
-		throw new UnsupportedOperationException();
+	
+	public Seat(int id, boolean state) {
+		seatID = id;
+		occupied = state;
 	}
-
+	
 	public int getSeatID() {
-		return this.seatID;
+		return seatID;
 	}
 
 	public boolean isOccupied() {
-		return this.occupied;
+		return occupied;
 	}
 
 	public void assign() {
-		// TODO - implement Seat.assign
-		throw new UnsupportedOperationException();
+		occupied = true;
 	}
 
 	public void unassign() {
-		// TODO - implement Seat.unassign
-		throw new UnsupportedOperationException();
+		occupied = false;
 	}
-
 }

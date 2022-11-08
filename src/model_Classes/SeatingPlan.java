@@ -1,67 +1,61 @@
 package model_Classes;
 
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
 public class SeatingPlan implements Serializable {
 
-	private Seat[][] singlesLayout;
-	private CoupleSeat[][] couplesLayout;
-	private int totalRow;
-	private int totalColumn;
-
-	/**
-	 * 
-	 * @param totalRow
-	 * @param totalColumn
-	 * @param coupleRows
-	 */
-	public SeatingPlan(int totalRow, int totalColumn, int coupleRows) {
-		// TODO - implement SeatingPlan.SeatingPlan
-		throw new UnsupportedOperationException();
+	private Seat [][] layout;
+	private int row;
+	private int column;
+	
+	public SeatingPlan(int row, int column) {
+		this.row = row;
+		this.column = column;
+		layout = new Seat [row][column];
+		for (int i = 0; i < row; i++) {
+			for(int j = 0; j < column; j++)
+				layout[i][j] = new Seat(i*this.row+j);
+		}
 	}
 
-	/**
-	 * 
-	 * @param row
-	 * @param column
-	 */
-	public int calculateID(int row, int column) {
-		// TODO - implement SeatingPlan.calculateID
-		throw new UnsupportedOperationException();
+	public void printLayout( ) {
+		System.out.print("\nX means occupied, 0 means not occupied.\n");
+		for (int i = 0; i < row; i++) {
+			System.out.print("Seats " + (i * column) + " - " + ((i + 1) * column - 1) + ":\t");
+			for (int j = 0; j < column; j++) {
+				if(layout[i][j].isOccupied()) System.out.print("X ");
+				else System.out.print("0 ");
+				if(j == column/2 - 1) System.out.print("\t");
+			}
+			System.out.print("\n");
+		}
 	}
 
-	public int getTotalRow() {
-		return this.totalRow;
+	public int getRow() {
+		return row;
 	}
-
-	public int getTotalColumn() {
-		return this.totalColumn;
+	
+	public int getColumn() {
+		return column;
 	}
-
-	public int getTotalSeats() {
-		// TODO - implement SeatingPlan.getTotalSeats
-		throw new UnsupportedOperationException();
+	
+	public int getNumSeats() {
+		return row*column;
 	}
-
-	/**
-	 * 
-	 * @param id
-	 */
+	
 	public void assignSeats(int id) {
-		// TODO - implement SeatingPlan.assignSeats
-		throw new UnsupportedOperationException();
+		int i = id/row;
+		layout[i][id - row*i].assign();
+	}
+	
+	public void unassignSeats(int id) {
+		int i = id/row;
+		layout[i][id - row*i].unassign();
 	}
 
-	public void unassignSeats() {
-		// TODO - implement SeatingPlan.unassignSeats
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param id
-	 */
 	public boolean checkSeats(int id) {
-		// TODO - implement SeatingPlan.checkSeats
-		throw new UnsupportedOperationException();
+		int i = id/row;
+		return layout[i][id - row*i].isOccupied();
 	}
-
 }
