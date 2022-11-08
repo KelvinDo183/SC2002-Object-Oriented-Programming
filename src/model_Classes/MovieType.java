@@ -10,7 +10,7 @@ public enum MovieType implements PriceChanger {
 	public String toString() {
 		
 		String toReturn = "";
-		toReturn += "Type: " + text + "\n";
+		toReturn += "Type: " + text;
 		
 		return toReturn;
 		
