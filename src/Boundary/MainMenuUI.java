@@ -1,19 +1,10 @@
 package Boundary;
 
-import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 import Controller.*;
-import model_Classes.Movie;
-import model_Classes.MovieType;
+import model_Classes.*;
 
 
 public class MainMenuUI {
@@ -22,7 +13,7 @@ public class MainMenuUI {
 
     public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
 
-        // initialize();
+        initialize();
 
         int menuChoice;
         boolean exitMenu = false;
@@ -74,9 +65,25 @@ public class MainMenuUI {
 
     }
 
-    // private static void initialize() {
-    // create cinema, cineplex and other presets
-    // }
+    private static void initialize() {
+
+        CineplexeController cineplexeController = new CineplexeController();
+
+        ArrayList<Cinema> orchardCinemas = new ArrayList<>();
+
+        orchardCinemas.add(new Cinema("AAA",CinemaType.PREMIUM, new SeatingPlan(10,10)));
+		orchardCinemas.add(new Cinema("BBB",CinemaType.PREMIUM, new SeatingPlan(10,10)));
+		orchardCinemas.add(new Cinema("CCC",CinemaType.STANDARD, new SeatingPlan(10,10)));
+
+        if(cineplexeController.read().size()==0){
+			System.out.println(orchardCinemas.size());
+			cineplexeController.create("Orchard Cineplex", orchardCinemas);
+		}
+
+        // Display created cineplex and its cinemas
+        //System.out.println(cineplexeController.read());
+    
+    }
 
     public static void adminLoginMenu() throws IOException, NoSuchAlgorithmException {
         LoginUIAdmin admin_login = new LoginUIAdmin();
