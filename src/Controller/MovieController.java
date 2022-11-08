@@ -273,11 +273,11 @@ public class MovieController {
 		try {
 			allMovies = MovieController.read();
 			
-	        for (Movie movie : allMovies) {
-	            if (movie.getTitle().equals(title))
-	                return true;
-	        }
-	        return false;
+			for (Movie movie : allMovies) {
+			    if (movie.getTitle().equals(title))
+				return true;
+			}
+			return false;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
