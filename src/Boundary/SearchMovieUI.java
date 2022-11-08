@@ -3,6 +3,7 @@ package Boundary;
 import Controller.*;
 import model_Classes.*;
 import java.util.Scanner;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class SearchMovieUI {
@@ -11,11 +12,11 @@ public class SearchMovieUI {
 	private int choice;
 	static Scanner sc = new Scanner(System.in);
 
-	SearchMovieUI() {
+		SearchMovieUI() {
 
 	}
 
-	public void main() {
+	public void main() throws FileNotFoundException {
 
 		int menuChoice;
         boolean exitMenu = false;
@@ -78,15 +79,15 @@ public class SearchMovieUI {
 
 	}
 
-	public boolean searchType() {
+	public boolean searchType() throws FileNotFoundException {
 		System.out.println("Enter movie type(Case sensitive): ");
 		type = sc.nextLine();
 
-		ArrayList<Movie> movieTypeArray = new ArrayList<Movie>();
+//		ArrayList<Movie> movieTypeArray = new ArrayList<Movie>();
 		
 		// update movieTypeArray value if readAllMoviesOfType function returns array of movies
-		movieTypeArray = MovieController.readAllMoviesOfType(type);
-		
+//		movieTypeArray = MovieController.readAllMoviesOfType(type);
+		ArrayList<Movie> movieTypeArray = MovieController.readAllMoviesOfType(type);		
 
 		if (movieTypeArray.isEmpty()) {
 			System.out.println("No movies of type " + type + " found.");
@@ -101,7 +102,7 @@ public class SearchMovieUI {
 	}
 
 	// lists all screening movies
-	public void listAll() {
+	public void listAll() throws FileNotFoundException {
 		ArrayList<Movie> allMovies = MovieController.readAllScreeningMovies();
 
 		if (allMovies.isEmpty()) {
@@ -109,7 +110,9 @@ public class SearchMovieUI {
 		}
 
 		else {
-			System.out.println("Movies found will be listed");
+			System.out.println("--------------------------------------------------");
+			System.out.println("Movies found are listed below: ");
+			System.out.println("--------------------------------------------------");
 			for (int i = 0; i < allMovies.size(); i++) {
 				System.out.println(allMovies.get(i).toString());
 			}

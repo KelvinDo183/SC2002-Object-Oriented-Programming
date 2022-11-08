@@ -1,9 +1,20 @@
 package Boundary;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 import Controller.*;
+import model_Classes.Movie;
+import model_Classes.MovieType;
+
 
 public class MainMenuUI {
 
@@ -46,11 +57,12 @@ public class MainMenuUI {
                     break;
 
                 case 4:
+
                     exitMenu = true;
                     System.out.println("Terminating App...");
-                    System.out.println("");
+                    System.out.println("");                	
                     break;
-
+                    
                 default:
                     System.out.println("Please enter a correct number");
                     System.out.println("");
@@ -131,7 +143,7 @@ public class MainMenuUI {
         } while (!exitMenu);
     }
 
-    public static void movieGoerMenu() {
+    public static void movieGoerMenu() throws FileNotFoundException {
         // movie goer menu
         int movieGoerChoice;
         boolean exitMenu = false;

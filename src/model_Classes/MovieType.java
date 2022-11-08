@@ -8,8 +8,12 @@ public enum MovieType implements PriceChanger {
 	private String text;
 
 	public String toString() {
-		// TODO - implement MovieType.toString
-		throw new UnsupportedOperationException();
+		
+		String toReturn = "";
+		toReturn += "Type: " + text + "\n";
+		
+		return toReturn;
+		
 	}
 
 }
