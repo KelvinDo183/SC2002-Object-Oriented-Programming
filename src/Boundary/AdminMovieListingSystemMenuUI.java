@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import Boundary.CreateMovieListingUI;
+import Boundary.DeleteMovieListingUI;
 import Controller.MovieController;
 
 import model_Classes.Movie;
@@ -49,11 +50,14 @@ public class AdminMovieListingSystemMenuUI {
 
 		    // update existing movie listing
 		    case 2:
-			break;
+		    	// process of updating movies by ID goes through MovieController
+		    	movControl.updateById();
+		    	break;
 
 		    // delete a movie listing
 		    case 3:
-			break;
+		    	deleteMovieListingUIMenu();
+		    	break;
 
 		    // return to previous
 		    case 4:
@@ -80,6 +84,10 @@ public class AdminMovieListingSystemMenuUI {
     			newMovie.getReleaseDate(), newMovie.getEndDate(), newMovie.getDirectorName(), newMovie.getCastMembers());
     }
 
-	
+    public void deleteMovieListingUIMenu() throws NoSuchAlgorithmException, FileNotFoundException {
+    	// delete movie listing based on ID
+    	DeleteMovieListingUI deleteML_UI = new DeleteMovieListingUI();
+    	deleteML_UI.main();
+   }	
 
 }

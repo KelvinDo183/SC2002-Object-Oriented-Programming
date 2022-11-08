@@ -25,7 +25,7 @@ public class SelectAttributeToAmendMenuUI {
         int menuChoice;
     	
     	System.out.println("--------------------------------------------------");
-        System.out.println("----- Select the attribute you wish to amend -----");
+        System.out.println("----- Select ONE attribute you wish to amend -----");
         System.out.println("--------------------------------------------------");
         System.out.println("(1) Movie Title ");
         System.out.println("(2) Movie Type ");
@@ -36,15 +36,14 @@ public class SelectAttributeToAmendMenuUI {
         System.out.println("(7) End of Screening Date ");
         System.out.println("(8) Director ");
         System.out.println("(9) Cast Members ");
+        System.out.println("(10) Exit menu without making changes to movie listing ");
         System.out.println("");
         System.out.print("Enter choice: ");
 
         menuChoice = sc.nextInt();
 
         System.out.println("");
-        
 
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-Mmm-yyyy");
     	// make changes to movie here
         switch(menuChoice) {
         
@@ -133,9 +132,9 @@ public class SelectAttributeToAmendMenuUI {
         	case 6:
                 System.out.println("--------------------------------------------------");
                 System.out.println("");
-                System.out.println("Enter release date to amend to (format d-Mmm-yyyy): ");
+                System.out.println("Enter release date to amend to (format yyyy-mm-dd): ");
 
-                LocalDate newReleaseDate = LocalDate.parse(sc.next(), formatter);
+                LocalDate newReleaseDate = LocalDate.parse(sc.next());
                 
         		m.setReleaseDate(newReleaseDate);
         		System.out.println("Movie listing has new release date: " + m.getReleaseDate());
@@ -146,9 +145,9 @@ public class SelectAttributeToAmendMenuUI {
         	case 7:
                 System.out.println("--------------------------------------------------");
                 System.out.println("");
-                System.out.print("Enter end of screening date to amend to (format d-Mmm-yyyy): ");
+                System.out.print("Enter end of screening date to amend to (format yyyy-mm-dd): ");
                 
-                LocalDate newEndDate = LocalDate.parse(sc.next(), formatter);
+                LocalDate newEndDate = LocalDate.parse(sc.next());
                 
         		m.setEndDate(newEndDate);
         		System.out.println("Movie listing has new end of screening date: " + m.getEndDate());
@@ -186,6 +185,11 @@ public class SelectAttributeToAmendMenuUI {
                 m.setCastMembers(newCastMembersAL);
         		System.out.println("Movie listing has new Cast Members: " + m.getCastMembers());
         		System.out.println("--------------------------------------------------");
+        		break;
+        		
+    		// exit attribute selection menu
+        	case 10:
+//        		exitMenu = true;
         		break;
         
         }

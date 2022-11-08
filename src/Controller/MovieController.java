@@ -7,6 +7,7 @@ import Boundary.CreateMovieListingUI;
 import Boundary.AdminMovieListingSystemMenuUI;
 import Boundary.DetailsMovieToAmendMenuUI;
 import Boundary.SelectAttributeToAmendMenuUI;
+import Boundary.UpdateMovieListingMenuUI;
 import Boundary.RegisterUIAdmin;
 import exceptions.ExistingMovieException;
 import exceptions.ReleasePastEndException;
@@ -96,6 +97,7 @@ public class MovieController {
 			if (file.exists())
 			{
 				allMovies = read();
+				
 			}
 				ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(FILENAME));
 				allMovies.add(movie);
@@ -111,40 +113,11 @@ public class MovieController {
 	}
 	
 	@SuppressWarnings("unchecked")
-    public void updateById(int col, int ID, Object newValue) throws NoSuchAlgorithmException, FileNotFoundException {
-        ArrayList<Movie> allMovies = read();
-        ArrayList<Movie> remainingMovies = new ArrayList<Movie>();
+    public void updateById() throws NoSuchAlgorithmException, FileNotFoundException {
 
-     // invoke updateByMovie() method in sessionController
-//        sessionController.updateByMovie(col, id, newValue);
-                
-        for (int i=0; i<allMovies.size(); i++){
-            Movie m = allMovies.get(i);
-            if (m.getID() == ID)
-            {
-            	// print out details of movie selected by User
-            	detailsMovieToAmendUIMenu(m);
-            	
-            	// allow User to amend attributes of the selected Movie
-                Movie updatedMovieCopy = selectAttributeToAmendUIMenu(m);
-                
-         
-            	// create new movie listing (with updated attribute values) with new ID
-                updatedMovieCopy.setID(getLatestId());
-                remainingMovies.add(updatedMovieCopy);
+        ArrayList<Movie> updatedMovieListing = updateMovieListingMenuUI();
 
-
-            	// remove original movie listing
-//                MovieController movController = new MovieController();
-//                movController.deleteById(m.getID());
-                remainingMovies.remove(m.getID());
-            	
-            }
-            	
-//            returnData.add(updatedMovieCopy);
-        }
-
-        replaceExistingFile(FILENAME, remainingMovies);
+        replaceExistingFile(FILENAME, updatedMovieListing);
     }
 	
 	
@@ -176,69 +149,24 @@ public class MovieController {
     		FileInputStream fis = new FileInputStream(FILENAME);
             ObjectInputStream objInputStream = new ObjectInputStream(fis);   
 
-        	
-//    		FileOutputStream fos = new FileOutputStream(FILENAME);
-//            ObjectOutputStream objOutputStream = new ObjectOutputStream(fos);   
 
-//            ArrayList<Movie> movieListing = (ArrayList<Movie>) objOutputStream.writeObject();
-//            Object mov = objInputStream.readObject();
-//            System.out.println("MOVIE TITLE = " + mov.toString());
-
-            
             ArrayList<Movie> movieListing = (ArrayList<Movie>) objInputStream.readObject();
-//            movieListing = (ArrayList<Movie>) objInputStream.readObject();
-//            System.out.println("ArrayList of movie = " + movieListing.toString());
-            
-//            Movie mov = (Movie) objInputStream.readObject();
-//            System.out.println("The movie is : " + mov.toString());
-            
-            //            System.out.println("The OIS is = " + objInputStream.toString());
-            
-//            int j = 0;
-//            while (( j = fis.read()) != -1)
-//            {
-//            	System.out.print((char) j);
-//            	
-//            	Movie mov = (Movie) objInputStream.readObject();
-//            	System.out.println("MOVIE TITLE = " + mov.getTitle());
-//            	
-//            	j++;
-//            }
-            
-            
-//            boolean isExist = true;
-//            
-//            while(isExist)
-//            {
-//            	if(fis.available() != 0)
-//            	{
-//            		Object mov = objInputStream.readObject();
-////            		movieListing.add((Movie) mov);
-//            		System.out.println("The object is = " + mov.toString());
-//            		
-//            	}
-//            	else
-//            	{
-//            		isExist = false;
-//            	}
-//            }
-            
-//                for (int j = 0; j < movieListing.size(); j ++)
-//                {
-//
-//                  System.out.println("Movie ID = " + movieListing.get(j).getID());
-//                  System.out.println("Movie title = " + movieListing.get(j).getTitle());
-//                  System.out.println("Movie cast members = " + movieListing.get(j).getCastMembers());
-//                  System.out.println("");
-//                	
-//                }
             
             objInputStream.close();
-            return movieListing;
+            
+            ArrayList<Movie> returnMovieList = new ArrayList<Movie>();
+            // rearrange movie ID before returning ArrayList
+            for (int i = 0; i < movieListing.size(); i++)
+            {
+            	Movie m = movieListing.get(i);
+            	m.setID(1001 + i); 
+            	returnMovieList.add(m);
+            }
+            
+            return returnMovieList;
             
         } catch (IOException | ClassNotFoundException e) {
-//            System.out.println(e.getMessage());
-        	e.printStackTrace();
+            System.out.println(e.getMessage());
         } 
         
         return new ArrayList<Movie>();
@@ -398,28 +326,17 @@ public class MovieController {
         	e.printStackTrace();
         }
     }
-    
-//    public void createMovieListingUIMenu() throws NoSuchAlgorithmException {
-//        // Create new Movie Listing menu
-//    	CreateMovieListingUI createML_UI = new CreateMovieListingUI();
-//    	Movie newMovie = createML_UI.main();
-//    	this.create(newMovie.getTitle(), newMovie.getType(), newMovie.getDescription(), newMovie.getDuration(), newMovie.getRating(), 
-//    			newMovie.getReleaseDate(), newMovie.getEndDate(), newMovie.getDirectorName(), newMovie.getCastMembers());
-//    }
-    
-    public void detailsMovieToAmendUIMenu(Movie m) throws NoSuchAlgorithmException {
-    	DetailsMovieToAmendMenuUI detailsAmendMenu = new DetailsMovieToAmendMenuUI(m);
-    	detailsAmendMenu.main();
-    }
-    
-    public Movie selectAttributeToAmendUIMenu(Movie m) throws NoSuchAlgorithmException {
-    	SelectAttributeToAmendMenuUI attributeAmendMenu = new SelectAttributeToAmendMenuUI(m);
-    	return attributeAmendMenu.main();
-    }
+
     
     public void adminMovieListingSystemMenuUI() throws NoSuchAlgorithmException, FileNotFoundException {
     	AdminMovieListingSystemMenuUI adminSystemMenu = new AdminMovieListingSystemMenuUI();
     	adminSystemMenu.main();
+    }
+    
+    public ArrayList<Movie> updateMovieListingMenuUI() throws NoSuchAlgorithmException, FileNotFoundException {
+    	UpdateMovieListingMenuUI updateML_UI = new UpdateMovieListingMenuUI();
+    	ArrayList<Movie> updatedML_AL = updateML_UI.main();
+    	return updatedML_AL;
     }
         
 	

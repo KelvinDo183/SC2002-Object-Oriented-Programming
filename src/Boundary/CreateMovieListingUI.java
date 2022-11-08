@@ -34,23 +34,28 @@ public class CreateMovieListingUI {
 		System.out.println("(2) 2D ");
 		System.out.println("(3) 3D ");
 		MovieType movieType = MovieType.BLOCKBUSTER;
+		System.out.println("The initial movie type is " + movieType);
+
 		int movTypeInput = sc.nextInt();
-				// convert user input to MOVIE TYPE
+			// convert user input to MOVIE TYPE
 
-				switch(movTypeInput) {
-					case 1:
-						movieType = MovieType.BLOCKBUSTER;
-						break;
-					case 2:
-						movieType = MovieType.TWO_D;
-						break;
-					case 3:
-						movieType = MovieType.THREE_D;
-						break;
-					default:
-						movieType = MovieType.BLOCKBUSTER;
-
-				}
+		switch(movTypeInput) {
+			case 1:
+				movieType = MovieType.BLOCKBUSTER;
+				System.out.println("The movie type is " + movieType);
+				break;
+			case 2:
+				movieType = MovieType.TWO_D;
+				System.out.println("The movie type is " + movieType);
+				break;
+			case 3:
+				movieType = MovieType.THREE_D;
+				System.out.println("The movie type is " + movieType);
+				break;
+			default:
+				movieType = MovieType.BLOCKBUSTER;
+				System.out.println("The movie type is " + movieType);
+		}
 
 
 		System.out.println("Enter Synopsis: ");
@@ -108,10 +113,30 @@ public class CreateMovieListingUI {
 		System.out.println("");
 		Movie movielisting = new Movie(MovieController.getLatestId()+1, movieTitle, movieType, movieDescription,
 							movieDuration, movieRating, movieReleaseDate, movieEndDate, movieDirectorName, newCastMembersAL);
+		
+		switch(movTypeInput) {
+		case 1:
+			movielisting.setType(MovieType.BLOCKBUSTER);
+			System.out.println("The movie type is " + movielisting.getType().toString());
+			break;
+		case 2:
+			movielisting.setType(MovieType.TWO_D);
+			System.out.println("The movie type is " + movielisting.getType().toString());
 
-		System.out.println("Movie listing with ID #" + movielisting.getID() + " and title '" 
+			break;
+		case 3:
+			movielisting.setType(MovieType.THREE_D);
+			System.out.println("The movie type is " + movielisting.getType().toString());
+			break;
+		default:
+			movielisting.setType(MovieType.BLOCKBUSTER);
+			System.out.println("The movie type is " + movielisting.getType().toString());
+	}
+
+
+		System.out.println("Movie listing with ID #" + movielisting.getID() + " and movieType = " + movieType + " and title '" 
 						+ movielisting.getTitle() + "' and cast members: " + newCastMembersAL + " -> has been created.");
-//		
+		
 		return movielisting;
 		
 	}

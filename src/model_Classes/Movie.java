@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.Serializable;
 
+
 @SuppressWarnings("serial")
 public class Movie implements Serializable {
 
@@ -26,7 +27,7 @@ public class Movie implements Serializable {
 			LocalDate releaseDate, LocalDate endDate, String directorName, ArrayList<String> castMembers) {
 		this.id = id;
 		this.title = title;
-		this.type = type;
+		this.type = MovieType.BLOCKBUSTER;
 		// adjust movie status based on the dates provided by admin user OUTSIDE of constructor
 		this.status = MovieStatus.NOW_SHOWING;
 		this.description = description;
@@ -211,8 +212,7 @@ public class Movie implements Serializable {
 
 	public String toString() {
 		// TODO - implement Movie.toString
-//		throw new UnsupportedOperationException();
-		String toReturn = "";
+		String toReturn = "\n";
 		toReturn += "ID: " + getID() + "\n"
 				+ "Title: " + getTitle() + "\n"
 				+ "Type: " + this.type.toString()+ "\n"
@@ -224,9 +224,8 @@ public class Movie implements Serializable {
 				+ "End Date: " + getEndDate() + "\n"
 				+ "Director Name: " + getDirectorName() + "\n"
 				+ "Cast Members: " + getCastMembersToString() + "\n"
-//				+ "Cast Members: " + getCastMembers() + "\n"
-				+ "Reviews: " + getReviews()
-				;
+				+ "Reviews: " + getReviews() + "\n";
+				
 		return toReturn;
 		
 	}
