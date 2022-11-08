@@ -167,7 +167,26 @@ public class Movie implements Serializable {
 	}
 
 	public ArrayList<String> getCastMembers() {
+		
 		return this.castMembers;
+	}
+	
+	public String getCastMembersToString() {
+		
+		String toReturn = "\n";
+		
+		for (int i = 0; i < this.castMembers.size(); i ++)
+		{
+			if (this.castMembers.get(i).compareTo("N") != 1)
+			{
+				toReturn += this.castMembers.get(i) ;
+			}			
+		}
+		
+		// add another line break for clarity when viewing
+		toReturn += "\n";
+		
+		return toReturn;
 	}
 
 	/**
@@ -196,7 +215,7 @@ public class Movie implements Serializable {
 		String toReturn = "";
 		toReturn += "ID: " + getID() + "\n"
 				+ "Title: " + getTitle() + "\n"
-				+ "Type: " + getType().toString() + "\n"
+				+ "Type: " + this.type.toString()+ "\n"
 				+ "Status: " + getStatus() + "\n"
 				+ "Description: " + getDescription() + "\n"
 				+ "Duration: " + getDuration() + "\n"
@@ -204,7 +223,8 @@ public class Movie implements Serializable {
 				+ "Release Date: " + getReleaseDate() + "\n"
 				+ "End Date: " + getEndDate() + "\n"
 				+ "Director Name: " + getDirectorName() + "\n"
-				+ "Cast Members: " + getCastMembers() + "\n"
+				+ "Cast Members: " + getCastMembersToString() + "\n"
+//				+ "Cast Members: " + getCastMembers() + "\n"
 				+ "Reviews: " + getReviews()
 				;
 		return toReturn;

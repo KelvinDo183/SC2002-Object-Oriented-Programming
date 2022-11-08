@@ -56,7 +56,7 @@ public class CreateMovieListingUI {
 		System.out.println("Enter Synopsis: ");
 //        String movieDescription = sc.nextLine();
 		String movieDescription = string_scanner.next();
-		System.out.println("");
+//		System.out.println("");
 
 		System.out.println("Enter Screening Duration: ");
 		String durationStringInput = string_scanner.next();
@@ -77,10 +77,10 @@ public class CreateMovieListingUI {
 		System.out.println("Enter Director Name: ");
 	//                String movieDirectorName = sc.nextLine();
 		String movieDirectorName = string_scanner.next();
-		System.out.println("Enter list of Cast Members (new line for each cast member): ");
+		System.out.println("Enter list of Cast Members (new line for each cast member, no spaces between first & last names): ");
 		System.out.println("Type 'N' to end input of cast member names");
 
-		String newCastMember = sc.nextLine();
+//		String newCastMember = sc.nextLine();
 	//                String newCastMember = string_scanner.next();
 		ArrayList<String> newCastMembersAL = new ArrayList<String>();
 
@@ -88,13 +88,19 @@ public class CreateMovieListingUI {
 
 		do
 		{
-			newCastMembersAL.add(newCastMember);
-			String additionalCast = sc.next();
-			if (additionalCast.toUpperCase().matches("N")) 
-				{
-					System.out.println("No more cast members to add.");
-					continueLooping = false;
-				}
+//			String additionalCast = sc.next();
+			String additionalCast = string_scanner.next();
+			newCastMembersAL.add(additionalCast);
+//			if (additionalCast.toUpperCase().matches("N")) 
+//				{
+//					System.out.println("No more cast members to add.");
+//					continueLooping = false;
+//				}
+			if (additionalCast.compareTo("N") == 1) 
+			{
+				System.out.println("No more cast members to add.");
+				continueLooping = false;
+			}			
 
 		} while (continueLooping);
 
@@ -103,8 +109,8 @@ public class CreateMovieListingUI {
 		Movie movielisting = new Movie(MovieController.getLatestId()+1, movieTitle, movieType, movieDescription,
 							movieDuration, movieRating, movieReleaseDate, movieEndDate, movieDirectorName, newCastMembersAL);
 
-//		System.out.println("Movie listing with ID #" + movielisting.getID() + " and title '" 
-//						+ movielisting.getTitle() + "' has been created.");
+		System.out.println("Movie listing with ID #" + movielisting.getID() + " and title '" 
+						+ movielisting.getTitle() + "' and cast members: " + newCastMembersAL + " -> has been created.");
 //		
 		return movielisting;
 		
