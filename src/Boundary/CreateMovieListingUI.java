@@ -1,5 +1,6 @@
 package Boundary;
 
+import java.io.FileNotFoundException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class CreateMovieListingUI {
 		this.movieController = new MovieController();
 	}
 	
-	public Movie main() throws NoSuchAlgorithmException {
+	public Movie main() throws NoSuchAlgorithmException, FileNotFoundException {
 	
 	    Scanner sc = new Scanner(System.in);
 	    Scanner string_scanner = new Scanner(System.in).useDelimiter("\n");
@@ -53,7 +54,7 @@ public class CreateMovieListingUI {
 
 
 		System.out.println("Enter Synopsis: ");
-	//                String movieDescription = sc.nextLine();
+//        String movieDescription = sc.nextLine();
 		String movieDescription = string_scanner.next();
 		System.out.println("");
 
@@ -102,10 +103,9 @@ public class CreateMovieListingUI {
 		Movie movielisting = new Movie(MovieController.getLatestId()+1, movieTitle, movieType, movieDescription,
 							movieDuration, movieRating, movieReleaseDate, movieEndDate, movieDirectorName, newCastMembersAL);
 
-		System.out.println("Movie listing with ID #" + movielisting.getID() + " and title '" 
-						+ movielisting.getTitle() + "' has been created.");
-		
-		
+//		System.out.println("Movie listing with ID #" + movielisting.getID() + " and title '" 
+//						+ movielisting.getTitle() + "' has been created.");
+//		
 		return movielisting;
 		
 	}

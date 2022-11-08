@@ -1,5 +1,8 @@
 package model_Classes;
 
+import java.io.Serializable;
+
+
 public class Review implements Serializable {
 
 	private String name;

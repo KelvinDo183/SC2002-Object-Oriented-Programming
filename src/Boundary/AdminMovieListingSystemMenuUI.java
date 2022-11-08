@@ -1,5 +1,6 @@
 package Boundary;
 
+import java.io.FileNotFoundException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import Boundary.CreateMovieListingUI;
@@ -18,7 +19,7 @@ public class AdminMovieListingSystemMenuUI {
 		
 	}
 	
-	public void main() throws NoSuchAlgorithmException {
+	public void main() throws NoSuchAlgorithmException, FileNotFoundException {
 		
 		boolean exitMenu = false;
 		while (!exitMenu)
@@ -70,10 +71,11 @@ public class AdminMovieListingSystemMenuUI {
 		
 	}
 	
-    public void createMovieListingUIMenu() throws NoSuchAlgorithmException {
+    public void createMovieListingUIMenu() throws NoSuchAlgorithmException, FileNotFoundException {
         // Create new Movie Listing menu
     	CreateMovieListingUI createML_UI = new CreateMovieListingUI();
     	Movie newMovie = createML_UI.main();
+
     	movControl.create(newMovie.getTitle(), newMovie.getType(), newMovie.getDescription(), newMovie.getDuration(), newMovie.getRating(), 
     			newMovie.getReleaseDate(), newMovie.getEndDate(), newMovie.getDirectorName(), newMovie.getCastMembers());
     }

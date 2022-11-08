@@ -7,8 +7,9 @@ import java.time.format.DateTimeFormatter;
 @SuppressWarnings("serial")
 public class Holiday implements Serializable {
 
-    private LocalDate holidayDate;
-
+	private LocalDate holidayDate;
+	
+	// constructor
     public Holiday(LocalDate holidayDate){
         this.holidayDate = holidayDate;
     }

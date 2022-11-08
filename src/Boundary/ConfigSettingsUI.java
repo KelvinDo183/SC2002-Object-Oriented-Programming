@@ -235,6 +235,6 @@ public class ConfigSettingsUI {
     }
 
     public void printHoliday(Holiday holiday) {
-		System.out.println(holiday.getHolidayDateToString());
+		System.out.println(holiday.getHolidayDate().toString());
 	}
 }

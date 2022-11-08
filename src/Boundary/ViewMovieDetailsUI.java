@@ -2,6 +2,8 @@ package Boundary;
 
 import Controller.*;
 import model_Classes.*;
+
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ViewMovieDetailsUI {
@@ -17,7 +19,7 @@ public class ViewMovieDetailsUI {
         this.moviesCtrl = moviesCtrl;
     }
 
-    public void main() {
+    public void main() throws FileNotFoundException {
 
         int menuChoice;
         boolean exitMenu = false;
@@ -58,7 +60,7 @@ public class ViewMovieDetailsUI {
 
     }
 
-    public void viewMovieDetails() {
+    public void viewMovieDetails() throws FileNotFoundException {
 
         System.out.print("Enter Movie ID: ");
         int id = InputController.getIntFromUser();

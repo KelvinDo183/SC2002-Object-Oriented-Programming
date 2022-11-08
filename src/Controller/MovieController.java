@@ -17,7 +17,9 @@ import java.time.format.DateTimeFormatter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.EOFException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +31,17 @@ import java.util.Scanner;
 public class MovieController {
 	
 	public final static String FILENAME = "src/datastorage/movielisting.txt";
+    public final static int ID = 0;
+    public final static int TITLE = 1;
+    public final static int TYPE = 2;
+    public final static int DESCRIPTION = 3;
+    public final static int DURATION = 4;
+    public final static int RATING = 5;
+    public final static int RELEASE_DATE = 6;
+    public final static int END_DATE = 7;
+    public final static int DIRECTOR_NAME = 8;
+    public final static int CAST_MEMBERS = 9;
+    public final static int REVIEWS = 10;
 	
 	// controller for each new session by users
 	public SessionController sessionController;
@@ -44,7 +57,7 @@ public class MovieController {
 	}
 	
 	// To print the following menu options upon loading of menu
-	public void main() throws IOException, NoSuchAlgorithmException {
+	public void main() throws IOException, NoSuchAlgorithmException, FileNotFoundException {
 
 		// display menu UI for Admin to interact with Movie Listing System
 		adminMovieListingSystemMenuUI();
@@ -67,6 +80,7 @@ public class MovieController {
 	// For the first movie created, a new file is also created to save it
 	public void create(String title, MovieType type, String description, double duration, String rating,
 					LocalDate releaseDate, LocalDate endDate, String directorName, ArrayList<String> castMembers)
+			throws FileNotFoundException
 	{
 		// append new movie to database of movies after validation
 		if (isValidMovie(title, type, description, duration, rating, releaseDate, endDate, directorName, castMembers))
@@ -97,7 +111,7 @@ public class MovieController {
 	}
 	
 	@SuppressWarnings("unchecked")
-    public void updateById(int col, int ID, Object newValue) throws NoSuchAlgorithmException {
+    public void updateById(int col, int ID, Object newValue) throws NoSuchAlgorithmException, FileNotFoundException {
         ArrayList<Movie> allMovies = read();
         ArrayList<Movie> remainingMovies = new ArrayList<Movie>();
 
@@ -121,7 +135,7 @@ public class MovieController {
 
 
             	// remove original movie listing
-                MovieController movController = new MovieController();
+//                MovieController movController = new MovieController();
 //                movController.deleteById(m.getID());
                 remainingMovies.remove(m.getID());
             	
@@ -134,7 +148,7 @@ public class MovieController {
     }
 	
 	
-	public void deleteById(int ID) {
+	public void deleteById(int ID) throws FileNotFoundException {
         ArrayList<Movie> allMovies = read();
         ArrayList<Movie> remainingMovies = new ArrayList<Movie>();
 
@@ -156,22 +170,84 @@ public class MovieController {
 	
     // this method reads the entire database of movie listings (including movies past their screening date)
     @SuppressWarnings("unchecked")
-	public static ArrayList<Movie> read() {
+	public static ArrayList<Movie> read() throws FileNotFoundException {
         try {
-            ObjectInputStream objInputStream = new ObjectInputStream(new FileInputStream(FILENAME));   
+
+    		FileInputStream fis = new FileInputStream(FILENAME);
+            ObjectInputStream objInputStream = new ObjectInputStream(fis);   
+
+        	
+//    		FileOutputStream fos = new FileOutputStream(FILENAME);
+//            ObjectOutputStream objOutputStream = new ObjectOutputStream(fos);   
+
+//            ArrayList<Movie> movieListing = (ArrayList<Movie>) objOutputStream.writeObject();
+//            Object mov = objInputStream.readObject();
+//            System.out.println("MOVIE TITLE = " + mov.toString());
+
+            
             ArrayList<Movie> movieListing = (ArrayList<Movie>) objInputStream.readObject();
+//            movieListing = (ArrayList<Movie>) objInputStream.readObject();
+//            System.out.println("ArrayList of movie = " + movieListing.toString());
+            
+//            Movie mov = (Movie) objInputStream.readObject();
+//            System.out.println("The movie is : " + mov.toString());
+            
+            //            System.out.println("The OIS is = " + objInputStream.toString());
+            
+//            int j = 0;
+//            while (( j = fis.read()) != -1)
+//            {
+//            	System.out.print((char) j);
+//            	
+//            	Movie mov = (Movie) objInputStream.readObject();
+//            	System.out.println("MOVIE TITLE = " + mov.getTitle());
+//            	
+//            	j++;
+//            }
+            
+            
+//            boolean isExist = true;
+//            
+//            while(isExist)
+//            {
+//            	if(fis.available() != 0)
+//            	{
+//            		Object mov = objInputStream.readObject();
+////            		movieListing.add((Movie) mov);
+//            		System.out.println("The object is = " + mov.toString());
+//            		
+//            	}
+//            	else
+//            	{
+//            		isExist = false;
+//            	}
+//            }
+            
+//                for (int j = 0; j < movieListing.size(); j ++)
+//                {
+//
+//                  System.out.println("Movie ID = " + movieListing.get(j).getID());
+//                  System.out.println("Movie title = " + movieListing.get(j).getTitle());
+//                  System.out.println("Movie cast members = " + movieListing.get(j).getCastMembers());
+//                  System.out.println("");
+//                	
+//                }
+            
             objInputStream.close();
             return movieListing;
-        } catch (ClassNotFoundException | IOException e) {
+            
+        } catch (IOException | ClassNotFoundException e) {
 //            System.out.println(e.getMessage());
+        	e.printStackTrace();
         } 
+        
         return new ArrayList<Movie>();
     }
     
     
     // this method lists all movies in database (including title & ID so it is easier for user to identify movies)
     // which are currently screening
-	public static ArrayList<Movie> readAllScreeningMovies() 
+	public static ArrayList<Movie> readAllScreeningMovies() throws FileNotFoundException 
 	{
 		ArrayList<Movie> allMovies = read();
 		ArrayList<Movie> allScreeningMovies = new ArrayList<Movie>();
@@ -189,7 +265,7 @@ public class MovieController {
 		return allScreeningMovies;
 	}
 	
-	public static ArrayList<Movie> readAllMoviesOfType(String type) 
+	public static ArrayList<Movie> readAllMoviesOfType(String type) throws FileNotFoundException 
 	{
 		ArrayList<Movie> allMovies = read();
 		ArrayList<Movie> allApplicableMovieType = new ArrayList<Movie>();
@@ -211,7 +287,7 @@ public class MovieController {
     
     
     // this method returns a particular movie specified by the ID provided by user
-	public Movie readSpecificID(int movieID)
+	public Movie readSpecificID(int movieID) throws FileNotFoundException
 	{
 		ArrayList<Movie> allMovies = read();
 		for (int i = 0; i < allMovies.size(); i++)
@@ -295,7 +371,7 @@ public class MovieController {
         }
     }
     
-    public static int getLatestId(){
+    public static int getLatestId() throws FileNotFoundException{
         int movieID;
     	int latestId = -1;
 
@@ -341,7 +417,7 @@ public class MovieController {
     	return attributeAmendMenu.main();
     }
     
-    public void adminMovieListingSystemMenuUI() throws NoSuchAlgorithmException {
+    public void adminMovieListingSystemMenuUI() throws NoSuchAlgorithmException, FileNotFoundException {
     	AdminMovieListingSystemMenuUI adminSystemMenu = new AdminMovieListingSystemMenuUI();
     	adminSystemMenu.main();
     }

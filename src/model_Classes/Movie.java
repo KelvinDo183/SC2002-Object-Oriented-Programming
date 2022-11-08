@@ -27,6 +27,8 @@ public class Movie implements Serializable {
 		this.id = id;
 		this.title = title;
 		this.type = type;
+		// adjust movie status based on the dates provided by admin user OUTSIDE of constructor
+		this.status = MovieStatus.NOW_SHOWING;
 		this.description = description;
 		this.duration = duration;
 		this.rating = rating;
@@ -190,13 +192,30 @@ public class Movie implements Serializable {
 
 	public String toString() {
 		// TODO - implement Movie.toString
-		throw new UnsupportedOperationException();
+//		throw new UnsupportedOperationException();
+		String toReturn = "";
+		toReturn += "ID: " + getID() + "\n"
+				+ "Title: " + getTitle() + "\n"
+				+ "Type: " + getType().toString() + "\n"
+				+ "Status: " + getStatus() + "\n"
+				+ "Description: " + getDescription() + "\n"
+				+ "Duration: " + getDuration() + "\n"
+				+ "Rating: " + getRating() + "\n"
+				+ "Release Date: " + getReleaseDate() + "\n"
+				+ "End Date: " + getEndDate() + "\n"
+				+ "Director Name: " + getDirectorName() + "\n"
+				+ "Cast Members: " + getCastMembers() + "\n"
+				+ "Reviews: " + getReviews()
+				;
+		return toReturn;
+		
 	}
-
-	public String getOverallReviews() {
-		// TODO - implement Movie.getOverallReviews
-		throw new UnsupportedOperationException();
-	}
+	
+	
+//	public String getOverallReviews() {
+//		// TODO - implement Movie.getOverallReviews
+//		throw new UnsupportedOperationException();
+//	}
 
 //	public MovieStatus getShowStatus() {
 //		// TODO - implement Movie.getShowStatus
