@@ -2,14 +2,16 @@ package model_Classes;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import model_Classes.SeatingPlan;
+import java.time.DayOfWeek;
+//import model_Classes.SeatingPlan;
+import java.time.format.DateTimeFormatter;
 
 public class Session implements Serializable {
 
 	private Movie movie;
 	private LocalDateTime sessionDateTime;
 	private SeatingPlan seatsAvailability;
-	private int id;
+	private int sessionID;
 
 	/**
 	 * 
@@ -18,8 +20,12 @@ public class Session implements Serializable {
 	 * @param DateTime
 	 * @param seatsAvailability
 	 */
-	public Session(Movie movie, int session, LocalDateTime DateTime, SeatingPlan seatsAvailability) {
-		// TODO - implement Session.Session
+	public Session(Movie movie, int sessionID, LocalDateTime DateTime, SeatingPlan seatsAvailability) {
+		this.movie = movie;
+		this.sessionID = sessionID;
+		this.sessionDateTime = DateTime;
+		this.seatsAvailability = seatsAvailability;
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -48,7 +54,8 @@ public class Session implements Serializable {
 	}
 
 	public String getStringSessionDateTime() {
-		// TODO - implement Session.getStringSessionDateTime
+
+		sessionDateTime.format(DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy HH:mm"));
 		throw new UnsupportedOperationException();
 	}
 
@@ -56,46 +63,52 @@ public class Session implements Serializable {
 		return this.seatsAvailability;
 	}
 
-	/**
-	 * 
-	 * @param seatsAvailability
-	 */
 	public void setSeatsAvailability(SeatingPlan seatsAvailability) {
 		this.seatsAvailability = seatsAvailability;
 	}
 
 	public int getID() {
-		// TODO - implement Session.getID
-		throw new UnsupportedOperationException();
+
+		return this.sessionID;
 	}
 
 	/**
 	 * 
 	 * @param id
 	 */
-	public void setID(int id) {
-		// TODO - implement Session.setID
+	public void setID(int sessionID) {
+		this.sessionID = sessionID;
+
 		throw new UnsupportedOperationException();
 	}
 
 	public boolean isWeekend() {
-		// TODO - implement Session.isWeekend
-		throw new UnsupportedOperationException();
+		if (sessionDateTime.getDayOfWeek() == DayOfWeek.SATURDAY
+				|| sessionDateTime.getDayOfWeek() == DayOfWeek.SUNDAY) {
+			return true;
+		} else if (sessionDateTime.getDayOfWeek() == DayOfWeek.FRIDAY && sessionDateTime.getHour() > 18) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public LocalTime getStartTime() {
-		// TODO - implement Session.getStartTime
-		throw new UnsupportedOperationException();
+
+		return getSessionDateTime().toLocalTime();
+
 	}
 
 	public LocalTime getEndTime() {
-		// TODO - implement Session.getEndTime
-		throw new UnsupportedOperationException();
+
+		return getStartTime().plusMinutes((long) (60.0 * getMovie().getDuration()));
+
 	}
 
 	public String toString() {
-		// TODO - implement Session.toString
-		throw new UnsupportedOperationException();
+
+		return "id: " + this.getID() + " Title: " + movie.getTitle() + ", DateTime: " + this.getSessionDateTime()
+				+ "is Weekend: " + isWeekend();
 	}
 
 }
