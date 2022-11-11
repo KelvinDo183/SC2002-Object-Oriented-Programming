@@ -1,26 +1,27 @@
 package Boundary;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import Controller.*;
-import Model.*;
+import model_Classes.Movie;
 
 public class MovieRatingUI {
 	static Scanner sc = new Scanner(System.in);
 	
-	private MoviesController moviesController = new MoviesController();
+	private MovieController moviesController = new MovieController();
 	private SearchMovieUI searchMovieUI = new SearchMovieUI();
 	private ReviewsController reviewsController = new ReviewsController();
 	
-	public void main(){
+	public void main() throws FileNotFoundException{
         System.out.println("Enter username: ");
         String user = sc.nextLine();
         
         if(searchMovieUI.listAll()){
             System.out.print("Name the title of the movie to be rated(case sensitive): ");
             String title =sc.nextLine();
-            Movie movie = moviesController.findExistingMovie;
+            Movie movie = moviesController.findExistingMovie(title);
             
-            if(movie.isEmpty()){
+            if(movie == null){
                 System.out.println("\nMovie "+ title +" doesn't exist!");
                 System.out.println("Returning to menu...\n");
                 return;
@@ -32,7 +33,7 @@ public class MovieRatingUI {
             String comment = sc.nextLine();
             
             //TODO ReviewsController class
-            reviewsController.create(movie.get(0), user, rating, comment);
+            reviewsController.create(movie, user, rating, comment);
         }
     }
 }

@@ -1,19 +1,23 @@
-package Boundary;
+package Controller;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import Controller.*;
-import Model.*;
+import model_Classes.Movie;
+import model_Classes.Review;
 
 public class ReviewsController {
 	
-	private MoviesController movieController;
+	private MovieController movieController;
 	public String FILENAME;
 	
 	public ReviewsController() {
-		this.movieController = new MovieController;
+		this.movieController = new MovieController();
 		this.FILENAME = movieController.FILENAME;
 	}
 	
-	public ReviewsController(MoviesController movieController) {
+	public ReviewsController(MovieController movieController) {
 		this.movieController = movieController;
 		this.FILENAME = movieController.FILENAME;
 	}
@@ -27,8 +31,13 @@ public class ReviewsController {
 	}
 		
 	
-	public void create(Movie movie, String user, float rating, String comment) {
-		Review review = new Review(movie, user, rating, comment);
+	public void create(Movie movie, String user, float rating, String comment) throws FileNotFoundException {
+		Review review = new Review(user, rating, comment);
+		
+		ArrayList<Review> existingReviews = movie.getReviews();
+		existingReviews.add(review);
+		// update reviews tied to movie
+		movie.setReviews(existingReviews);
 		
 		ArrayList<Movie> allData = this.movieController.read();
         ArrayList<Movie> returnData = new ArrayList<Movie>();

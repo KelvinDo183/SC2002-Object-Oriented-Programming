@@ -27,6 +27,8 @@ public class ViewAvailableSeatsUI {
 
             switch (menuChoice) {
                 case 1:
+                	// select session functionality
+                	
                     break;
 
                 case 2:

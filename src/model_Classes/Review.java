@@ -53,7 +53,10 @@ public class Review implements Serializable {
 	 */
 	public Review(String username, Float rating, String comment) {
 		// TODO - implement Review.Review
-		throw new UnsupportedOperationException();
+//		throw new UnsupportedOperationException();
+		this.name = username;
+		this.rating = rating;
+		this.comment = comment;
 	}
 
 }
