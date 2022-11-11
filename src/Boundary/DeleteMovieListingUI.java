@@ -1,5 +1,11 @@
 package Boundary;
 
+/* Interface class branching from AdminMovieListingSystemMenuUI when the Admin user calls to delete a Movie Listing.
+ * 
+ * Identifies movie to be deleted via ID
+ * 
+ * */
+
 import java.io.FileNotFoundException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;

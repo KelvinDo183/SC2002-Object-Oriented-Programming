@@ -6,6 +6,11 @@ import java.util.*;
 import Controller.*;
 import model_Classes.*;
 
+/* The starting point for the whole MOBLIMA program(main function begins here). Admins and Movie-Goers will access their respective functions
+ * for MOBLIMA as this class calls methods from the other Boundary classes.
+ * 
+ * */
+
 public class MainMenuUI {
 
     private static Scanner sc;

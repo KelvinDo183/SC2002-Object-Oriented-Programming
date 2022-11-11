@@ -1,5 +1,20 @@
 package Boundary;
 
+/* Interface class branching from AdminMovieListingSystemMenuUI when the Admin user calls to create a Movie Listing.
+ * 
+ * Required details for Movie Listing creation:
+ * 1) Title
+ * 2) Type(Blockbuster/2D/3D) (see MovieType entity class under model_Classes)
+ * 3) Synopsis
+ * 4) Screening Duration
+ * 5) Rating
+ * 6) Release Date
+ * 7) End-of-Screening Date
+ * 8) Director name
+ * 9) List of class members (ending with N)
+ * 
+ * */
+
 import java.io.FileNotFoundException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;

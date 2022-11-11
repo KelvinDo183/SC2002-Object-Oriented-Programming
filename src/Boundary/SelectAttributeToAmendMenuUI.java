@@ -9,6 +9,10 @@ import java.util.Scanner;
 import model_Classes.Movie;
 import model_Classes.MovieType;;
 
+/* Called by UpdateMovieListingMenuUI for the Admin to select the attribute of the Movie to be ammended. Only one attribute ammendable each call.
+ * Returns the Movie object with the updated attribute.
+ * 
+ * */
 
 public class SelectAttributeToAmendMenuUI {
 	

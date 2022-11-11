@@ -3,6 +3,9 @@ package Boundary;
 import java.security.NoSuchAlgorithmException;
 import model_Classes.Movie;;
 
+/* Called by UpdateMovieListingMenuUI to display all the attributes of the Movie selected by the Admin to have an attribute updated.
+ * 
+ * */
 
 public class DetailsMovieToAmendMenuUI {
 	
