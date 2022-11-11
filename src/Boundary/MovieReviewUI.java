@@ -49,7 +49,7 @@ public class MovieReviewUI {
             System.out.println("Input additional comment");
             String comment = sc.nextLine();
             
-            reviewsController.create(movie, email, rating, comment);
+            reviewsController.create(title, rating, comment);
         }
     }
 }

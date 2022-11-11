@@ -1,24 +1,30 @@
-package Boundary;
+package Controller;
 
-import Controller.*;
-import Model.*;
+/* ReviewsController is a controller class for communicating between the reviews.txt file in datastorage and 
+ * the user who is running the code in MovieReviewUI.
+ * 
+ * */
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+import model_Classes.*;
 
 public class ReviewsController {
 	
-	private MoviesController movieController;
+	private MovieController movieController;
 	public String FILENAME;
 	
 	public ReviewsController() {
-		this.movieController = new MovieController;
+		this.movieController = new MovieController();
 		this.FILENAME = movieController.FILENAME;
 	}
 	
-	public ReviewsController(MoviesController movieController) {
+	public ReviewsController(MovieController movieController) {
 		this.movieController = movieController;
 		this.FILENAME = movieController.FILENAME;
 	}
 	
-	//Get/Set methods for MovieController
+	/* Get/Set methods for MovieController */
 	public MovieController getMovieController() {
 		return this.movieController;
 	}
@@ -27,15 +33,17 @@ public class ReviewsController {
 	}
 		
 	
-	public void create(Movie movie, String user, float rating, String comment) {
-		Review review = new Review(movie, user, rating, comment);
+	public void create(String title, float rating, String comment) throws FileNotFoundException {
+		Review review = new Review(title, rating, comment);
 		
-		ArrayList<Movie> allData = this.movieController.read();
+		ArrayList<Movie> allData = MovieController.read();
         ArrayList<Movie> returnData = new ArrayList<Movie>();
-        
+        /*
+         * Checks for if that movie named exists. And if yes, get the reviews stored for that movie then add the review
+         */
         for (int i=0; i<allData.size(); i++){
             Movie m = allData.get(i);
-            if (m.equals(movie)){
+            if (m.getTitle() == title){
                 ArrayList<Review> reviews = m.getReviews();
                 reviews.add(review);
                 m.setReviews(reviews);

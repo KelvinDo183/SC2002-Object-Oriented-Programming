@@ -2,17 +2,24 @@ package model_Classes;
 
 import java.io.Serializable;
 
+/* Class for the Review entity, has an association with the Movie entity from the usage of each movie's title. Verification of validity will be done in 
+ * ReviewsController and the user makes use of this via MovieReviewUI.
+ * 
+ * Parameters used in the creation are:
+ * String title(of the movie)
+ * float rating
+ * String comment
+ * */
 
 public class Review implements Serializable {
-
-	private String name;
+    private String title;
 	private float rating;
 	private String comment;
 
-	public String getName() {
-		return this.name;
+	public String getTitle() {
+		return this.title;
 	}
-
+	
 	public float getRating() {
 		return this.rating;
 	}
@@ -22,27 +29,35 @@ public class Review implements Serializable {
 	}
 
 	public String toString() {
-		// TODO - implement Review.toString
-		throw new UnsupportedOperationException();
+		String out = "";
+		out     += "        Movie title: " + getTitle() + "\n"
+                +  "        Rating: " + String.valueOf(getRating()) + "\n"
+                +  "        Comment: " + getComment();
+		return out;
 	}
 
-	public void setRating() {
+	public void setRating(float rating) {
 		// TODO - implement Review.setRating
-		throw new UnsupportedOperationException();
+		this.rating = rating;
 	}
 
-	public void setComment() {
+	public void setComment(String comment) {
 		// TODO - implement Review.setComment
-		throw new UnsupportedOperationException();
+		this.comment = comment;
 	}
 
 	/**
 	 * 
 	 * @param review
 	 */
-	public boolean equals(Object review) {
+	public boolean equals(Review review) {
 		// TODO - implement Review.equals
-		throw new UnsupportedOperationException();
+		if(this.getTitle() == review.getTitle() && this.getRating() == review.getRating() && this.getComment() == review.getComment() ) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	/**
@@ -51,9 +66,11 @@ public class Review implements Serializable {
 	 * @param rating
 	 * @param comment
 	 */
-	public Review(String username, Float rating, String comment) {
+	public Review(String title, Float rating, String comment) {
 		// TODO - implement Review.Review
-		throw new UnsupportedOperationException();
+		this.title = title;
+		this.rating = rating;
+		this.comment = comment;
 	}
 
 }
