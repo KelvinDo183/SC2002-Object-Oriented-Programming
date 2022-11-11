@@ -1,5 +1,9 @@
 package Controller;
 
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
 /* ReviewsController is a controller class for communicating between the reviews.txt file in datastorage and 
  * the user who is running the code in MovieReviewUI.
  * 
@@ -8,6 +12,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import model_Classes.*;
+
+import Controller.*;
+import model_Classes.Movie;
+import model_Classes.Review;
 
 public class ReviewsController {
 	
@@ -32,9 +40,14 @@ public class ReviewsController {
 		this.movieController = movieController;
 	}
 		
-	
-	public void create(String title, float rating, String comment) throws FileNotFoundException {
+
+	public void create(Movie movie, String title, float rating, String comment) throws FileNotFoundException {
 		Review review = new Review(title, rating, comment);
+		
+		ArrayList<Review> existingReviews = movie.getReviews();
+		existingReviews.add(review);
+		// update reviews tied to movie
+		movie.setReviews(existingReviews);
 		
 		ArrayList<Movie> allData = MovieController.read();
         ArrayList<Movie> returnData = new ArrayList<Movie>();

@@ -65,6 +65,57 @@ public class SearchMovieUI {
         while (!exitMenu);
 
 	}
+	
+	public void mainMovieGoer() throws FileNotFoundException {
+
+		int menuChoice;
+        boolean exitMenu = false;
+        sc = new Scanner(System.in);
+
+        do {
+			System.out.println("--------------------------------------------------");
+			System.out.println("----------------- Search Movies ------------------");
+			System.out.println("--------------------------------------------------");
+			System.out.println("(1) Search by title");
+			System.out.println("(2) Search by type");
+			System.out.println("(3) List available titles");
+			System.out.println("(4) Return to menu");
+            System.out.println("");
+            System.out.print("Select choice: ");
+
+            menuChoice = sc.nextInt();
+
+            System.out.println("");
+
+            switch (menuChoice) {
+				case 1:
+					searchTitle();
+					break;
+
+				case 2:
+					searchType();
+					break;
+
+				case 3:
+					listAvailableScreeningMovies();
+					break;
+
+                case 4:
+                    exitMenu = true;
+                    System.out.println("Returning to menu...");
+                    System.out.println("");
+                    break;
+
+                default:
+                    System.out.println("Please enter a correct number");
+                    System.out.println("");
+            }
+        }
+
+        while (!exitMenu);
+
+	}
+	
 
 	public boolean searchTitle() {
 		System.out.println("Enter movie title(Case sensitive): ");
@@ -103,11 +154,12 @@ public class SearchMovieUI {
 
 
 	// lists all movies (Admin view)
-	public void listAll() throws FileNotFoundException {
+	public boolean listAll() throws FileNotFoundException {
 		ArrayList<Movie> allMovies = MovieController.read();
 
 		if (allMovies.isEmpty()) {
 			System.out.println("No movies found.");
+			return false;
 		}
 
 		else {
@@ -117,6 +169,7 @@ public class SearchMovieUI {
 			for (int i = 0; i < allMovies.size(); i++) {
 				System.out.println(allMovies.get(i).toString());
 			}
+			return true;
 		}
 
 	}

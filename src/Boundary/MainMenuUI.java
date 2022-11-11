@@ -158,7 +158,7 @@ public class MainMenuUI {
 
         do {
             System.out.println("--------------------------------------------------");
-            System.out.println("--------------- MOBLIMA MOVIE MENU ---------------");
+            System.out.println("--------------- MOBLIMA MOVIE GOER MENU ---------------");
             System.out.println("--------------------------------------------------");
             System.out.println("(1) Search Movie Listings");
             System.out.println("(2) View Top 5 Movies");
@@ -178,7 +178,7 @@ public class MainMenuUI {
             switch (movieGoerChoice) {
                 case 1:
                     SearchMovieUI searchMovie = new SearchMovieUI();
-                    searchMovie.main();
+                    searchMovie.mainMovieGoer();
                     break;
 
                 case 2:
