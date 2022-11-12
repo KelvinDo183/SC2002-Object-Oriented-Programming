@@ -20,13 +20,12 @@ public class Session implements Serializable {
 	 * @param DateTime
 	 * @param seatsAvailability
 	 */
-	public Session(Movie movie, int sessionID, LocalDateTime DateTime, SeatingPlan seatsAvailability) {
+	public Session(Movie movie, int sessionID, LocalDateTime DateTime, SeatingPlan seatsAvailability) throws UnsupportedOperationException {
 		this.movie = movie;
 		this.sessionID = sessionID;
 		this.sessionDateTime = DateTime;
 		this.seatsAvailability = seatsAvailability;
-
-		throw new UnsupportedOperationException();
+//		System.out.printf("\nThe sessionID is =", sessionID);
 	}
 
 	public Movie getMovie() {
@@ -53,10 +52,8 @@ public class Session implements Serializable {
 		this.sessionDateTime = sessionDateTime;
 	}
 
-	public String getStringSessionDateTime() {
-
-		sessionDateTime.format(DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy HH:mm"));
-		throw new UnsupportedOperationException();
+	public String getStringSessionDateTime() throws UnsupportedOperationException {
+		return sessionDateTime.format(DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy HH:mm"));
 	}
 
 	public SeatingPlan getSeatsAvailability() {
@@ -76,10 +73,9 @@ public class Session implements Serializable {
 	 * 
 	 * @param id
 	 */
-	public void setID(int sessionID) {
+	public void setID(int sessionID) throws UnsupportedOperationException{
 		this.sessionID = sessionID;
 
-		throw new UnsupportedOperationException();
 	}
 
 	public boolean isWeekend() {
