@@ -244,9 +244,11 @@ public class MovieController {
 			allMovies = MovieController.read();
 
 			for (Movie movie : allMovies) {
-				if (movie.getTitle().equals(title))
+				if (movie.getTitle().matches(title))
+					System.out.println("This is an existing movie! " + title);
 					return true;
 			}
+//			System.out.println("All movies does not contain the input title");
 			return false;
 
 		} catch (Exception e) {
