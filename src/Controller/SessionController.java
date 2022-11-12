@@ -84,9 +84,10 @@ public class SessionController {
     public void create(String cinemaCode, Movie movie, LocalDateTime sessionDateTime) {
         if (SessionException.isSessionValid(cinemaCode, movie, sessionDateTime)) {
             SeatingPlan seatingPlan = cinemaCtrl.readByAttribute(CODE, cinemaCode).get(0).getSeatingPlan();
+            Session session = new Session(movie, getLastId() + 1, sessionDateTime, seatingPlan);
             ArrayList<Cinema> allData = cinemaCtrl.read();
             System.out.printf("\nCinema Controller Array List = ", allData.toString());
-            
+
             System.out.println("Seating plan (Col) = " + seatingPlan.getColumn());
             System.out.println("Seating plan (Row) = " + seatingPlan.getRow());
             System.out.println("Cinema Code = " + cinemaCode.toString());
@@ -94,19 +95,22 @@ public class SessionController {
             System.out.println("Session Date Time = " + sessionDateTime.toString());
             System.out.println("Session Last ID = " + getLastId());
             int lastID_default = 100;
-            if (getLastId() != -1) lastID_default = getLastId();
-//            Session session = new Session(movie, lastID_default + 1, sessionDateTime, seatingPlan);
-            Session session = new Session(movie, getLastId() + 1, sessionDateTime, seatingPlan);
-//            Session session = new Session(movie, 101, sessionDateTime, seatingPlan);
+            if (getLastId() != -1)
+                lastID_default = getLastId();
+            // Session session = new Session(movie, lastID_default + 1, sessionDateTime,
+            // seatingPlan);
+            // Session session = new Session(movie, getLastId() + 1, sessionDateTime,
+            // seatingPlan);
+            // Session session = new Session(movie, 101, sessionDateTime, seatingPlan);
             System.out.println("Created Session ID = " + session.getID());
             System.out.println("Created Session MOVIE ID = " + session.getMovie().getID());
             System.out.println("Created Session Start Time = " + session.getStringSessionDateTime());
 
-//            ArrayList<Cinema> allData = this.cinemaCtrl.read();
-//            System.out.printf("\nCinema Controller Array List = ", allData.toString());
-            
+            // ArrayList<Cinema> allData = this.cinemaCtrl.read();
+            // System.out.printf("\nCinema Controller Array List = ", allData.toString());
+
             ArrayList<Session> sessions = new ArrayList<Session>();
-            System.out.printf("\nSessions Array List = ", sessions.toString());
+            // System.out.printf("\nSessions Array List = ", sessions.toString());
             for (int i = 0; i < allData.size(); i++) {
                 Cinema cinema_i = allData.get(i);
                 if (cinema_i.getCode().equals(cinemaCode)) {
