@@ -241,19 +241,16 @@ public class MovieController {
 	public static boolean isExistingMovie(String title) {
 		ArrayList<Movie> allMovies;
 		try {
-			allMovies = read();
-
+			
+			allMovies = MovieController.read();
+			
 			for (Movie movie : allMovies) {
-
 				String titleData = movie.getTitle();
-				
-				if (titleData.matches(title)) {
-					System.out.println("This is an existing movie! " + titleData);
+				if (movie.getTitle().trim().toUpperCase().equals(title.trim().toUpperCase())) {
+					System.out.println("This is an existing movie! " + title);
 					return true;
-				}
+				}				
 			}
-//			System.out.println("All movies does not contain the input title");
-			return false;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -266,12 +263,13 @@ public class MovieController {
 
 		ArrayList<Movie> allMovies;
 		try {
-			allMovies = read();
+			allMovies = readAllScreeningMovies();
 
 			for (Movie movie : allMovies) {
 				String titleData = movie.getTitle();
-				if (titleData.equals(title))
+				if (movie.getTitle().trim().toUpperCase().equals(title.trim().toUpperCase())) {
 					return movie;
+				}				
 			}
 
 		} catch (Exception e) {

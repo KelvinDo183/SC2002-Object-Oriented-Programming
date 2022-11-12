@@ -61,10 +61,18 @@ public class SeatingUI {
             System.out.println("Seating layout for this session: ");
             seatsAvailability = session.getSeatsAvailability();
             seatsAvailability.printLayout();
+            
+            // Allow user to select seats from layout
+            System.out.println("--------------------------------------------------");
+            System.out.println("Select an available seat: ");
             Scanner sc = new Scanner(System.in);
+            int seatChoice = sc.nextInt();
+            ArrayList<Integer> seatChoices = new ArrayList<Integer>();
+            
+            
             do{
-                System.out.println("To exit SeatingUI, input 1 ...");
-            }while((choice = sc.nextInt())!=1);
+                System.out.println("To exit SeatingUI, input -1 ...");
+            }while((seatChoice = sc.nextInt())!=-1);
 
             Pair newPair = Pair(cinemaCode, session);
             return newPair;

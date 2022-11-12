@@ -119,11 +119,15 @@ public class SearchMovieUI {
 		
 		Movie movie = MovieController.findExistingMovie(title);
 		
-		if (MovieController.isExistingMovie(title)) {
-			System.out.println("Movie of title " + title + " found!");
-			System.out.println(movie.toString());
-			return true;
-		} 
+		if (movie != null)
+		{
+            System.out.println("**********************");
+			System.out.println("Movie found!");
+            System.out.println("Movie is: " + movie.toString());
+            System.out.println("**********************");
+            return true;
+		}
+		
 		else {
 			System.out.println("Movie with title " + title + " was not found.");
 			return false;
