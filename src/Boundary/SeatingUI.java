@@ -58,10 +58,10 @@ public class SeatingUI {
             System.out.println("Seating layout for this session: ");
             seatsAvailability = session.getSeatsAvailability();
             seatsAvailability.printLayout();
-
+            Scanner sc = new Scanner(System.in);
             do{
-                System.out.println("Insert 1 to exit");
-            }while((choice = InputController.getIntFromUser())!=1);
+                System.out.println("To exit SeatingUI, input 1 ...");
+            }while((choice = sc.nextInt())!=1);
         }
     }
 
@@ -91,35 +91,6 @@ public class SeatingUI {
             }
         }
         
-//        int userChoice = 0;
-//        while(!validInput){
-//            System.out.print("Choose cineplex (ID): ");
-//            Scanner sc = new Scanner(System.in);
-//            int cineplexChoice = sc.nextInt() - 1;
-//            userChoice = cineplexChoice;
-//            
-//            if(cineplexChoice < 1 || cineplexChoice > cineplexes.size()){
-//                System.out.println("Invalid input provided.");
-//            }
-//            else{
-//                validInput = true;
-//            }
-//        }
-//
-//        ArrayList<Cinema> cinemas = cineplexes.get(userChoice-1).getCinemas();
-//        int counter = 0;
-//
-//        System.out.println("---------------------------------------------------------------");
-//        System.out.println(" **** Available sessions in cineplex " + cineplexes.get(userChoice-1).getName() + ": ");
-//        for(int i =0;i<cinemas.size();i++){
-//            Cinema cinema = cinemas.get(i);
-//            ArrayList<Session> sessions = cinema.getSessions();
-//            for(int j=0;j<sessions.size();j++){
-//                System.out.println("\t" + (counter+1) + ". Cinema: " + cinema.getCode() + "\n\t   Movie: " + sessions.get(j).getMovie().getTitle()
-//                + "\n\t   Date: " + sessions.get(j).getStringSessionDateTime());
-//                counter++;
-//            }
-//        }
 
         while(!validInput){
             System.out.print("Choose cineplex by ID: ");

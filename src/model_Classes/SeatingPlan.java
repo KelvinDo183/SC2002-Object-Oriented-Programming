@@ -20,16 +20,34 @@ public class SeatingPlan implements Serializable {
 	}
 
 	public void printLayout( ) {
-		System.out.print("\nX means occupied, 0 means not occupied.\n");
+		System.out.print("\n[X] denotes an occupied seat; Number from 0 to 99 denotes a seat available for booking.\n");
 		for (int i = 0; i < row; i++) {
-			System.out.print("Seats " + (i * column) + " - " + ((i + 1) * column - 1) + ":\t");
+			if (i == 0)
+			{
+				System.out.print("Seats 0" + (i * column) + " - 0" + ((i + 1) * column - 1) + ":\t");
+			}
+			else
+			{
+				System.out.print("Seats " + (i * column) + " - " + ((i + 1) * column - 1) + ":\t");	
+			}
 			for (int j = 0; j < column; j++) {
-				if(layout[i][j].isOccupied()) System.out.print("X ");
-				else System.out.print("0 ");
+				if(layout[i][j].isOccupied()) System.out.print("[X] ");
+				else 
+				{
+					if (i == 0)
+					{
+						System.out.print("[0" + (i * 10 + j) +"] ");
+					}
+					else
+					{
+						System.out.print("[" + (i * 10 + j) +"] ");
+					}
+				}
 				if(j == column/2 - 1) System.out.print("\t");
 			}
 			System.out.print("\n");
 		}
+		System.out.println("");
 	}
 
 	public int getRow() {

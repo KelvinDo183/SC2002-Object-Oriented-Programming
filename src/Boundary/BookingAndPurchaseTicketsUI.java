@@ -9,6 +9,7 @@ import Controller.CineplexeController;
 import Controller.InputController;
 import model_Classes.Cinema;
 import model_Classes.Cineplex;
+import model_Classes.Movie;
 import model_Classes.Session;
 import Boundary.SeatingUI;
 
@@ -25,17 +26,16 @@ public class BookingAndPurchaseTicketsUI {
         sc = new Scanner(System.in);
 
         do {
-            System.out.println("--------------------------------------------------");
+            System.out.println("\n--------------------------------------------------");
             System.out.println("----------- Book and Purchase Tickets ------------");
             System.out.println("--------------------------------------------------");
             System.out.println("(1) Show Available Movies");
             System.out.println("(2) Show Available Cineplexes");
             System.out.println("(3) Show Available Sessions");
             System.out.println("(4) Price Calculations");
-            System.out.println("(5) Pick Session");
-            System.out.println("(6) Seat Selection");
-            System.out.println("(7) Make Booking");
-            System.out.println("(8) Return to Movie Goer Menu");
+            System.out.println("(5) Seat Selection");
+            System.out.println("(6) Make Booking");
+            System.out.println("(7) Return to Movie Goer Menu");
             System.out.print("Select choice:");
 
             menuChoice = sc.nextInt();
@@ -60,18 +60,14 @@ public class BookingAndPurchaseTicketsUI {
                     break;
 
                 case 5:
-                	pickSession();
-                    break;
-
-                case 6:
                 	seatSelection();
                     break;
                     
-                case 7:
+                case 6:
                 	makeBooking();
                     break;
 
-                case 8:
+                case 7:
                     exitMenu = true;
                     System.out.println("Returning to Movie Goer menu...");
                     System.out.println("");
@@ -135,10 +131,6 @@ public class BookingAndPurchaseTicketsUI {
     }
     
 
-    public void pickSession() {
-        //TODO
-    }   
-
     public void priceCalculation() {
         //TODO
     }
@@ -153,6 +145,18 @@ public class BookingAndPurchaseTicketsUI {
 
     public void makeBooking() {
         //TODO
+    }
+    
+    public void makeTransaction() {
+    	System.out.print("Enter your name: ");
+    	String name = InputController.getStringFromUser();
+    	System.out.print("Enter your email: ");
+    	String email = InputController.getEmailFromUser();
+    	System.out.print("Enter your mobile number: ");
+    	String mobileNumber = InputController.getMobileNumberFromUser();
+//    	Movie movie = queriedSession.getMovie();
+//    	transCtrl.create(cinemaCode, name, email, mobileNumber, movie);
+    	System.out.println("Transaction successful!");
     }
     
     public void printCinema(Cinema cinema) {
