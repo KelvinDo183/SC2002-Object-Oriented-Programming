@@ -6,19 +6,22 @@ import java.util.Scanner;
 
 import Controller.CinemaController;
 import Controller.CineplexeController;
+import Controller.InputController;
 import model_Classes.Cinema;
 import model_Classes.Cineplex;
+import model_Classes.Session;
+import Boundary.SeatingUI;
 
 public class BookingAndPurchaseTicketsUI {
 
     private static Scanner sc;
+    private CinemaController cinemaCtrl = new CinemaController();
+    private CineplexeController cineplexCtrl = new CineplexeController();
 
     public void main() throws FileNotFoundException {
 
         int menuChoice;
-        boolean exitMenu = false;
-
-        
+        boolean exitMenu = false;        
         sc = new Scanner(System.in);
 
         do {
@@ -95,23 +98,42 @@ public class BookingAndPurchaseTicketsUI {
 
     public void showAvailableCineplexes() {
         //TODO
-        System.out.println("\n----------- Available Cineplexes Shown Below: ------------");
-        System.out.println("--------------------------------------------------");
-    	CineplexeController cineplexControl = new CineplexeController();
-    	CinemaController cinemaControl = new CinemaController();
-//    	cineplexControl.readByName("AAA");
-//    	cineplexControl.readByName("BBB");
-//    	cineplexControl.readByName("CCC");
     	
-    	ArrayList<Cineplex> allCineplexList = cineplexControl.read();
-    	ArrayList<Cinema> allCinemaList = cinemaControl.read();
-    	cineplexControl.create("DDD", allCinemaList);
-    	cineplexControl.readByName("DDD");    	
+    	ArrayList<Cineplex> cineplexList = cineplexCtrl.read();
+        if (cineplexList.isEmpty()) {
+            System.out.println("There are no cineplexes registered!");
+            return;
+        }
+        else
+        {
+            System.out.println("\n----------- Available Cineplexes Shown Below: ------------");
+            cineplexList.forEach(Cineplex -> printCineplex(Cineplex));            
+        }
+
     }
 
+    
     public void showAvailableSessions() {
-        //TODO
+        System.out.println("\nCineplex List:");
+        ArrayList<Cineplex> cineplexList = cineplexCtrl.read();
+        if (cineplexList.isEmpty()) {
+            System.out.println("There are no cineplexes registered!");
+            return;
+        }
+        cineplexList.forEach(Cineplex -> printCineplex(Cineplex));
+        System.out.println("\nEnter Cineplex Name:");
+        String cineplexName = InputController.getStringFromUser();
+        Cineplex cineplex = cineplexCtrl.readByName(cineplexName);
+        if (cineplex == null) {
+            System.out.println("Cineplex does not exist!\n" +
+                    "Returning to menu...");
+            return;
+        }
+
+        ArrayList<Cinema> cinemaList = cineplex.getCinemas();
+        cinemaList.forEach(Cinema -> printCinema(Cinema));
     }
+    
 
     public void pickSession() {
         //TODO
@@ -122,11 +144,39 @@ public class BookingAndPurchaseTicketsUI {
     }
 
     public void seatSelection() {
-        //TODO
+    	
+    	showSeatingArrangementUI();
+        
+    	// instructions to input seat selection
+    	
     }
 
     public void makeBooking() {
         //TODO
     }
+    
+    public void printCinema(Cinema cinema) {
+        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::\nCinema code: " + cinema.getCode());
+        ArrayList<Session> sessionList = cinema.getSessions();
+        sessionList.forEach(session -> printSession(session));
+    }
 
+    public void printCinemaCode(Cinema cinema) {
+        System.out.println("Cinema code: " + cinema.getCode());
+    }
+    
+    public void printCineplex(Cineplex cineplex) {
+        System.out.println("Name: " + cineplex.getName());
+    }
+    
+    public void printSession(Session session) {
+        System.out.print("\n\tSession id: " + session.getID() + "\n" +
+                "\tMovie title: " + session.getMovie().getTitle() + "\n" +
+                "\tDate: " + session.getStringSessionDateTime() + "\n");
+    }
+
+    public void showSeatingArrangementUI() {
+    	SeatingUI seatingUI = new SeatingUI();
+    	seatingUI.main();
+    }
 }

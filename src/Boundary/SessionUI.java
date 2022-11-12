@@ -29,12 +29,14 @@ public class SessionUI {
         sc = new Scanner(System.in);
         
         while (!exit) {
-            System.out.print("\n\nCreate/Update/Remove session: \n\n" +
+            System.out.println("\n--------------------------------------------------");
+            System.out.print("\nCreate/Update/Remove session: \n\n" +
                     "1. Create Movie Session\n" +
                     "2. Update Movie Session\n" +
                     "3. Remove Movie Session\n" +
                     "4. View Movie Sessions\n" +
                     "5. Return to Main Menu\n\n" +
+            		"\n\n--------------------------------------------------\n" +
                     "Select action: ");
             int option = sc.nextInt();
             System.out.println("");
