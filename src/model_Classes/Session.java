@@ -65,6 +65,7 @@ public class Session implements Serializable {
 		this.seatsAvailability = seatsAvailability;
 	}
 
+	
 	public int getID() {
 
 		return this.sessionID;

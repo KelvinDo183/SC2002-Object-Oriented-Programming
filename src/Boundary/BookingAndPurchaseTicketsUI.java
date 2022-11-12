@@ -7,10 +7,13 @@ import java.util.Scanner;
 import Controller.CinemaController;
 import Controller.CineplexeController;
 import Controller.InputController;
+import Controller.TransactionController;
+import exceptions.InvalidTxnException;
 import model_Classes.Cinema;
 import model_Classes.Cineplex;
 import model_Classes.Movie;
 import model_Classes.Session;
+import model_Classes.Pair;
 import Boundary.SeatingUI;
 
 public class BookingAndPurchaseTicketsUI {
@@ -18,8 +21,9 @@ public class BookingAndPurchaseTicketsUI {
     private static Scanner sc;
     private CinemaController cinemaCtrl = new CinemaController();
     private CineplexeController cineplexCtrl = new CineplexeController();
+    private TransactionController txnCtrl = new TransactionController();
 
-    public void main() throws FileNotFoundException {
+    public void main() throws FileNotFoundException, InvalidTxnException {
 
         int menuChoice;
         boolean exitMenu = false;        
@@ -33,9 +37,8 @@ public class BookingAndPurchaseTicketsUI {
             System.out.println("(2) Show Available Cineplexes");
             System.out.println("(3) Show Available Sessions");
             System.out.println("(4) Price Calculations");
-            System.out.println("(5) Seat Selection");
-            System.out.println("(6) Make Booking");
-            System.out.println("(7) Return to Movie Goer Menu");
+            System.out.println("(5) Seat Selection and Make Booking");
+            System.out.println("(6) Return to Movie Goer Menu");
             System.out.print("Select choice:");
 
             menuChoice = sc.nextInt();
@@ -62,12 +65,8 @@ public class BookingAndPurchaseTicketsUI {
                 case 5:
                 	seatSelection();
                     break;
-                    
+                   
                 case 6:
-                	makeBooking();
-                    break;
-
-                case 7:
                     exitMenu = true;
                     System.out.println("Returning to Movie Goer menu...");
                     System.out.println("");
@@ -135,27 +134,32 @@ public class BookingAndPurchaseTicketsUI {
         //TODO
     }
 
-    public void seatSelection() {
+    public void seatSelection() throws FileNotFoundException, InvalidTxnException {
     	
-    	showSeatingArrangementUI();
+    	Pair<String, Session> selectedSessionPair = showSeatingArrangementUI();
         
     	// instructions to input seat selection
     	
+    	// makeBooking()
+        System.out.println("--------------------------------------------------");
+        System.out.println("------------ Proceed to make booking: ------------\n");
+    	makeBooking(selectedSessionPair);
+    	
     }
 
-    public void makeBooking() {
-        //TODO
-    }
     
-    public void makeTransaction() {
+    public void makeBooking(Pair<String, Session> selectedSessionPair) throws FileNotFoundException, InvalidTxnException {
     	System.out.print("Enter your name: ");
     	String name = InputController.getStringFromUser();
     	System.out.print("Enter your email: ");
     	String email = InputController.getEmailFromUser();
     	System.out.print("Enter your mobile number: ");
     	String mobileNumber = InputController.getMobileNumberFromUser();
-//    	Movie movie = queriedSession.getMovie();
-//    	transCtrl.create(cinemaCode, name, email, mobileNumber, movie);
+    	String cinemaCode = selectedSessionPair.t1;
+    	Movie movie = selectedSessionPair.t2.getMovie();
+    	
+    	txnCtrl.create(cinemaCode, name, email, mobileNumber, movie);
+    	
     	System.out.println("Transaction successful!");
     }
     
@@ -179,8 +183,9 @@ public class BookingAndPurchaseTicketsUI {
                 "\tDate: " + session.getStringSessionDateTime() + "\n");
     }
 
-    public void showSeatingArrangementUI() {
+    public Pair<String, Session> showSeatingArrangementUI() {
     	SeatingUI seatingUI = new SeatingUI();
-    	seatingUI.main();
+    	Pair<String, Session> selectedSessionPair = seatingUI.main();
+    	return selectedSessionPair;
     }
 }

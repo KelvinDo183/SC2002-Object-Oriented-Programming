@@ -30,17 +30,19 @@ public class SeatingUI {
     /** 
      * Main method to load - if there are available sessions, user can choose one to load the layout
      */
-    public void main(){
+    public Pair<String, Session> main(){
         if(showAvailableSessions()){
-            printLayout();
+            return printLayout();
         }
         else{
-            return;
+            return null;
         }
     }
 
     // user can retrieve layout of seating arrangement by providing date & cinema code of movie session
-    public void printLayout(){
+    // this function returns movie associated with session to the main() method
+    // so that user can proceed to make booking after selecting seat
+    public Pair<String, Session> printLayout(){
         int choice = 0;
         System.out.println("\nSelect session by providing Date and Cinema Code");
 		System.out.print("Enter date : ");
@@ -53,6 +55,7 @@ public class SeatingUI {
         if(session == null){
             System.out.println("Incorrect input...");
             printLayout();
+            return null;
         }
         else{
             System.out.println("Seating layout for this session: ");
@@ -62,10 +65,20 @@ public class SeatingUI {
             do{
                 System.out.println("To exit SeatingUI, input 1 ...");
             }while((choice = sc.nextInt())!=1);
+
+            Pair newPair = Pair(cinemaCode, session);
+            return newPair;
         }
     }
+    
 
-    /** 
+    private Pair Pair(String cinemaCode, model_Classes.Session session2) {
+		Pair newPair = new Pair();
+    	newPair.setPair(cinemaCode, session2);
+    	return newPair;
+	}
+
+	/** 
      * Check if there are availablle sessions.
      * If there are no cineplex, return false
      * If there are, display all cineplexes and ask the user to choose one.
@@ -125,5 +138,5 @@ public class SeatingUI {
         }
         return true;
     }
-
+    
 }

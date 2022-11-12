@@ -1,9 +1,12 @@
 package Boundary;
 
 import java.util.Scanner;
+import Controller.TransactionController;
+import model_Classes.Transaction;
 
 public class ViewBookingAndPurchasedHistoryUI {
 
+	TransactionController txnCtrl = new TransactionController();
     private static Scanner sc;
 
     public void main() {
@@ -48,8 +51,17 @@ public class ViewBookingAndPurchasedHistoryUI {
     }
 
     public void retrieve() {
-        //TODO
-        
+        System.out.println("\nEnter transaction ID: ");
+        int txnID = sc.nextInt();
+        Transaction txn = txnCtrl.readByTID(String.valueOf(txnID));
+        System.out.println("\n::::::::::::::::::::::::::::::");
+        System.out.println("TransactionID = " + txn.getTID());
+        System.out.println("Customer Name = " + txn.getMobileNumber());
+        System.out.println("Customer Mobile Number = " + txn.getMobileNumber());
+        System.out.println("CinemaCode = " + txn.getCinemaCode());
+        System.out.println("Movie Title = " + txn.getMovie().getTitle());
+        System.out.println("::::::::::::::::::::::::::::::");
+        System.out.println("");
     }
 
     public void displayHistory() { 
