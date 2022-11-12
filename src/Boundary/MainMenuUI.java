@@ -9,6 +9,21 @@ import model_Classes.*;
 /* The starting point for the whole MOBLIMA program(main function begins here). Admins and Movie-Goers will access their respective functions
  * for MOBLIMA as this class calls methods from the other Boundary classes.
  * 
+ * Functions for Admin
+ * 1) Create / Update / Delete Movie Listing(a movie)
+ * 2) Create / Update / Delete Movie Session(a screening on a given date at a given cinema)
+ * 3) Search Movie Listing
+ * 4) View Movie Details
+ * 5) Configure System Settings
+ * 
+ * Functions for MovieGoer
+ * 1) Search Movie Listing
+ * 2) View Top 5 Movies (varies depending on Admin's configuration ー by ratings or ticket sales)
+ * 3) View Movie Details
+ * 4) Check Available Seats
+ * 5) Book Tickets
+ * 6) View Booking History
+ * 7) Rate/Review Movie
  * */
 
 public class MainMenuUI {
@@ -171,7 +186,7 @@ public class MainMenuUI {
             System.out.println("(4) Check Available Seats");
             System.out.println("(5) Book Tickets");
             System.out.println("(6) View Booking History");
-            System.out.println("(7) Rate Movie");
+            System.out.println("(7) Rate/Review Movie");
             System.out.println("(8) Exit");
             System.out.println("");
             System.out.print("Select choice: ");
@@ -212,8 +227,8 @@ public class MainMenuUI {
                     break;
 
                 case 7:
-                    RateMovieUI rateMovie = new RateMovieUI();
-                    rateMovie.main();
+                    RateOrReviewUI rateOrReview = new RateOrReviewUI();
+                    rateOrReview.main();
                     break;
 
                 case 8:

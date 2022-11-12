@@ -7,8 +7,8 @@ import Controller.*;
 import model_Classes.*;
 
 /*
- * MovieReviewUI is called when a Movie-Goer selects the respective option to do so from MainMenuUI, they can leave a rating and an additional 
- * comment to be recorded as a MovieReview(controlled by ReviewsController and kept in reviews.txt)
+ * MovieReviewUI is called when a Movie-Goer selects the respective option to do so from MainMenuUI followed by in RateOrReviewUI. 
+ * They can leave a rating and an additional comment to be recorded as a MovieReview(controlled by ReviewsController)
  * */
 
 public class MovieReviewUI {
@@ -19,7 +19,9 @@ public class MovieReviewUI {
 	private ReviewsController reviewsController = new ReviewsController();
 	
 	public void main() throws FileNotFoundException{
-        
+		System.out.println("--------------------------------------------------");
+        System.out.println("------------------ Review Movie ------------------");
+    	System.out.println("--------------------------------------------------");
 		System.out.println("Enter transaction ID: ");
         int tid = sc.nextInt();
         System.out.println("Enter email: ");

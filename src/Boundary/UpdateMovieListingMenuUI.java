@@ -10,7 +10,7 @@ import Boundary.SelectAttributeToAmendMenuUI;
 import Controller.MovieController;
 import model_Classes.Movie;
 
-/* Interface class branching from AdminMovieListingSystemMenuUI followed by MovieController when the Admin user calls to update a Movie Listing.
+/* Boundary class branching from AdminMovieListingSystemMenuUI followed by MovieController when the Admin user calls to "Update Existing Movie Listing.
  * Returns an ArrayList of Movie objects to MovieController. 
  * 
  * Identifies movie to be updated by ID. 

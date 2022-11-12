@@ -9,8 +9,8 @@ import Controller.MovieController;
 
 import model_Classes.Movie;
 
-/* AdminMovieListingSystemMenuUI is the Boundary between an admin user that has selected to "Create/Update/Delete Movie Listing" in
- * MainMenuUI and the other 3 Movie Listing UIs.
+/* AdminMovieListingSystemMenuUI is a Boundary class for an Admin to "Create/Update/Delete Movie Listing" via
+ * MainMenuUI and the other 3 Movie Listing UIs. Called from the MainMenuUI via the MovieController class.
  * 
  * Creation: 	CreateMovieListingUI 		(by calling method createMovieListingUI() in this class)
  * 

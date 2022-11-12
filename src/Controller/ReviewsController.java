@@ -42,17 +42,17 @@ public class ReviewsController {
 		
 
 	public void create(Movie movie, String title, float rating, String comment) throws FileNotFoundException {
+		//Call the constructor for Review entity
 		Review review = new Review(title, rating, comment);
 		
-		ArrayList<Review> existingReviews = movie.getReviews();
-		existingReviews.add(review);
-		// update reviews tied to movie
-		movie.setReviews(existingReviews);
-		
+		//Reads the current ArrayList of movies stored in movielisting.txt
 		ArrayList<Movie> allData = MovieController.read();
+		
+		//Initialises an ArrayList of Movie object to be returned, stores only the modified Movie object with the newly added review
         ArrayList<Movie> returnData = new ArrayList<Movie>();
         /*
-         * Checks for if that movie named exists. And if yes, get the reviews stored for that movie then add the review
+         * Checks for if the movie passed into the function exists. And if yes, get the reviews stored for that movie then add the new review
+         * to the movie, then add the modified movie to the returned data.
          */
         for (int i=0; i<allData.size(); i++){
             Movie m = allData.get(i);
@@ -63,6 +63,7 @@ public class ReviewsController {
             }
             returnData.add(m);
         }
+        //Finds the matching movie within movielisting.txt and replaces it with the modified Movie stored in returnData
         this.movieController.replaceExistingFile(FILENAME, returnData);
 	}
 	
