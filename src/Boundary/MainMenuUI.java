@@ -186,7 +186,7 @@ public class MainMenuUI {
             System.out.println("(4) Check Available Seats");
             System.out.println("(5) Book Tickets");
             System.out.println("(6) View Booking History");
-            System.out.println("(7) Rate/Review Movie");
+            System.out.println("(7) Review(rate) Movie");
             System.out.println("(8) Exit");
             System.out.println("");
             System.out.print("Select choice: ");
@@ -227,8 +227,8 @@ public class MainMenuUI {
                     break;
 
                 case 7:
-                    RateOrReviewUI rateOrReview = new RateOrReviewUI();
-                    rateOrReview.main();
+                    MovieReviewUI reviewUI = new MovieReviewUI();
+                    reviewUI.main();
                     break;
 
                 case 8:

@@ -15,7 +15,7 @@ public class Movie implements Serializable {
 	private MovieType type;
 	private MovieStatus status;
 	private String description;
-	private String rating;
+	private float rating;
 	private double duration;
 	private LocalDate releaseDate;
 	private LocalDate endDate;
@@ -25,11 +25,11 @@ public class Movie implements Serializable {
 
 	// Constructor for movie
 	public Movie(
-			int id, String title, MovieType type, String description, double duration, String rating,
+			int id, String title, MovieType type, String description, double duration, float rating,
 			LocalDate releaseDate, LocalDate endDate, String directorName, ArrayList<String> castMembers) {
 		this.id = id;
 		this.title = title;
-		this.type = type;
+		this.type = MovieType.BLOCKBUSTER;
 		// adjust movie status based on the dates provided by admin user OUTSIDE of
 		// constructor
 		this.status = MovieStatus.NOW_SHOWING;
@@ -100,7 +100,7 @@ public class Movie implements Serializable {
 		this.description = description;
 	}
 
-	public String getRating() {
+	public float getRating() {
 		return this.rating;
 	}
 
@@ -108,7 +108,7 @@ public class Movie implements Serializable {
 	 * 
 	 * @param rating
 	 */
-	public void setRating(String rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
 	}
 
@@ -295,7 +295,6 @@ public class Movie implements Serializable {
 				&& this.title.equals(other.getTitle())
 				&& this.type.equals(other.getType())
 				&& this.description.equals(other.getDescription())
-				&& this.rating.equals(other.getRating())
 				&& this.releaseDate.equals(other.getReleaseDate())
 				&& this.endDate.equals(other.getEndDate())
 				&& this.directorName.equals(other.getDirectorName())

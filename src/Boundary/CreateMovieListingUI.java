@@ -77,7 +77,7 @@ public class CreateMovieListingUI {
 		String durationStringInput = string_scanner.next();
 		Double movieDuration = Double.parseDouble(durationStringInput);
 		System.out.println("Enter Rating: ");
-		String movieRating = string_scanner.next();
+		float movieRating = Float.parseFloat(string_scanner.next());
 		System.out.println("Enter Release Date (format yyyy-mm-dd): ");
 		String releaseDateStringInput = sc.next();
 	//            	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-Mmm-yyyy");

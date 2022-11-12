@@ -431,7 +431,7 @@ public class SessionController {
                             break;
 
                         case (MovieController.RATING):
-                            s.getMovie().setRating((String) newValue);
+                            s.getMovie().setRating((float) newValue);
                             break;
 
                         case (MovieController.DURATION):
