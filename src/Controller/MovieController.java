@@ -241,10 +241,11 @@ public class MovieController {
 	public static boolean isExistingMovie(String title) {
 		ArrayList<Movie> allMovies;
 		try {
-			allMovies = MovieController.read();
+			allMovies = read();
 
 			for (Movie movie : allMovies) {
-				if (movie.getTitle().equals(title))
+				String titleData = movie.getTitle();
+				if (titleData.equals(title))
 					return true;
 			}
 			return false;
@@ -255,17 +256,18 @@ public class MovieController {
 		return false;
 	}
 
-	// like isExistingMovie but returns Movie object
-	public static Movie findExistingMovie(String title) {
+	// returns movie that have a title as per the parameter
+	public static Movie findExistingMovie(String title) throws FileNotFoundException {
+
 		ArrayList<Movie> allMovies;
 		try {
-			allMovies = MovieController.read();
+			allMovies = read();
 
 			for (Movie movie : allMovies) {
-				if (movie.getTitle().equals(title))
+				String titleData = movie.getTitle();
+				if (titleData.equals(title))
 					return movie;
 			}
-			return null;
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -113,19 +113,22 @@ public class SearchMovieUI {
 	}
 	
 
-	public boolean searchTitle() {
+	public boolean searchTitle() throws FileNotFoundException {
 		System.out.println("Enter movie title(Case sensitive): ");
 		title = InputController.getStringFromUser();
 		
+		Movie movie = MovieController.findExistingMovie(title);
+		
 		if (MovieController.isExistingMovie(title)) {
 			System.out.println("Movie of title " + title + " found!");
+			System.out.println(movie.toString());
 			return true;
 		} 
 		else {
 			System.out.println("No movie of title " + title + " found.");
 			return false;
 		}
-
+		
 	}
 
 	public boolean searchType() throws FileNotFoundException {
@@ -141,8 +144,7 @@ public class SearchMovieUI {
 		} else {
 			System.out.println("Movie(s) of type " + type + " found!");
 			for (int i = 0; i < movieTypeArray.size(); i++) {
-				int count = i+1;
-				System.out.println(count + ") " + movieTypeArray.get(i).toString());
+				System.out.println(movieTypeArray.get(i).toString());
 			}
 			return true;
 		}
