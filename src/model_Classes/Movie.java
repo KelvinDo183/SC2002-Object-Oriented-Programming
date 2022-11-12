@@ -1,10 +1,11 @@
 package model_Classes;
 
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.io.Serializable;
-
 
 @SuppressWarnings("serial")
 public class Movie implements Serializable {
@@ -14,7 +15,7 @@ public class Movie implements Serializable {
 	private MovieType type;
 	private MovieStatus status;
 	private String description;
-	private String rating;
+	private float rating;
 	private double duration;
 	private LocalDate releaseDate;
 	private LocalDate endDate;
@@ -24,12 +25,13 @@ public class Movie implements Serializable {
 
 	// Constructor for movie
 	public Movie(
-			int id, String title, MovieType type, String description, double duration, String rating,
+			int id, String title, MovieType type, String description, double duration, float rating,
 			LocalDate releaseDate, LocalDate endDate, String directorName, ArrayList<String> castMembers) {
 		this.id = id;
 		this.title = title;
 		this.type = MovieType.BLOCKBUSTER;
-		// adjust movie status based on the dates provided by admin user OUTSIDE of constructor
+		// adjust movie status based on the dates provided by admin user OUTSIDE of
+		// constructor
 		this.status = MovieStatus.NOW_SHOWING;
 		this.description = description;
 		this.duration = duration;
@@ -98,7 +100,7 @@ public class Movie implements Serializable {
 		this.description = description;
 	}
 
-	public String getRating() {
+	public float getRating() {
 		return this.rating;
 	}
 
@@ -106,7 +108,7 @@ public class Movie implements Serializable {
 	 * 
 	 * @param rating
 	 */
-	public void setRating(String rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
 	}
 
@@ -135,13 +137,11 @@ public class Movie implements Serializable {
 	}
 
 	public String getMovieReleaseDateToString() {
-		// TODO - implement Movie.getMovieReleaseDateToString
-		throw new UnsupportedOperationException();
+		return releaseDate.format(DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy"));
 	}
 
 	public String getMovieEndDateToString() {
-		// TODO - implement Movie.getMovieEndDateToString
-		throw new UnsupportedOperationException();
+		return endDate.format(DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy"));
 	}
 
 	public LocalDate getEndDate() {
@@ -169,25 +169,30 @@ public class Movie implements Serializable {
 	}
 
 	public ArrayList<String> getCastMembers() {
-		
-		return this.castMembers;
+		ArrayList<String> returnListCastMembers = new ArrayList<String>();
+		// do not include "N" as a CastMember
+		for (int i = 0; i < this.castMembers.size(); i++) {
+			if (this.castMembers.get(i).compareTo("N") != 1) {
+				returnListCastMembers.add(this.castMembers.get(i));
+			}
+		}
+		return returnListCastMembers;
 	}
-	
+
 	public String getCastMembersToString() {
-		
+
 		String toReturn = "\n";
-		
-		for (int i = 0; i < this.castMembers.size(); i ++)
-		{
-			if (this.castMembers.get(i).compareTo("N") != 1)
-			{
-				toReturn += this.castMembers.get(i) ;
-			}			
+
+		for (int i = 0; i < this.castMembers.size(); i++) {
+			if (this.castMembers.get(i).compareTo("N") != 1) {
+				toReturn += this.castMembers.get(i);
+			}
 		}
 		
+
 		// add another line break for clarity when viewing
 		toReturn += "\n";
-		
+
 		return toReturn;
 	}
 
@@ -212,11 +217,22 @@ public class Movie implements Serializable {
 	}
 
 	public String toString() {
-		// TODO - implement Movie.toString
+		String castString = "";
+		for (int i = 0; i < getCastMembers().size(); i++)
+			castString = castString.concat(getCastMembers().get(i) + ",");
+		castString = castString.substring(0, castString.length() - 1);
+
+		String reviews = "";
+		for (int i = 0; i < getReviews().size(); i++) {
+			reviews += getReviews().get(i).toString() + "\n\n";
+		}
+		if (reviews.equals(""))
+			reviews = "N/A";
+
 		String toReturn = "\n";
 		toReturn += "ID: " + getID() + "\n"
 				+ "Title: " + getTitle() + "\n"
-				+ "Type: " + this.type.toString()+ "\n"
+				+ "Type: " + this.type.toString() + "\n"
 				+ "Status: " + getStatus() + "\n"
 				+ "Description: " + getDescription() + "\n"
 				+ "Duration: " + getDuration() + "\n"
@@ -226,67 +242,71 @@ public class Movie implements Serializable {
 				+ "Director Name: " + getDirectorName() + "\n"
 				+ "Cast Members: " + getCastMembersToString() + "\n"
 				+ "Reviews: " + getReviews() + "\n";
-				
+
 		return toReturn;
-		
+
 	}
-	
+
 	public void adjustStatusByDates() {
-		
+
 		LocalDate todayDate = LocalDate.now();
-		
-		if (todayDate.isBefore(this.releaseDate))
-		{
-			
+
+		if (todayDate.isBefore(this.releaseDate)) {
+
 			Long daysBetweenReleaseToday = this.releaseDate.toEpochDay() - todayDate.toEpochDay();
-			
+
 			// Case 1a: today is BEFORE the release date of movie (more than 7 days)
-			if (daysBetweenReleaseToday > 7)
-			{
+			if (daysBetweenReleaseToday > 7) {
 				this.setStatus(MovieStatus.COMING_SOON);
 			}
-			
+
 			// Case 1b: today is BEFORE the release date of movie (7 days or fewer)
-			else
-			{
+			else {
 				this.setStatus(MovieStatus.PREVIEW);
 			}
-			
-		}
-		
-		// Case 2: today is BETWEEN release date of movie & end date of movie
-		else if ((todayDate.isAfter(this.releaseDate) || todayDate.isEqual(this.releaseDate)) 
-				&& (todayDate.isBefore(endDate) || todayDate.isEqual(this.endDate))
-				)
-		{
-			this.setStatus(MovieStatus.NOW_SHOWING);	
-		}
-		
-		// Case 3: today is AFTER release date of movie
-		else if (todayDate.isAfter(endDate))
-		{
-			this.setStatus(MovieStatus.END_OF_SHOWING);
-		}				
-	}
-	
-	
-//	public String getOverallReviews() {
-//		// TODO - implement Movie.getOverallReviews
-//		throw new UnsupportedOperationException();
-//	}
 
-//	public MovieStatus getShowStatus() {
-//		// TODO - implement Movie.getShowStatus
-//		throw new UnsupportedOperationException();
-//	}
+		}
+
+		// Case 2: today is BETWEEN release date of movie & end date of movie
+		else if ((todayDate.isAfter(this.releaseDate) || todayDate.isEqual(this.releaseDate))
+				&& (todayDate.isBefore(endDate) || todayDate.isEqual(this.endDate))) {
+			this.setStatus(MovieStatus.NOW_SHOWING);
+		}
+
+		// Case 3: today is AFTER release date of movie
+		else if (todayDate.isAfter(endDate)) {
+			this.setStatus(MovieStatus.END_OF_SHOWING);
+		}
+	}
+
+	// public String getOverallReviews() {
+	// // TODO - implement Movie.getOverallReviews
+	// throw new UnsupportedOperationException();
+	// }
+
+	// public MovieStatus getShowStatus() {
+	// // TODO - implement Movie.getShowStatus
+	// throw new UnsupportedOperationException();
+	// }
 
 	/**
 	 * 
 	 * @param movie
 	 */
 	public boolean equal(Object movie) {
-		// TODO - implement Movie.equal
-		throw new UnsupportedOperationException();
+		if (!(movie instanceof Movie)) {
+			return false;
+		}
+		Movie other = (Movie) movie;
+		return this.id == other.getID()
+				&& this.title.equals(other.getTitle())
+				&& this.type.equals(other.getType())
+				&& this.description.equals(other.getDescription())
+				&& this.releaseDate.equals(other.getReleaseDate())
+				&& this.endDate.equals(other.getEndDate())
+				&& this.directorName.equals(other.getDirectorName())
+				&& this.castMembers.equals(other.getCastMembersToString())
+				&& this.reviews.equals(other.getReviews());
 	}
 
 }

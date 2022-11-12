@@ -55,7 +55,6 @@ public class CinemaController {
     public ArrayList<Cinema> read() {
         ArrayList<Cinema> returnData = new ArrayList<Cinema>();
         ArrayList<Cineplex> cineplexListing = this.cineplexCtrl.read();
-        System.out.printf("\nCineplex Listing = ", cineplexListing.toString());
         Cineplex cineplex = null;
 
         for (int i = 0; i < cineplexListing.size(); i++) {

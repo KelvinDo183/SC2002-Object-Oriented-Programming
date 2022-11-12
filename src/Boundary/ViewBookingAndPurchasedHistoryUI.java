@@ -1,9 +1,15 @@
 package Boundary;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import Controller.InputController;
+import Controller.TransactionController;
+import model_Classes.Transaction;
 
 public class ViewBookingAndPurchasedHistoryUI {
 
+	TransactionController txnCtrl = new TransactionController();
     private static Scanner sc;
 
     public void main() {
@@ -17,7 +23,8 @@ public class ViewBookingAndPurchasedHistoryUI {
             System.out.println("--------- Booking and Purchased History ---------- ");
             System.out.println("--------------------------------------------------");
             System.out.println("(1) Enter booking ID to retrieve purchase history");
-            System.out.println("(2) Return to menu");
+            System.out.println("(2) View your past transactions");
+            System.out.println("(3) Return to menu");
             System.out.println("");
             System.out.print("Select choice:");
 
@@ -31,6 +38,11 @@ public class ViewBookingAndPurchasedHistoryUI {
                     break;
 
                 case 2:
+                    displayHistory();
+                    break;
+
+                    
+                case 3:
                     exitMenu = true;
                     System.out.println("Returning to menu...");
                     System.out.println("");
@@ -48,12 +60,42 @@ public class ViewBookingAndPurchasedHistoryUI {
     }
 
     public void retrieve() {
-        //TODO
-        
+        System.out.println("\nEnter transaction ID: ");
+        int txnID = sc.nextInt();
+        Transaction txn = txnCtrl.readByTID(String.valueOf(txnID));
+        System.out.println("\n::::::::::::::::::::::::::::::");
+        System.out.println("TransactionID = " + txn.getTID());
+        System.out.println("Customer Name = " + txn.getName());
+        System.out.println("Customer Mobile Number = " + txn.getMobileNumber());
+        System.out.println("CinemaCode = " + txn.getCinemaCode());
+        System.out.println("Movie Title = " + txn.getMovie().getTitle());
+        System.out.println("::::::::::::::::::::::::::::::");
+        System.out.println("");
     }
 
     public void displayHistory() { 
         //TODO
+    	// Display all transactions by current user
+    	System.out.print("Enter your email: ");
+    	String email = InputController.getStringFromUser();
+    	ArrayList<Transaction> allUserTxn = txnCtrl.readByMovieGoerUsername(email);
+
+    	System.out.println("\nHistorical Transactions ");
+        System.out.println("::::::::::::::::::::::::::::::");
+    	for (int i = 0; i < allUserTxn.size(); i++)
+    	{
+    		Transaction txn = allUserTxn.get(i);
+            System.out.println("TransactionID = " + txn.getTID());
+            System.out.println("Customer Name = " + txn.getName());
+            System.out.println("Customer Mobile Number = " + txn.getMobileNumber());
+            System.out.println("CinemaCode = " + txn.getCinemaCode());
+            System.out.println("Movie Title = " + txn.getMovie().getTitle());
+            System.out.println("::::::::::::::::::::::::::::::");
+    		
+    	}
+    	
+
+    	System.out.println("");
     }
     
 }

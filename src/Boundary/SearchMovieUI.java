@@ -12,10 +12,6 @@ public class SearchMovieUI {
 	private int choice;
 	static Scanner sc = new Scanner(System.in);
 
-		SearchMovieUI() {
-
-	}
-
 	public void main() throws FileNotFoundException {
 
 		int menuChoice;
@@ -117,27 +113,29 @@ public class SearchMovieUI {
 	}
 	
 
-	public boolean searchTitle() {
+	public boolean searchTitle() throws FileNotFoundException {
 		System.out.println("Enter movie title(Case sensitive): ");
-		title = sc.nextLine();
+		title = InputController.getStringFromUser();
+		
+		Movie movie = MovieController.findExistingMovie(title);
+		
 		if (MovieController.isExistingMovie(title)) {
 			System.out.println("Movie of title " + title + " found!");
+			System.out.println(movie.toString());
 			return true;
-		} else {
-			System.out.println("No movie of title " + title + " found.");
+		} 
+		else {
+			System.out.println("Movie with title " + title + " was not found.");
 			return false;
 		}
-
+		
 	}
 
 	public boolean searchType() throws FileNotFoundException {
 		System.out.println("Enter movie type(Case sensitive): ");
-		type = sc.nextLine();
-
-//		ArrayList<Movie> movieTypeArray = new ArrayList<Movie>();
+		type = InputController.getStringFromUser();
 		
 		// update movieTypeArray value if readAllMoviesOfType function returns array of movies
-//		movieTypeArray = MovieController.readAllMoviesOfType(type);
 		ArrayList<Movie> movieTypeArray = MovieController.readAllMoviesOfType(type);		
 
 		if (movieTypeArray.isEmpty()) {

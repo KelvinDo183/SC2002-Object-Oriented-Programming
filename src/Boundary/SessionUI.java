@@ -7,6 +7,7 @@ import Controller.*;
 import model_Classes.*;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class SessionUI {
     /**
@@ -16,6 +17,7 @@ public class SessionUI {
     private CinemaController cinemaCtrl = new CinemaController();
     private CineplexeController cineplexCtrl = new CineplexeController();
     private SessionController sessionCtrl = new SessionController();
+    private static Scanner sc;
 
     /**
      * Main method to load - display all options and ask user to choose one
@@ -24,15 +26,21 @@ public class SessionUI {
      */
     public void main() throws FileNotFoundException {
         boolean exit = false;
+        sc = new Scanner(System.in);
+        
         while (!exit) {
-            System.out.print("\n\nCreate/Update/Remove session: \n\n" +
+            System.out.println("\n--------------------------------------------------");
+            System.out.print("\nCreate/Update/Remove session: \n\n" +
                     "1. Create Movie Session\n" +
                     "2. Update Movie Session\n" +
                     "3. Remove Movie Session\n" +
                     "4. View Movie Sessions\n" +
                     "5. Return to Main Menu\n\n" +
+            		"\n\n--------------------------------------------------\n" +
                     "Select action: ");
-            int option = InputController.getIntFromUser();
+            int option = sc.nextInt();
+            System.out.println("");
+            
             switch (option) {
                 case 1:
                     createMovieSession();
@@ -61,8 +69,7 @@ public class SessionUI {
      */
     public void createMovieSession() throws FileNotFoundException {
 
-        System.out.println("Creating Session:\n\n");
-
+        System.out.println("Creating Session:\n");
         System.out.println("Cineplex List:\n");
         ArrayList<Cineplex> cineplexList = cineplexCtrl.read();
         if (cineplexList.isEmpty()) {
@@ -70,8 +77,12 @@ public class SessionUI {
             return;
         }
         cineplexList.forEach(Cineplex -> printCineplex(Cineplex));
-        System.out.println("\nEnter Cineplex Name:");
+        System.out.println("\n--------------------------------------------------");
+        System.out.println("Enter Cineplex Name:");
         String cineplexName = InputController.getStringFromUser();
+//	    Scanner string_scanner = new Scanner(System.in).useDelimiter("\n");
+//        String cineplexName = string_scanner.next();
+        
         Cineplex cineplex = cineplexCtrl.readByName(cineplexName);
         if (cineplex == null) {
             System.out.println("Cineplex does not exist!\n" +
@@ -79,27 +90,39 @@ public class SessionUI {
             return;
         }
 
+        System.out.println("--------------------------------------------------");
         System.out.println("\nCinemas in " + cineplex.getName() + ": \n");
         ArrayList<Cinema> cinemaList = cineplex.getCinemas();
         cinemaList.forEach(Cinema -> printCinemaCode(Cinema));
 
-        System.out.println("Enter cinema code: ");
+       
+        System.out.println("\nEnter cinema code: ");
         String cinemaCode = InputController.getStringFromUser();
+//        String cinemaCode = sc.next();
+//        String cinemaCode = string_scanner.next();
         if (cinemaCtrl.readByAttribute(0, cinemaCode).isEmpty()) {
             System.out.println("Cinema does not exist!\n" +
                     "Returning to menu...");
             return;
         }
 
-        System.out.println("Enter movie id: ");
-        int movie_id = InputController.getIntFromUser();
+        System.out.println("\nEnter movie id: ");
+//        int movie_id = InputController.getIntFromUser();
+        int movie_id = sc.nextInt();
+        System.out.println("");
+        
+        
         if (movieCtrl.readSpecificID(movie_id) == null) {
             System.out.println("Movie does not exist!\n" +
                     "Returning to menu...");
             return;
         }
+        else
+        {
+        	System.out.println("You are adding session to the movie with title " + movieCtrl.readSpecificID(movie_id).getTitle());
+        }
 
-        System.out.println("Enter session date and time: ");
+        System.out.println("Enter session date and time (format DD/MM/YYYY HH:mm) : ");
         LocalDateTime sessionDateTime = InputController.getDateTimeFromUser();
         Movie movie = movieCtrl.readSpecificID(movie_id);
         sessionCtrl.create(cinemaCode, movie, sessionDateTime);
@@ -240,7 +263,7 @@ public class SessionUI {
      * @param cinema Cinema to be printed
      */
     public void printCinema(Cinema cinema) {
-        System.out.println("\nCinema code: " + cinema.getCode());
+        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::\nCinema code: " + cinema.getCode());
         ArrayList<Session> sessionList = cinema.getSessions();
         sessionList.forEach(session -> printSession(session));
     }

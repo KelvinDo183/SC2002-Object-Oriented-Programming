@@ -4,6 +4,7 @@ import java.io.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import Controller.*;
+import exceptions.InvalidTxnException;
 import model_Classes.*;
 
 /* The starting point for the whole MOBLIMA program(main function begins here). Admins and Movie-Goers will access their respective functions
@@ -30,7 +31,7 @@ public class MainMenuUI {
 
     private static Scanner sc;
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
+    public static void main(String[] args) throws NoSuchAlgorithmException, IOException, InvalidTxnException {
 
         initialize();
 
@@ -170,12 +171,11 @@ public class MainMenuUI {
         } while (!exitMenu);
     }
 
-    public static void movieGoerMenu() throws FileNotFoundException {
+    public static void movieGoerMenu() throws FileNotFoundException, InvalidTxnException {
         // movie goer menu
         int movieGoerChoice;
         boolean exitMenu = false;
-        ;
-
+        
         do {
             System.out.println("--------------------------------------------------");
             System.out.println("--------------- MOBLIMA MOVIE GOER MENU ---------------");
@@ -186,7 +186,7 @@ public class MainMenuUI {
             System.out.println("(4) Check Available Seats");
             System.out.println("(5) Book Tickets");
             System.out.println("(6) View Booking History");
-            System.out.println("(7) Rate/Review Movie");
+            System.out.println("(7) Review(rate) Movie");
             System.out.println("(8) Exit");
             System.out.println("");
             System.out.print("Select choice: ");
@@ -227,8 +227,8 @@ public class MainMenuUI {
                     break;
 
                 case 7:
-                    RateOrReviewUI rateOrReview = new RateOrReviewUI();
-                    rateOrReview.main();
+                    MovieReviewUI reviewUI = new MovieReviewUI();
+                    reviewUI.main();
                     break;
 
                 case 8:

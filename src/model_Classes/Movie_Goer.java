@@ -26,8 +26,13 @@ public class Movie_Goer extends User {
 	}
 
 	public String toString() {
-		// TODO - implement Movie_Goer.toString
-		throw new UnsupportedOperationException();
+		String returnString = "\n";
+		returnString += "Movie Goer has name "
+					+ this.getName()
+					+ " and mobile number "
+					+ this.getMobileNumber()
+					+ "\n";
+		return returnString;
 	}
 
 }

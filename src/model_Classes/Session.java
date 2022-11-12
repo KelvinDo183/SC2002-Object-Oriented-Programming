@@ -1,5 +1,6 @@
 package model_Classes;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.DayOfWeek;
@@ -20,16 +21,16 @@ public class Session implements Serializable {
 	 * @param DateTime
 	 * @param seatsAvailability
 	 */
-	public Session(Movie movie, int sessionID, LocalDateTime DateTime, SeatingPlan seatsAvailability) throws UnsupportedOperationException {
+	public Session(Movie movie, int sessionID, LocalDateTime sessionDateTime, SeatingPlan seatingPlan) {
 		this.movie = movie;
 		this.sessionID = sessionID;
-		this.sessionDateTime = DateTime;
-		this.seatsAvailability = seatsAvailability;
-//		System.out.printf("\nThe sessionID is =", sessionID);
+		this.sessionDateTime = sessionDateTime;
+		this.seatsAvailability = seatingPlan;
+		// System.out.printf("\nThe sessionID is =", sessionID);
 	}
 
 	public Movie getMovie() {
-		return this.movie;
+		return movie;
 	}
 
 	/**
@@ -41,7 +42,7 @@ public class Session implements Serializable {
 	}
 
 	public LocalDateTime getSessionDateTime() {
-		return this.sessionDateTime;
+		return sessionDateTime;
 	}
 
 	/**
@@ -52,7 +53,7 @@ public class Session implements Serializable {
 		this.sessionDateTime = sessionDateTime;
 	}
 
-	public String getStringSessionDateTime() throws UnsupportedOperationException {
+	public String getStringSessionDateTime() {
 		return sessionDateTime.format(DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy HH:mm"));
 	}
 
@@ -64,6 +65,7 @@ public class Session implements Serializable {
 		this.seatsAvailability = seatsAvailability;
 	}
 
+	
 	public int getID() {
 
 		return this.sessionID;
@@ -73,7 +75,7 @@ public class Session implements Serializable {
 	 * 
 	 * @param id
 	 */
-	public void setID(int sessionID) throws UnsupportedOperationException{
+	public void setID(int sessionID) {
 		this.sessionID = sessionID;
 
 	}

@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import static Controller.CinemaController.SESSIONS;
 import static Controller.CinemaController.CODE;
+import Controller.CineplexeController;
+import Controller.CinemaController;
+
 
 import model_Classes.*;
 import exceptions.SessionException;
@@ -18,6 +21,7 @@ public class SessionController {
      * The Cineplex Controller that this controller will reference
      */
     private CinemaController cinemaCtrl = new CinemaController();
+    private CineplexeController cineplexCtrl = new CineplexeController();
 
     /**
      * The file name of the database file that this controller will access
@@ -84,39 +88,28 @@ public class SessionController {
     public void create(String cinemaCode, Movie movie, LocalDateTime sessionDateTime) {
         if (SessionException.isSessionValid(cinemaCode, movie, sessionDateTime)) {
             SeatingPlan seatingPlan = cinemaCtrl.readByAttribute(CODE, cinemaCode).get(0).getSeatingPlan();
-            ArrayList<Cinema> allData = cinemaCtrl.read();
-            System.out.printf("\nCinema Controller Array List = ", allData.toString());
-            
-            System.out.println("Seating plan (Col) = " + seatingPlan.getColumn());
-            System.out.println("Seating plan (Row) = " + seatingPlan.getRow());
-            System.out.println("Cinema Code = " + cinemaCode.toString());
-            System.out.println("Movie = " + movie.getTitle());
-            System.out.println("Session Date Time = " + sessionDateTime.toString());
-            System.out.println("Session Last ID = " + getLastId());
-            int lastID_default = 100;
-            if (getLastId() != -1) lastID_default = getLastId();
-//            Session session = new Session(movie, lastID_default + 1, sessionDateTime, seatingPlan);
             Session session = new Session(movie, getLastId() + 1, sessionDateTime, seatingPlan);
-//            Session session = new Session(movie, 101, sessionDateTime, seatingPlan);
-            System.out.println("Created Session ID = " + session.getID());
-            System.out.println("Created Session MOVIE ID = " + session.getMovie().getID());
-            System.out.println("Created Session Start Time = " + session.getStringSessionDateTime());
-
-//            ArrayList<Cinema> allData = this.cinemaCtrl.read();
-//            System.out.printf("\nCinema Controller Array List = ", allData.toString());
+            ArrayList<Cineplex> allData = this.cineplexCtrl.read();
             
-            ArrayList<Session> sessions = new ArrayList<Session>();
-            System.out.printf("\nSessions Array List = ", sessions.toString());
+
             for (int i = 0; i < allData.size(); i++) {
-                Cinema cinema_i = allData.get(i);
-                if (cinema_i.getCode().equals(cinemaCode)) {
-                    sessions = cinema_i.getSessions();
-                    sessions.add(session);
-                    cinema_i.setSessions(sessions);
-                    this.cinemaCtrl.updateByAttribute(SESSIONS, cinemaCode, sessions);
-                    sessions.clear();
-                    break;
-                }
+            	ArrayList<Cinema> cinemaList = allData.get(i).getCinemas();
+
+            	for (int j = 0; j < cinemaList.size(); j++)
+            	{
+
+            		if (cinemaList.get(j).getCode().equals(cinemaCode))
+            		{
+            			Cinema selectedCinema = cinemaList.get(j);
+                        ArrayList<Session> sessions = selectedCinema.getSessions();
+                        sessions.add(session);
+                        selectedCinema.setSessions(sessions);
+                        this.cinemaCtrl.updateByAttribute(SESSIONS, cinemaCode, sessions);
+                        sessions.clear();
+                        break;
+            		}
+            		
+            	}
             }
         } else {
             // do nothing
@@ -438,7 +431,7 @@ public class SessionController {
                             break;
 
                         case (MovieController.RATING):
-                            s.getMovie().setRating((String) newValue);
+                            s.getMovie().setRating((float) newValue);
                             break;
 
                         case (MovieController.DURATION):
@@ -571,11 +564,8 @@ public class SessionController {
         int lastId = -1;
         int sessionId;
         ArrayList<Session> allData = read();
-        System.out.printf("\nallSession array list = ", allData.toString());
-        System.out.printf("\nallSession array list length = ", allData.size());
         for (int i = 0; i < allData.size(); i++) {
             sessionId = allData.get(i).getID();
-            System.out.printf("\nThe sessionID = ", sessionId);
             if (sessionId > lastId)
                 lastId = sessionId;
         }

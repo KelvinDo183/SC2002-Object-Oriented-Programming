@@ -125,7 +125,7 @@ public class SelectAttributeToAmendMenuUI {
                 System.out.println("--------------------------------------------------");
                 System.out.println("");
                 System.out.print("Enter movie rating to amend to: ");
-                String newRating = sc.next();
+                float newRating = Float.parseFloat(sc.next());
                 
         		m.setRating(newRating);
         		System.out.println("Movie listing has new rating: " + m.getRating());

@@ -6,33 +6,39 @@ import java.util.Scanner;
 
 import Controller.CinemaController;
 import Controller.CineplexeController;
+import Controller.InputController;
+import Controller.TransactionController;
+import exceptions.InvalidTxnException;
 import model_Classes.Cinema;
 import model_Classes.Cineplex;
+import model_Classes.Movie;
+import model_Classes.Session;
+import model_Classes.Pair;
+import Boundary.SeatingUI;
 
 public class BookingAndPurchaseTicketsUI {
 
     private static Scanner sc;
+    private CinemaController cinemaCtrl = new CinemaController();
+    private CineplexeController cineplexCtrl = new CineplexeController();
+    private TransactionController txnCtrl = new TransactionController();
 
-    public void main() throws FileNotFoundException {
+    public void main() throws FileNotFoundException, InvalidTxnException {
 
         int menuChoice;
-        boolean exitMenu = false;
-
-        
+        boolean exitMenu = false;        
         sc = new Scanner(System.in);
 
         do {
-            System.out.println("--------------------------------------------------");
+            System.out.println("\n--------------------------------------------------");
             System.out.println("----------- Book and Purchase Tickets ------------");
             System.out.println("--------------------------------------------------");
             System.out.println("(1) Show Available Movies");
             System.out.println("(2) Show Available Cineplexes");
             System.out.println("(3) Show Available Sessions");
             System.out.println("(4) Price Calculations");
-            System.out.println("(5) Pick Session");
-            System.out.println("(6) Seat Selection");
-            System.out.println("(7) Make Booking");
-            System.out.println("(8) Return to Movie Goer Menu");
+            System.out.println("(5) Seat Selection and Make Booking");
+            System.out.println("(6) Return to Movie Goer Menu");
             System.out.print("Select choice:");
 
             menuChoice = sc.nextInt();
@@ -57,18 +63,10 @@ public class BookingAndPurchaseTicketsUI {
                     break;
 
                 case 5:
-                	pickSession();
-                    break;
-
-                case 6:
                 	seatSelection();
                     break;
-                    
-                case 7:
-                	makeBooking();
-                    break;
-
-                case 8:
+                   
+                case 6:
                     exitMenu = true;
                     System.out.println("Returning to Movie Goer menu...");
                     System.out.println("");
@@ -95,38 +93,99 @@ public class BookingAndPurchaseTicketsUI {
 
     public void showAvailableCineplexes() {
         //TODO
-        System.out.println("\n----------- Available Cineplexes Shown Below: ------------");
-        System.out.println("--------------------------------------------------");
-    	CineplexeController cineplexControl = new CineplexeController();
-    	CinemaController cinemaControl = new CinemaController();
-//    	cineplexControl.readByName("AAA");
-//    	cineplexControl.readByName("BBB");
-//    	cineplexControl.readByName("CCC");
     	
-    	ArrayList<Cineplex> allCineplexList = cineplexControl.read();
-    	ArrayList<Cinema> allCinemaList = cinemaControl.read();
-    	cineplexControl.create("DDD", allCinemaList);
-    	cineplexControl.readByName("DDD");    	
+    	ArrayList<Cineplex> cineplexList = cineplexCtrl.read();
+        if (cineplexList.isEmpty()) {
+            System.out.println("There are no cineplexes registered!");
+            return;
+        }
+        else
+        {
+            System.out.println("\n----------- Available Cineplexes Shown Below: ------------");
+            cineplexList.forEach(Cineplex -> printCineplex(Cineplex));            
+        }
+
     }
 
+    
     public void showAvailableSessions() {
-        //TODO
-    }
+        System.out.println("\nCineplex List:");
+        ArrayList<Cineplex> cineplexList = cineplexCtrl.read();
+        if (cineplexList.isEmpty()) {
+            System.out.println("There are no cineplexes registered!");
+            return;
+        }
+        cineplexList.forEach(Cineplex -> printCineplex(Cineplex));
+        System.out.println("\nEnter Cineplex Name:");
+        String cineplexName = InputController.getStringFromUser();
+        Cineplex cineplex = cineplexCtrl.readByName(cineplexName);
+        if (cineplex == null) {
+            System.out.println("Cineplex does not exist!\n" +
+                    "Returning to menu...");
+            return;
+        }
 
-    public void pickSession() {
-        //TODO
-    }   
+        ArrayList<Cinema> cinemaList = cineplex.getCinemas();
+        cinemaList.forEach(Cinema -> printCinema(Cinema));
+    }
+    
 
     public void priceCalculation() {
         //TODO
     }
 
-    public void seatSelection() {
-        //TODO
+    public void seatSelection() throws FileNotFoundException, InvalidTxnException {
+    	
+    	Pair<String, Session> selectedSessionPair = showSeatingArrangementUI();
+        
+    	// instructions to input seat selection
+    	
+    	// makeBooking()
+        System.out.println("--------------------------------------------------");
+        System.out.println("------------ Proceed to make booking: ------------\n");
+    	makeBooking(selectedSessionPair);
+    	
     }
 
-    public void makeBooking() {
-        //TODO
+    
+    public void makeBooking(Pair<String, Session> selectedSessionPair) throws FileNotFoundException, InvalidTxnException {
+    	System.out.print("Enter your name: ");
+    	String name = InputController.getStringFromUser();
+    	System.out.print("Enter your email: ");
+    	String email = InputController.getEmailFromUser();
+    	System.out.print("Enter your mobile number: ");
+    	String mobileNumber = InputController.getMobileNumberFromUser();
+    	String cinemaCode = selectedSessionPair.t1;
+    	Movie movie = selectedSessionPair.t2.getMovie();
+    	
+    	txnCtrl.create(cinemaCode, name, email, mobileNumber, movie);
+    	
+    	System.out.println("Transaction successful!");
+    }
+    
+    public void printCinema(Cinema cinema) {
+        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::\nCinema code: " + cinema.getCode());
+        ArrayList<Session> sessionList = cinema.getSessions();
+        sessionList.forEach(session -> printSession(session));
     }
 
+    public void printCinemaCode(Cinema cinema) {
+        System.out.println("Cinema code: " + cinema.getCode());
+    }
+    
+    public void printCineplex(Cineplex cineplex) {
+        System.out.println("Name: " + cineplex.getName());
+    }
+    
+    public void printSession(Session session) {
+        System.out.print("\n\tSession id: " + session.getID() + "\n" +
+                "\tMovie title: " + session.getMovie().getTitle() + "\n" +
+                "\tDate: " + session.getStringSessionDateTime() + "\n");
+    }
+
+    public Pair<String, Session> showSeatingArrangementUI() {
+    	SeatingUI seatingUI = new SeatingUI();
+    	Pair<String, Session> selectedSessionPair = seatingUI.main();
+    	return selectedSessionPair;
+    }
 }

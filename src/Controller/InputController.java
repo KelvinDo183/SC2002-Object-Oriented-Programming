@@ -124,7 +124,7 @@ public class InputController {
                 result = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
                 validInput = true;
             } catch (DateTimeParseException e) {
-                System.out.println("Must be of pattern DD/MM/YYYY HH:MM!");
+                System.out.println("Ensure input is of format dd/MM/yyyy HH:mm!");
             }
         }
         return result;
@@ -140,7 +140,7 @@ public class InputController {
                 result = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 validInput = true;
             } catch (DateTimeParseException e) {
-                System.out.println("Must be of pattern DD/MM/YYYY!");
+                System.out.println("Ensure input is of format dd/MM/YYYY!");
             }
         }
         return result;
