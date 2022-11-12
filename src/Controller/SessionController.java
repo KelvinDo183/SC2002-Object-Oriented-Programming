@@ -88,67 +88,28 @@ public class SessionController {
     public void create(String cinemaCode, Movie movie, LocalDateTime sessionDateTime) {
         if (SessionException.isSessionValid(cinemaCode, movie, sessionDateTime)) {
             SeatingPlan seatingPlan = cinemaCtrl.readByAttribute(CODE, cinemaCode).get(0).getSeatingPlan();
-            
-//            Session session = new Session(movie, lastID_default + 1, sessionDateTime, seatingPlan);
             Session session = new Session(movie, getLastId() + 1, sessionDateTime, seatingPlan);
-//            Session session = new Session(movie, 101, sessionDateTime, seatingPlan);
-
-//            ArrayList<Cinema> allData = this.cinemaCtrl.read();
             ArrayList<Cineplex> allData = this.cineplexCtrl.read();
-//            System.out.printf("\nCinema Controller Array List = ", allData.toString());
             
-            ArrayList<Session> sessions = new ArrayList<Session>();
-//            System.out.printf("\nSessions Array List = ", sessions.toString());
-            
-//            SeatingPlan seatingPlan = cinemaCtrl.readByAttribute(CODE, cinemaCode).get(0).getSeatingPlan();
-//            Cinema cinema_selected =   cinemaCtrl.readByAttribute(CODE, cinemaCode).get(0);
-//            Cinema cinema_selected =  this.cinemaCtrl.readByCineplexName("Orchard Cineplex").get(0); 
-//            System.out.printf("\nCinema Selected = ", cinema_selected.toString());
-//            sessions.add(session);
-//            cinema_selected.setSessions(sessions);
-//            System.out.printf("\nUpdated sessions for cinema ", cinema_selected.getCode());
-//            System.out.printf("\nUpdated sessions is ", cinema_selected.getSessions().toString());
-//            this.cinemaCtrl.updateByAttribute(SESSIONS, cinemaCode, sessions);
-            
+
             for (int i = 0; i < allData.size(); i++) {
             	ArrayList<Cinema> cinemaList = allData.get(i).getCinemas();
 
-//            	Cinema cinema_i = allData.get(i).g allData.get(i);
             	for (int j = 0; j < cinemaList.size(); j++)
             	{
-//            		System.out.printf("\nValue of i = ", i);
-//            		System.out.printf("\nValue of j = ", j);
 
-                    System.out.printf("\nFor loop to find matching cinemaCode = ", cinemaCode.toString());
             		if (cinemaList.get(j).getCode().equals(cinemaCode))
             		{
             			Cinema selectedCinema = cinemaList.get(j);
-                        sessions = selectedCinema.getSessions();
-                        System.out.println("Sessions !!! = " + sessions.toString());
+                        ArrayList<Session> sessions = selectedCinema.getSessions();
                         sessions.add(session);
-                        System.out.println("After adding Sessions ~~~ = " + sessions.toString());
                         selectedCinema.setSessions(sessions);
-//                        System.out.printf("\nUpdated sessions for selected cinema ", selectedCinema.getCode());
-                        System.out.printf("\nUpdated sessions for selected cinema code ", cinemaCode.toString());
-//                        System.out.printf("\nUpdated sessions is ", cinemaList.get(j).getSessions().toString());
                         this.cinemaCtrl.updateByAttribute(SESSIONS, cinemaCode, sessions);
-                        System.out.printf("\nUpdated sessions is ", cinemaList.get(j).getSessions().toString());
                         sessions.clear();
                         break;
             		}
             		
             	}
-//            	
-//                if (cinema_i.getCode().equals(cinemaCode)) {
-//                    sessions = cinema_i.getSessions();
-//                    sessions.add(session);
-//                    cinema_i.setSessions(sessions);
-//                    System.out.printf("\nUpdated sessions for cinema ", cinema_i.getCode());
-//                    System.out.printf("\nUpdated sessions is ", cinema_i.getSessions().toString());
-//                    this.cinemaCtrl.updateByAttribute(SESSIONS, cinemaCode, sessions);
-//                    sessions.clear();
-//                    break;
-//                }
             }
         } else {
             // do nothing
