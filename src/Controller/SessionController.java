@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import static Controller.CinemaController.SESSIONS;
 import static Controller.CinemaController.CODE;
+import Controller.CineplexeController;
+import Controller.CinemaController;
+
 
 import model_Classes.*;
 import exceptions.SessionException;
@@ -18,6 +21,7 @@ public class SessionController {
      * The Cineplex Controller that this controller will reference
      */
     private CinemaController cinemaCtrl = new CinemaController();
+    private CineplexeController cineplexCtrl = new CineplexeController();
 
     /**
      * The file name of the database file that this controller will access
@@ -84,39 +88,67 @@ public class SessionController {
     public void create(String cinemaCode, Movie movie, LocalDateTime sessionDateTime) {
         if (SessionException.isSessionValid(cinemaCode, movie, sessionDateTime)) {
             SeatingPlan seatingPlan = cinemaCtrl.readByAttribute(CODE, cinemaCode).get(0).getSeatingPlan();
-            ArrayList<Cinema> allData = cinemaCtrl.read();
-            System.out.printf("\nCinema Controller Array List = ", allData.toString());
             
-            System.out.println("Seating plan (Col) = " + seatingPlan.getColumn());
-            System.out.println("Seating plan (Row) = " + seatingPlan.getRow());
-            System.out.println("Cinema Code = " + cinemaCode.toString());
-            System.out.println("Movie = " + movie.getTitle());
-            System.out.println("Session Date Time = " + sessionDateTime.toString());
-            System.out.println("Session Last ID = " + getLastId());
-            int lastID_default = 100;
-            if (getLastId() != -1) lastID_default = getLastId();
 //            Session session = new Session(movie, lastID_default + 1, sessionDateTime, seatingPlan);
             Session session = new Session(movie, getLastId() + 1, sessionDateTime, seatingPlan);
 //            Session session = new Session(movie, 101, sessionDateTime, seatingPlan);
-            System.out.println("Created Session ID = " + session.getID());
-            System.out.println("Created Session MOVIE ID = " + session.getMovie().getID());
-            System.out.println("Created Session Start Time = " + session.getStringSessionDateTime());
 
 //            ArrayList<Cinema> allData = this.cinemaCtrl.read();
+            ArrayList<Cineplex> allData = this.cineplexCtrl.read();
 //            System.out.printf("\nCinema Controller Array List = ", allData.toString());
             
             ArrayList<Session> sessions = new ArrayList<Session>();
-            System.out.printf("\nSessions Array List = ", sessions.toString());
+//            System.out.printf("\nSessions Array List = ", sessions.toString());
+            
+//            SeatingPlan seatingPlan = cinemaCtrl.readByAttribute(CODE, cinemaCode).get(0).getSeatingPlan();
+//            Cinema cinema_selected =   cinemaCtrl.readByAttribute(CODE, cinemaCode).get(0);
+//            Cinema cinema_selected =  this.cinemaCtrl.readByCineplexName("Orchard Cineplex").get(0); 
+//            System.out.printf("\nCinema Selected = ", cinema_selected.toString());
+//            sessions.add(session);
+//            cinema_selected.setSessions(sessions);
+//            System.out.printf("\nUpdated sessions for cinema ", cinema_selected.getCode());
+//            System.out.printf("\nUpdated sessions is ", cinema_selected.getSessions().toString());
+//            this.cinemaCtrl.updateByAttribute(SESSIONS, cinemaCode, sessions);
+            
             for (int i = 0; i < allData.size(); i++) {
-                Cinema cinema_i = allData.get(i);
-                if (cinema_i.getCode().equals(cinemaCode)) {
-                    sessions = cinema_i.getSessions();
-                    sessions.add(session);
-                    cinema_i.setSessions(sessions);
-                    this.cinemaCtrl.updateByAttribute(SESSIONS, cinemaCode, sessions);
-                    sessions.clear();
-                    break;
-                }
+            	ArrayList<Cinema> cinemaList = allData.get(i).getCinemas();
+
+//            	Cinema cinema_i = allData.get(i).g allData.get(i);
+            	for (int j = 0; j < cinemaList.size(); j++)
+            	{
+//            		System.out.printf("\nValue of i = ", i);
+//            		System.out.printf("\nValue of j = ", j);
+
+                    System.out.printf("\nFor loop to find matching cinemaCode = ", cinemaCode.toString());
+            		if (cinemaList.get(j).getCode().equals(cinemaCode))
+            		{
+            			Cinema selectedCinema = cinemaList.get(j);
+                        sessions = selectedCinema.getSessions();
+                        System.out.println("Sessions !!! = " + sessions.toString());
+                        sessions.add(session);
+                        System.out.println("After adding Sessions ~~~ = " + sessions.toString());
+                        selectedCinema.setSessions(sessions);
+//                        System.out.printf("\nUpdated sessions for selected cinema ", selectedCinema.getCode());
+                        System.out.printf("\nUpdated sessions for selected cinema code ", cinemaCode.toString());
+//                        System.out.printf("\nUpdated sessions is ", cinemaList.get(j).getSessions().toString());
+                        this.cinemaCtrl.updateByAttribute(SESSIONS, cinemaCode, sessions);
+                        System.out.printf("\nUpdated sessions is ", cinemaList.get(j).getSessions().toString());
+                        sessions.clear();
+                        break;
+            		}
+            		
+            	}
+//            	
+//                if (cinema_i.getCode().equals(cinemaCode)) {
+//                    sessions = cinema_i.getSessions();
+//                    sessions.add(session);
+//                    cinema_i.setSessions(sessions);
+//                    System.out.printf("\nUpdated sessions for cinema ", cinema_i.getCode());
+//                    System.out.printf("\nUpdated sessions is ", cinema_i.getSessions().toString());
+//                    this.cinemaCtrl.updateByAttribute(SESSIONS, cinemaCode, sessions);
+//                    sessions.clear();
+//                    break;
+//                }
             }
         } else {
             // do nothing
