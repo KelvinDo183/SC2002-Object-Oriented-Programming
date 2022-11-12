@@ -2,6 +2,8 @@ package Boundary;
 
 import java.util.Scanner;
 
+import Controller.SessionController;
+
 public class ViewAvailableSeatsUI {
 
     private static Scanner sc;
@@ -22,13 +24,14 @@ public class ViewAvailableSeatsUI {
             System.out.print("Select choice:");
 
             menuChoice = sc.nextInt();
-
             System.out.println("");
+            SessionController sessControl = new SessionController();
 
             switch (menuChoice) {
                 case 1:
                 	// select session functionality
-                	
+//                	sessControl.listSessions();
+//                	sessControl.printCinema(null);
                     break;
 
                 case 2:

@@ -53,9 +53,9 @@ public class MovieController {
 	}
 	
 	// Constructor including parameter for session
-	public MovieController(SessionController sessionController) {
-		this.sessionController = sessionController;
-	}
+//	public MovieController(SessionController sessionController) {
+//		this.sessionController = sessionController;
+//	}
 	
 	// To print the following menu options upon loading of menu
 	public void main() throws IOException, NoSuchAlgorithmException, FileNotFoundException {
