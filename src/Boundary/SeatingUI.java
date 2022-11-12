@@ -96,8 +96,15 @@ public class SeatingUI {
             
             System.out.println("Seating layout after selected seats are assigned: ");
             seatsAvailability.printLayout();
+            session.setSeatsAvailability(seatsAvailability);
             
-
+            // Compute prices for selected number of tickets here
+            BookingAndPurchaseTicketsUI bookingTicketsUI = new BookingAndPurchaseTicketsUI();
+            Cinema requestedCinema = cinemasCtrl.readByCinemaName(cinemaCode);
+            
+            double totalTicketPrice = bookingTicketsUI.priceCalculation(session, requestedCinema, seatChoices.size());
+            System.out.println("Total price of tickets = " + totalTicketPrice + " SGD.");
+            
             Pair newPair = Pair(cinemaCode, session);
             return newPair;
         }

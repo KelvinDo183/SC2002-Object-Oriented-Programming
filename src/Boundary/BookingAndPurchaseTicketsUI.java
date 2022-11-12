@@ -9,6 +9,7 @@ import Controller.CineplexeController;
 import Controller.InputController;
 import Controller.TransactionController;
 import Controller.PriceController;
+import Controller.SessionController;
 import exceptions.InvalidTxnException;
 import model_Classes.Cinema;
 import model_Classes.Cineplex;
@@ -25,6 +26,7 @@ public class BookingAndPurchaseTicketsUI {
     private CineplexeController cineplexCtrl = new CineplexeController();
     private TransactionController txnCtrl = new TransactionController();
     private PriceController priceCtrl = new PriceController();
+    private SessionController sessionCtrl = new SessionController();
 
     private int noOfTickets;
 
@@ -67,7 +69,7 @@ public class BookingAndPurchaseTicketsUI {
                     break;
 
                 case 4:
-                    priceCalculation();
+                    priceCalculationMenu();
                     break;
 
                 case 5:
@@ -132,25 +134,37 @@ public class BookingAndPurchaseTicketsUI {
         ArrayList<Cinema> cinemaList = cineplex.getCinemas();
         cinemaList.forEach(Cinema -> printCinema(Cinema));
     }
-
-    public void priceCalculation() {
-        // TODO
+    
+    
+    public void priceCalculationMenu() {
+        
         double price = 0;
         System.out.print("Enter the amount of tickets: ");
         noOfTickets = InputController.getPositiveIntFromUser();
+        Cinema requestedCinema = cinemaCtrl.readByCinemaName("BBB");
+//        Session weekdaySession = new Session();
+        
+//        price = priceCalculation(sessionCtrl noOfTickets);
+        
+        
+//        System.out.println("Total price is equal: " + price + " SGD");
+    }
+
+    public double priceCalculation(Session session, Cinema cinema, int noOfTickets) {
+        double returnPrice = 0;
         for (int i = 0; i < noOfTickets; i++) {
             boolean validInput = false;
             while (!validInput) {
-                System.out.println("Enter age type for " + (i + 1) + "th" + " ticket (Student, Senior, Standard): ");
+                System.out.println("Enter age type for Ticket #" + (i + 1) + " (Student, Senior, Standard): ");
                 String priceTypeString = InputController.getStringFromUser();
-                if (priceTypeString.equals("Student")) {
-                    price += priceCtrl.computePrice(queriedSession, queriedCinema, PriceType.STUDENT);
+                if (priceTypeString.equalsIgnoreCase("Student")) {
+                	returnPrice += priceCtrl.computePrice(session, cinema, PriceType.STUDENT);
                     validInput = true;
-                } else if (priceTypeString.equals("Senior")) {
-                    price += priceCtrl.computePrice(queriedSession, queriedCinema, PriceType.SENIOR_CITIZEN);
+                } else if (priceTypeString.equalsIgnoreCase("Senior")) {
+                	returnPrice += priceCtrl.computePrice(session, cinema, PriceType.SENIOR_CITIZEN);
                     validInput = true;
-                } else if (priceTypeString.equals("Standard")) {
-                    price += priceCtrl.computePrice(queriedSession, queriedCinema, PriceType.NORMAL);
+                } else if (priceTypeString.equalsIgnoreCase("Standard")) {
+                	returnPrice += priceCtrl.computePrice(session, cinema, PriceType.NORMAL);
                     validInput = true;
                 } else {
                     System.out.println("Wrong input!");
@@ -158,14 +172,15 @@ public class BookingAndPurchaseTicketsUI {
             }
         }
 
-        System.out.println("Total price is equal: " + price + " SGD");
+        return returnPrice;
     }
 
     public void seatSelection() throws FileNotFoundException, InvalidTxnException {
 
         Pair<String, Session> selectedSessionPair = showSeatingArrangementUI();
-
-        // instructions to input seat selection
+        
+        // Pass info to makeBooking function
+        
 
         // makeBooking()
         System.out.println("--------------------------------------------------");
