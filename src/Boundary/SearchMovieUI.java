@@ -114,7 +114,7 @@ public class SearchMovieUI {
 	
 
 	public boolean searchTitle() throws FileNotFoundException {
-		System.out.println("Enter movie title(Case sensitive): ");
+		System.out.println("Enter movie title: ");
 		title = InputController.getStringFromUser();
 		
 		Movie movie = MovieController.findExistingMovie(title);

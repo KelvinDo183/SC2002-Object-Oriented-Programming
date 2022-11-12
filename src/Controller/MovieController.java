@@ -246,7 +246,7 @@ public class MovieController {
 			
 			for (Movie movie : allMovies) {
 				String titleData = movie.getTitle();
-				if (movie.getTitle().trim().toUpperCase().equals(title.trim().toUpperCase())) {
+				if (titleData.trim().equalsIgnoreCase(title.trim())) {
 					System.out.println("This is an existing movie! " + title);
 					return true;
 				}				
@@ -267,7 +267,7 @@ public class MovieController {
 
 			for (Movie movie : allMovies) {
 				String titleData = movie.getTitle();
-				if (movie.getTitle().trim().toUpperCase().equals(title.trim().toUpperCase())) {
+				if (titleData.trim().equalsIgnoreCase(title.trim())) {
 					return movie;
 				}				
 			}
