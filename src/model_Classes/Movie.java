@@ -29,7 +29,7 @@ public class Movie implements Serializable {
 			LocalDate releaseDate, LocalDate endDate, String directorName, ArrayList<String> castMembers) {
 		this.id = id;
 		this.title = title;
-		this.type = type;
+		this.type = MovieType.BLOCKBUSTER;
 		// adjust movie status based on the dates provided by admin user OUTSIDE of
 		// constructor
 		this.status = MovieStatus.NOW_SHOWING;
