@@ -42,7 +42,6 @@ public class CreateMovieListingUI {
 		System.out.println("----- Details of the movie listing to create -----");
 		System.out.println("--------------------------------------------------");
 		System.out.println("Enter Movie Title: ");
-	//                String movieTitle = sc.nextLine();
 		String movieTitle = string_scanner.next();
 		System.out.println("Enter Movie Type: ");
 		System.out.println("(1) Blockbuster ");
@@ -69,9 +68,7 @@ public class CreateMovieListingUI {
 
 
 		System.out.println("Enter Synopsis: ");
-//        String movieDescription = sc.nextLine();
 		String movieDescription = string_scanner.next();
-//		System.out.println("");
 
 		System.out.println("Enter Screening Duration: ");
 		String durationStringInput = string_scanner.next();
@@ -88,29 +85,19 @@ public class CreateMovieListingUI {
 
 		String endDateStringInput = sc.next();
 		LocalDate movieEndDate = LocalDate.parse(endDateStringInput);
-	//                LocalDate movieEndDate = LocalDate.parse(endDateStringInput, formatter);
 		System.out.println("Enter Director Name: ");
-	//                String movieDirectorName = sc.nextLine();
 		String movieDirectorName = string_scanner.next();
 		System.out.println("Enter list of Cast Members (new line for each cast member, no spaces between first & last names): ");
 		System.out.println("Type 'N' to end input of cast member names");
 
-//		String newCastMember = sc.nextLine();
-	//                String newCastMember = string_scanner.next();
 		ArrayList<String> newCastMembersAL = new ArrayList<String>();
 
 		Boolean continueLooping = true;
 
 		do
 		{
-//			String additionalCast = sc.next();
 			String additionalCast = string_scanner.next();
 			newCastMembersAL.add(additionalCast);
-//			if (additionalCast.toUpperCase().matches("N")) 
-//				{
-//					System.out.println("No more cast members to add.");
-//					continueLooping = false;
-//				}
 			if (additionalCast.compareTo("N") == 1) 
 			{
 				System.out.println("No more cast members to add.");
@@ -127,25 +114,19 @@ public class CreateMovieListingUI {
 		switch(movTypeInput) {
 		case 1:
 			movielisting.setType(MovieType.BLOCKBUSTER);
-			System.out.println("The movie type is " + movielisting.getType().toString());
 			break;
 		case 2:
 			movielisting.setType(MovieType.TWO_D);
-			System.out.println("The movie type is " + movielisting.getType().toString());
-
 			break;
 		case 3:
 			movielisting.setType(MovieType.THREE_D);
-			System.out.println("The movie type is " + movielisting.getType().toString());
 			break;
 		default:
 			movielisting.setType(MovieType.BLOCKBUSTER);
-			System.out.println("The movie type is " + movielisting.getType().toString());
 	}
 
-
-		System.out.println("Movie listing with ID #" + movielisting.getID() + " and movieType = " + movieType + " and title '" 
-						+ movielisting.getTitle() + "' and cast members: " + newCastMembersAL + " -> has been created.");
+//		System.out.println("Movie listing with ID #" + movielisting.getID() + " and movieType = " + movieType + " and title '" 
+//						+ movielisting.getTitle() + "' and cast members: " + newCastMembersAL + " has been created.");
 		
 		return movielisting;
 		

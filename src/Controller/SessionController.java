@@ -564,11 +564,8 @@ public class SessionController {
         int lastId = -1;
         int sessionId;
         ArrayList<Session> allData = read();
-        System.out.printf("\nallSession array list = ", allData.toString());
-        System.out.printf("\nallSession array list length = ", allData.size());
         for (int i = 0; i < allData.size(); i++) {
             sessionId = allData.get(i).getID();
-            System.out.printf("\nThe sessionID = ", sessionId);
             if (sessionId > lastId)
                 lastId = sessionId;
         }

@@ -261,7 +261,7 @@ public class SessionUI {
      * @param cinema Cinema to be printed
      */
     public void printCinema(Cinema cinema) {
-        System.out.println("\nCinema code: " + cinema.getCode());
+        System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::\nCinema code: " + cinema.getCode());
         ArrayList<Session> sessionList = cinema.getSessions();
         sessionList.forEach(session -> printSession(session));
     }

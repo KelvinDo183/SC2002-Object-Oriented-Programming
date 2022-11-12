@@ -169,8 +169,14 @@ public class Movie implements Serializable {
 	}
 
 	public ArrayList<String> getCastMembers() {
-
-		return this.castMembers;
+		ArrayList<String> returnListCastMembers = new ArrayList<String>();
+		// do not include "N" as a CastMember
+		for (int i = 0; i < this.castMembers.size(); i++) {
+			if (this.castMembers.get(i).compareTo("N") != 1) {
+				returnListCastMembers.add(this.castMembers.get(i));
+			}
+		}
+		return returnListCastMembers;
 	}
 
 	public String getCastMembersToString() {
@@ -182,6 +188,7 @@ public class Movie implements Serializable {
 				toReturn += this.castMembers.get(i);
 			}
 		}
+		
 
 		// add another line break for clarity when viewing
 		toReturn += "\n";
@@ -298,7 +305,7 @@ public class Movie implements Serializable {
 				&& this.releaseDate.equals(other.getReleaseDate())
 				&& this.endDate.equals(other.getEndDate())
 				&& this.directorName.equals(other.getDirectorName())
-				&& this.castMembers.equals(other.getCastMembers())
+				&& this.castMembers.equals(other.getCastMembersToString())
 				&& this.reviews.equals(other.getReviews());
 	}
 
