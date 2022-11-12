@@ -125,7 +125,7 @@ public class SearchMovieUI {
 			return true;
 		} 
 		else {
-			System.out.println("No movie of title " + title + " found.");
+			System.out.println("Movie with title " + title + " was not found.");
 			return false;
 		}
 		
