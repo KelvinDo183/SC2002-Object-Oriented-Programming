@@ -259,8 +259,8 @@ public class MainMenuUI {
 
     public static void sessionControllerMenu() throws NoSuchAlgorithmException, IOException {
         // Movie Controller menu
-        SessionController sesController = new SessionController();
-        sesController.main();
+        SessionUI sessionUI = new SessionUI();
+        sessionUI.main();
     }
 
 }
