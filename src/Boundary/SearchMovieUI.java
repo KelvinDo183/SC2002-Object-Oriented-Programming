@@ -6,6 +6,12 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/* SearchMovieUI is a Boundary class that is called when either an Admin or a MovieGoer calls to "Search Movie Listing".
+ * The user may search for a movie by its title, or for a list of movies of a specific type. An Admin may choose to 
+ * list all movies, screening or not, whereas a MovieGoer will only be able to list available movies.
+ * 
+ * */
+
 public class SearchMovieUI {
 	private String title;
 	private String type;

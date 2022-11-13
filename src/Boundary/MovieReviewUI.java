@@ -9,7 +9,8 @@ import model_Classes.*;
 /*
  * MovieReviewUI is called when a Movie-Goer selects the respective option to do so from MainMenuUI. 
  * They can leave a rating and an additional comment(or left blank) to be recorded as a MovieReview(controlled by ReviewsController), the rating
- * recorded will affect a Movie's rating variable. Each transaction ID/email corresponds to one review(one review per user per movie).
+ * recorded will affect a Movie's rating variable. Each transaction ID/email can leave the same number of reviews(one review per user per movie)
+ * as the number of seats(ie. tickets) bought.
  * */
 
 public class MovieReviewUI {
