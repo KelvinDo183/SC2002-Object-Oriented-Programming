@@ -111,7 +111,6 @@ public class InputController {
             } else {
                 System.out.println("Please enter a correct input: ");
             }
-            sc.nextInt();
         }
         return input;
     }
