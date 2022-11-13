@@ -1190,9 +1190,10 @@ public class BookingAndPurchaseTicketsUI {
 //        Movie selectedMovie = selectedSession.getMovie();
         
 
-        txnCtrl.create(selectedCinemaCode, name, email, mobileNumber, selectedSession, seatsSelected, selectedTicketTotalPrice);
+        String bookingID = txnCtrl.create(selectedCinemaCode, name, email, mobileNumber, selectedSession, seatsSelected, selectedTicketTotalPrice);
 
         System.out.println("Transaction successful!");
+        System.out.println("Your booking ID is " + bookingID);
     }
 
     public void printCinema(Cinema cinema) {

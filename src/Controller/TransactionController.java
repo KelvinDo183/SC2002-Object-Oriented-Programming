@@ -55,7 +55,7 @@ public class TransactionController {
      * @param seatsSelected This transaction's selected seats
      * @param totalPrice    This transaction's total price
      */
-    public void create(String cinemaCode, String name, String email, String mobileNumber, Session session,
+    public String create(String cinemaCode, String name, String email, String mobileNumber, Session session,
             ArrayList<Integer> seatsSelected, Double totalPrice) throws FileNotFoundException, InvalidTxnException {
         if (isValidTransaction(cinemaCode, name, email, mobileNumber, session.getMovie())) {
 
@@ -110,22 +110,23 @@ public class TransactionController {
                     }
                 }
 
-                System.out.println("Cinema Control updated. Seating arrangement should reflect this transaction. ");
-
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILENAME));
                 allTxnData.add(txn);
 
                 out.writeObject(allTxnData);
                 out.flush();
                 out.close();
+                return txn.getTID();
 
             } catch (IOException e) {
                 // System.out.println(e.getStackTrace());
                 System.out.println(e.getMessage());
+                return null;
             }
         } else {
             // do nothing
             System.out.println("There is an error in creating this transaction.");
+            return null;
         }
     }
 
