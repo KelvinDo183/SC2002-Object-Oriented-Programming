@@ -61,10 +61,10 @@ public class Review implements Serializable {
 	 */
 	//TID will not be displayed
 	public String toString() {
-		String out = "";
-		out += "        Movie title: " + getTitle() + "\n"
-				+ "        Rating: " + String.valueOf(getRating()) + "\n"
-				+ "        Comment: " + getComment();
+		String out = "\n";
+		out    += "        Rating: " + String.valueOf(getRating()) + "\n"
+				+ "        Comment: " + getComment()
+				+ "\n";
 		return out;
 	}
 
