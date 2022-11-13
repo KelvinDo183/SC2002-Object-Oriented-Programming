@@ -73,10 +73,11 @@ public class SeatingUI {
             Scanner sc = new Scanner(System.in);
             int seatChoice = sc.nextInt();
             ArrayList<Integer> seatChoices = new ArrayList<Integer>();
+            ArrayList<Integer> coupleSeatChoices = new ArrayList<Integer>();
             
             
             do{
-                System.out.println("To exit SeatingUI, input -1 ...");
+                System.out.println("{  To exit SeatingUI, input -1 ...  }");
                 
                 // if user selects a seat that is indicated with X, then prompt them that it is an invalid selection
 
@@ -86,25 +87,53 @@ public class SeatingUI {
                 }
                 else
                 {
-                    // functionality to add/remove to ArrayList based on whether it is already included
-                    if (seatChoices.contains(seatChoice)) 
-                	{
-                    	int indexFirstOccurrence = seatChoices.indexOf(seatChoice);
-                    	seatChoices.remove(indexFirstOccurrence);
-                    	}
-                    else
-                    {
-                        seatChoices.add(seatChoice);	
-                    }                	
-                }
+                	// separate array list for single seats and couple seats
+//                	System.out.println("90% boolean = " + (seatChoice >= (0.9 * (seatsAvailability.getRow() * seatsAvailability.getColumn()))));
+                	if (seatChoice >= (0.9 * (seatsAvailability.getRow() * seatsAvailability.getColumn())))
+        			{
+//                    	System.out.println("Selecting couple seat ... #" + seatChoice);
+                		
+                        // functionality to add/remove to ArrayList based on whether it is already included
+                    	if (coupleSeatChoices.contains(seatChoice)) 
+                    	{
+                        	int indexFirstOccurrence = coupleSeatChoices.indexOf(seatChoice);
+                        	coupleSeatChoices.remove(indexFirstOccurrence);
+                        	}
+                        else
+                        {
+                        	coupleSeatChoices.add(seatChoice);	
+                        }
+        			}
+                	
 
-                
-                System.out.println("After update ... seatChoicesArray = " + seatChoices.toString());
+                	// first 90% of seats are single seats
+                	else
+                	{
+                        // functionality to add/remove to ArrayList based on whether it is already included
+                    	if (seatChoices.contains(seatChoice)) 
+                    	{
+                        	int indexFirstOccurrence = seatChoices.indexOf(seatChoice);
+                        	seatChoices.remove(indexFirstOccurrence);
+                        	}
+                        else
+                        {
+                            seatChoices.add(seatChoice);	
+                        }                  		
+                	}
+              	
+                }
+                System.out.println("Current selection of single seats = " + seatChoices.toString());
+                System.out.println("Current selection of couple seats = " + coupleSeatChoices.toString());
                 
             }while((seatChoice = sc.nextInt())!=-1);
             
             // run through loop to adjust seatsAvailability
             for (int seatIndex : seatChoices) {
+            	seatsAvailability.assignSeats(seatIndex);
+            }
+            
+            // run through loop to adjust seatsAvailability after assigning coupleSeats
+            for (int seatIndex : coupleSeatChoices) {
             	seatsAvailability.assignSeats(seatIndex);
             }
             
@@ -116,21 +145,14 @@ public class SeatingUI {
             BookingAndPurchaseTicketsUI bookingTicketsUI = new BookingAndPurchaseTicketsUI();
             Cinema requestedCinema = cinemasCtrl.readByCinemaName(cinemaCode);
             
-            double totalTicketPrice = bookingTicketsUI.priceCalculation(session, requestedCinema, seatChoices.size());
+            double singleTicketPrice = 0.0;
+            double coupleTicketPrice = 0.0;
+            
+            singleTicketPrice = bookingTicketsUI.priceCalculation(session, requestedCinema, seatChoices.size(), false);
+            coupleTicketPrice = bookingTicketsUI.priceCalculation(session, requestedCinema, coupleSeatChoices.size(), true);
+            
+            double totalTicketPrice = singleTicketPrice + coupleTicketPrice;
             System.out.println("Total price of tickets = " + totalTicketPrice + " SGD.");
-          
-            /** Method 1
-            // use session to update sessionsCtrl
-            
-            // use sessionsCtrl to update cinemasCtrl
-            
-            // use cinemasCtrl to update cineplexesCtrl
-            **/
-            
-            /** Method 2 in seatsAvailability.printlayout() **/
-            
-            
-            
             
             Pair cinemaSessionPair = PairOne(cinemaCode, session);
             Pair seatChoicePricePair = PairTwo(seatChoices, totalTicketPrice);

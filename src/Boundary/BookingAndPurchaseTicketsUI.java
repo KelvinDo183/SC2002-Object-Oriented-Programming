@@ -701,7 +701,7 @@ public class BookingAndPurchaseTicketsUI {
             		
             		if (standardPrice < 10)
             		{
-            			outputString += "  " + standardPrice + "    |    ";
+            			outputString += "  " + standardPrice + "    |   ";
             		}
             		else
             		{
@@ -714,7 +714,7 @@ public class BookingAndPurchaseTicketsUI {
             		}
             		else
             		{
-            			outputString += "  " + premiumPrice;
+            			outputString += " " + premiumPrice;
             		}
             		
             		
@@ -1104,31 +1104,54 @@ public class BookingAndPurchaseTicketsUI {
         System.out.println(outputString);
         System.out.println("\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
     }
-    
-    
 
-    public double priceCalculation(Session session, Cinema cinema, int noOfTickets) {
+    public double priceCalculation(Session session, Cinema cinema, int noOfTickets, boolean coupleSeat) {
         double returnPrice = 0;
-        for (int i = 0; i < noOfTickets; i++) {
-            boolean validInput = false;
-            while (!validInput) {
-                System.out.println("Enter age type for Ticket #" + (i + 1) + " (Student, Senior, Standard): ");
-                String priceTypeString = InputController.getStringFromUser();
-                if (priceTypeString.equalsIgnoreCase("Student")) {
-                	returnPrice += priceCtrl.computePrice(session, cinema, PriceType.STUDENT);
-                    validInput = true;
-                } else if (priceTypeString.equalsIgnoreCase("Senior")) {
-                	returnPrice += priceCtrl.computePrice(session, cinema, PriceType.SENIOR_CITIZEN);
-                    validInput = true;
-                } else if (priceTypeString.equalsIgnoreCase("Standard")) {
-                	returnPrice += priceCtrl.computePrice(session, cinema, PriceType.NORMAL);
-                    validInput = true;
-                } else {
-                    System.out.println("Wrong input!");
+        if (coupleSeat)
+        {
+        	for (int i = 0; i < noOfTickets; i++) {
+                boolean validInput = false;
+                while (!validInput) {
+                    System.out.println("Enter age type for Couple Seat Ticket #" + (i + 1) + " (Student, Senior, Standard): ");
+                    String priceTypeString = InputController.getStringFromUser();
+                    if (priceTypeString.equalsIgnoreCase("Student")) {
+                    	returnPrice += (2*priceCtrl.computePrice(session, cinema, PriceType.STUDENT));
+                        validInput = true;
+                    } else if (priceTypeString.equalsIgnoreCase("Senior")) {
+                    	returnPrice += (2*priceCtrl.computePrice(session, cinema, PriceType.SENIOR_CITIZEN));
+                        validInput = true;
+                    } else if (priceTypeString.equalsIgnoreCase("Standard")) {
+                    	returnPrice += (2*priceCtrl.computePrice(session, cinema, PriceType.NORMAL));
+                        validInput = true;
+                    } else {
+                        System.out.println("Wrong input!");
+                    }
                 }
-            }
+            }	
         }
-
+        else
+        {
+        	for (int i = 0; i < noOfTickets; i++) {
+                boolean validInput = false;
+                while (!validInput) {
+                    System.out.println("Enter age type for Ticket #" + (i + 1) + " (Student, Senior, Standard): ");
+                    String priceTypeString = InputController.getStringFromUser();
+                    if (priceTypeString.equalsIgnoreCase("Student")) {
+                    	returnPrice += priceCtrl.computePrice(session, cinema, PriceType.STUDENT);
+                        validInput = true;
+                    } else if (priceTypeString.equalsIgnoreCase("Senior")) {
+                    	returnPrice += priceCtrl.computePrice(session, cinema, PriceType.SENIOR_CITIZEN);
+                        validInput = true;
+                    } else if (priceTypeString.equalsIgnoreCase("Standard")) {
+                    	returnPrice += priceCtrl.computePrice(session, cinema, PriceType.NORMAL);
+                        validInput = true;
+                    } else {
+                        System.out.println("Wrong input!");
+                    }
+                }
+            }	
+        }
+        
         return returnPrice;
     }
 

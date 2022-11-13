@@ -52,25 +52,61 @@ public class SeatingPlan implements Serializable {
 		System.out
 				.print("\n[ X] denotes an occupied seat; Number from 0 to 99 denotes a seat available for booking.\n");
 		for (int i = 0; i < row; i++) {
-			if (i == 0) {
-				System.out.print("Seat # " + (i * column) + " to  " + ((i + 1) * column - 1) + ":\t");
-			} else {
-				System.out.print("Seat #" + (i * column) + " to " + ((i + 1) * column - 1) + ":\t");
-			}
-			for (int j = 0; j < column; j++) {
-				if (layout[i][j].isOccupied())
-					System.out.print("[ X] ");
-				else {
-					if (i == 0) {
-						System.out.print("[ " + (i * 10 + j) + "] ");
-					} else {
-						System.out.print("[" + (i * 10 + j) + "] ");
+			// Couple Seating
+			if (i >= row-1)
+			{
+				System.out.print("Couple Seats  :\t");
+				for (int j = 0; j < column / 2; j++) {
+					if (j == column / 4 + 1) System.out.print("\t\t");
+					
+					if (layout[i][j].isOccupied())
+						System.out.print("[   X   ] ");
+					else 
+					{
+						System.out.print("[  " + (i * 10 + j * 1) + "  ]  ");
 					}
+
 				}
-				if (j == column / 2 - 1)
-					System.out.print("\t");
+				System.out.print("\n");
+				
+				System.out.print("Couple Seats  :\t");
+				for (int k = column / 2; k < column ; k++) {
+					if (k == 3*(column / 4) + 2) System.out.print("\t\t");
+
+					if (layout[i][k].isOccupied())
+						System.out.print("[   X   ] ");
+					else 
+					{
+						System.out.print("[  " + (i * 10 + k * 1) + "  ]  ");
+					}
+
+				}
+				System.out.print("\n");	
 			}
-			System.out.print("\n");
+			else
+			{
+				if (i == 0) {
+					System.out.print("Seat # " + (i * column) + " to  " + ((i + 1) * column - 1) + ":\t");
+				} else {
+					System.out.print("Seat #" + (i * column) + " to " + ((i + 1) * column - 1) + ":\t");
+				}
+				for (int j = 0; j < column; j++) {
+					if (layout[i][j].isOccupied())
+						System.out.print("[ X] ");
+					else {
+						if (i == 0) {
+							System.out.print("[ " + (i * 10 + j) + "] ");
+						} else {
+							System.out.print("[" + (i * 10 + j) + "] ");
+						}
+					}
+//					if (j == column / 2 - 1)
+					if (j == column / 2)
+						System.out.print("\t\t");
+				}
+				System.out.print("\n");	
+			}
+		
 		}
 		System.out.println("");
 	}
