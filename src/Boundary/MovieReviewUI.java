@@ -13,12 +13,13 @@ import model_Classes.*;
  * */
 
 public class MovieReviewUI {
-    static Scanner sc = new Scanner(System.in);
+    
 
     private MovieController moviesController = new MovieController();
     private SearchMovieUI searchMovieUI = new SearchMovieUI();
     private TransactionController txnController = new TransactionController();
     private ReviewsController reviewsController = new ReviewsController();
+    Scanner sc = new Scanner(System.in);
     String email;
     String number;
     String tid;
@@ -69,10 +70,10 @@ public class MovieReviewUI {
     public boolean verifyByMail() {
     	email = null;
     	tid = null;
-    	System.out.println("Enter email: ");
-        email = sc.nextLine();
-        System.out.println("Enter transaction ID: ");
-        tid = sc.nextLine();
+    	System.out.print("Enter email: ");
+        email = InputController.getEmailFromUser();
+        System.out.print("Enter transaction ID: ");
+        tid = InputController.getStringFromUser();
         
     	if(!txnController.verifyEmailandTID(tid, email)) {
         	System.out.println("Invalid email and/or transaction ID!");
@@ -86,10 +87,10 @@ public class MovieReviewUI {
     public boolean verifyByNum() {
     	number = null;
     	tid = null;
-    	System.out.println("Enter mobile number: ");
-        number = sc.nextLine();
-        System.out.println("Enter transaction ID: ");
-        tid = sc.nextLine();
+    	System.out.print("Enter mobile number: ");
+        number = InputController.getStringFromUser();
+        System.out.print("Enter transaction ID: ");
+        tid = InputController.getStringFromUser();
         
         if(!txnController.verifyPhoneandTID(tid, number)) {
         	System.out.println("Invalid email and/or transaction ID!");
@@ -104,7 +105,7 @@ public class MovieReviewUI {
     	movie = null;
     	if (searchMovieUI.listAvailableScreeningMovies()) {
             System.out.print("Name the title of the movie to be reviewed: ");
-            title = sc.nextLine();
+            title = InputController.getStringFromUser();
             movie = MovieController.findExistingMovie(title);
     	}
             
@@ -132,7 +133,7 @@ public class MovieReviewUI {
             System.out.println("Input rating(from 0.0 to 5.0):");
             float rating = sc.nextFloat();
             System.out.println("Input additional comment");
-            String comment = sc.nextLine();
+            String comment = InputController.getStringFromUser();
             reviewsController.create(movie, title, rating, comment, tid);
     }
 }
