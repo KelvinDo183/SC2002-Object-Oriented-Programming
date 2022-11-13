@@ -76,9 +76,10 @@ public class ReviewsController {
 		 * to the movie, then add the modified movie to the returned data.
 		 */
 		for (int i = 0; i < allData.size(); i++) {
+			System.out.println("For:"+i);
 			Movie m = allData.get(i);
-			if (m.getTitle() == title) {
-
+			if (m.getTitle().trim().equalsIgnoreCase(title)) {
+				System.out.println("In If Statement");
 				// Appends new review into the ArrayList
 				ArrayList<Review> reviews = m.getReviews();
 				reviews.add(review);
@@ -88,9 +89,12 @@ public class ReviewsController {
 				int reviewsCount = reviews.size();
 				float newRating = ((m.getRating() * (reviewsCount - 1) + rating) / reviewsCount);
 				m.setRating(newRating);
+				System.out.println("Rating updated adding "+ rating +" to get " + newRating);
 			}
+			System.out.println("Added movie at index:"+i);
 			returnData.add(m);
 		}
+		
 		// Finds the matching movie within movielisting.txt and replaces it with the
 		// modified Movie stored in returnData
 		this.movieController.replaceExistingFile(FILENAME, returnData);
