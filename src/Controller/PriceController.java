@@ -36,7 +36,7 @@ public class PriceController {
         priceMap.put(MovieType.BLOCKBUSTER, 4.0);
         priceMap.put(CinemaType.PREMIUM, 1.0);
         priceMap.put(CinemaType.STANDARD, 0.0);
-        priceMap.put(PriceType.STUDENT, 8.0);
+        priceMap.put(PriceType.STUDENT, 7.5);
         priceMap.put(PriceType.HOLIDAY, 14.0);
         priceMap.put(PriceType.NORMAL, 10.0);
         priceMap.put(PriceType.SENIOR_CITIZEN, 6.0);
