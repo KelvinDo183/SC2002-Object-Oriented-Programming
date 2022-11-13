@@ -1,5 +1,8 @@
 package model_Classes;
 
+/**
+ * Enumerated type of movie
+ */
 public enum MovieType implements PriceChanger {
 	TWO_D("2D"),
 	THREE_D("3D"),
@@ -7,13 +10,12 @@ public enum MovieType implements PriceChanger {
 
 	private String text;
 
-	private MovieType(String text)
-	{
+	private MovieType(String text) {
 		this.text = text;
 	}
-	
+
 	public String toString() {
-		return text;		
+		return text;
 	}
 
 }

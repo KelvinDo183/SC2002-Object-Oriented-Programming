@@ -1,6 +1,9 @@
 package model_Classes;
 
-public enum MovieStatus{
+/**
+ * Enumerated type of movie status
+ */
+public enum MovieStatus {
     COMING_SOON("Coming soon"),
     PREVIEW("Preview"),
     NOW_SHOWING("Now showing"),
@@ -8,11 +11,11 @@ public enum MovieStatus{
 
     private final String text;
 
-    private MovieStatus(String text){
+    private MovieStatus(String text) {
         this.text = text;
     }
 
-    public String toString(){
+    public String toString() {
         return text;
     }
 }
