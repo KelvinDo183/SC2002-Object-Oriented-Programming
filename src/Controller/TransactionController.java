@@ -23,11 +23,13 @@ public class TransactionController{
     public final static int EMAIL = 3;
     public final static int MOBILE_NUMBER = 4;
     public final static int MOVIE = 5;
+    public final static int SEATS_SELECTED = 6;
+    public final static int TOTAL_PRICE = 7;
     
    
     
-    public void create(String cinemaCode, String name, String email, String mobileNumber, Movie movie) throws FileNotFoundException, InvalidTxnException {
-        if (isValidTransaction(cinemaCode, name, email, mobileNumber, movie)) {
+    public void create(String cinemaCode, String name, String email, String mobileNumber, Session session, ArrayList<Integer> seatsSelected, Double totalPrice) throws FileNotFoundException, InvalidTxnException {
+        if (isValidTransaction(cinemaCode, name, email, mobileNumber, session.getMovie())) {
             
             try {
 	            	ArrayList<Transaction> allTxnData = new ArrayList<Transaction>();
@@ -43,7 +45,7 @@ public class TransactionController{
 	                if (lengthArray > 0) TID = lengthArray + 2001;
 	                else TID = 2001;
 	                
-	                Transaction txn = new Transaction(Integer.toString(TID), cinemaCode, name, email, mobileNumber, movie);
+	                Transaction txn = new Transaction(Integer.toString(TID), cinemaCode, name, email, mobileNumber, session, seatsSelected, totalPrice);
 	                
 	            	
 	        		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILENAME));

@@ -177,7 +177,8 @@ public class BookingAndPurchaseTicketsUI {
 
     public void seatSelection() throws FileNotFoundException, InvalidTxnException {
 
-        Pair<String, Session> selectedSessionPair = showSeatingArrangementUI();
+//        Pair<String, Session> selectedSessionPair = showSeatingArrangementUI();
+        Pair<Pair, Pair> pairParent = showSeatingArrangementUI();
         
         // Pass info to makeBooking function
         
@@ -185,11 +186,12 @@ public class BookingAndPurchaseTicketsUI {
         // makeBooking()
         System.out.println("--------------------------------------------------");
         System.out.println("------------ Proceed to make booking: ------------\n");
-        makeBooking(selectedSessionPair);
+        makeBooking(pairParent);
 
     }
 
-    public void makeBooking(Pair<String, Session> selectedSessionPair)
+    @SuppressWarnings("rawtypes")
+	public void makeBooking(Pair<Pair, Pair> pairParent)
             throws FileNotFoundException, InvalidTxnException {
         System.out.print("Enter your name: ");
         String name = InputController.getStringFromUser();
@@ -197,10 +199,18 @@ public class BookingAndPurchaseTicketsUI {
         String email = InputController.getEmailFromUser();
         System.out.print("Enter your mobile number: ");
         String mobileNumber = InputController.getMobileNumberFromUser();
-        String cinemaCode = selectedSessionPair.t1;
-        Movie movie = selectedSessionPair.t2.getMovie();
+        
+        // PairOne holds information related to screening cinema and session (i.e. timeslot)
+        String selectedCinemaCode = pairParent.t1.t1.toString(); 
+        Session selectedSession = (Session) pairParent.t1.t2;
+        // PairTwo holds information about user seat selection and total ticket price
+        ArrayList<Integer> seatsSelected = (ArrayList<Integer>) pairParent.t2.t1;
+        Double selectedTicketTotalPrice = (Double) pairParent.t2.t2;
 
-        txnCtrl.create(cinemaCode, name, email, mobileNumber, movie);
+//        Movie selectedMovie = selectedSession.getMovie();
+        
+
+        txnCtrl.create(selectedCinemaCode, name, email, mobileNumber, selectedSession, seatsSelected, selectedTicketTotalPrice);
 
         System.out.println("Transaction successful!");
     }
@@ -225,9 +235,9 @@ public class BookingAndPurchaseTicketsUI {
                 "\tDate: " + session.getStringSessionDateTime() + "\n");
     }
 
-    public Pair<String, Session> showSeatingArrangementUI() {
+    public Pair<Pair, Pair> showSeatingArrangementUI() {
         SeatingUI seatingUI = new SeatingUI();
-        Pair<String, Session> selectedSessionPair = seatingUI.main();
+        Pair<Pair, Pair> selectedSessionPair = seatingUI.main();
         return selectedSessionPair;
     }
 }

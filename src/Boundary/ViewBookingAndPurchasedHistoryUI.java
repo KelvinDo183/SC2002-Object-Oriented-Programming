@@ -63,13 +63,8 @@ public class ViewBookingAndPurchasedHistoryUI {
         System.out.println("\nEnter transaction ID: ");
         int txnID = sc.nextInt();
         Transaction txn = txnCtrl.readByTID(String.valueOf(txnID));
-        System.out.println("\n::::::::::::::::::::::::::::::");
-        System.out.println("TransactionID = " + txn.getTID());
-        System.out.println("Customer Name = " + txn.getName());
-        System.out.println("Customer Mobile Number = " + txn.getMobileNumber());
-        System.out.println("CinemaCode = " + txn.getCinemaCode());
-        System.out.println("Movie Title = " + txn.getMovie().getTitle());
-        System.out.println("::::::::::::::::::::::::::::::");
+        System.out.println("The total price paid = " + txn.getTotalPrice());
+        System.out.printf(txn.toStringTransaction());
         System.out.println("");
     }
 
@@ -85,13 +80,8 @@ public class ViewBookingAndPurchasedHistoryUI {
     	for (int i = 0; i < allUserTxn.size(); i++)
     	{
     		Transaction txn = allUserTxn.get(i);
-            System.out.println("TransactionID = " + txn.getTID());
-            System.out.println("Customer Name = " + txn.getName());
-            System.out.println("Customer Mobile Number = " + txn.getMobileNumber());
-            System.out.println("CinemaCode = " + txn.getCinemaCode());
-            System.out.println("Movie Title = " + txn.getMovie().getTitle());
-            System.out.println("::::::::::::::::::::::::::::::");
-    		
+            System.out.printf(txn.toStringTransaction());
+            System.out.println("");
     	}
     	
 

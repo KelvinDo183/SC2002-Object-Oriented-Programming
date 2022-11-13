@@ -30,7 +30,7 @@ public class SeatingUI {
     /** 
      * Main method to load - if there are available sessions, user can choose one to load the layout
      */
-    public Pair<String, Session> main(){
+    public Pair<Pair, Pair> main(){
         if(showAvailableSessions()){
             return printLayout();
         }
@@ -43,7 +43,7 @@ public class SeatingUI {
     // this function returns movie associated with session to the main() method
     // so that user can proceed to make booking after selecting seat
     @SuppressWarnings("unlikely-arg-type")
-	public Pair<String, Session> printLayout(){
+	public Pair<Pair, Pair> printLayout(){
         int choice = 0;
         System.out.println("\nSelect session by providing Date and Cinema Code");
 		System.out.print("Enter date : ");
@@ -105,15 +105,33 @@ public class SeatingUI {
             double totalTicketPrice = bookingTicketsUI.priceCalculation(session, requestedCinema, seatChoices.size());
             System.out.println("Total price of tickets = " + totalTicketPrice + " SGD.");
             
-            Pair newPair = Pair(cinemaCode, session);
-            return newPair;
+            Pair cinemaSessionPair = PairOne(cinemaCode, session);
+            Pair seatChoicePricePair = PairTwo(seatChoices, totalTicketPrice);
+            // PairOne holds information related to screening cinema and session (i.e. timeslot)
+            // PairTwo holds information about user seat selection and total ticket price
+            // PairParent holds PairOne and PairTwo
+            
+            Pair pairParent = PairParent(cinemaSessionPair, seatChoicePricePair);
+            return pairParent;
         }
     }
     
 
-    private Pair Pair(String cinemaCode, model_Classes.Session session2) {
+    private Pair PairOne(String cinemaCode, model_Classes.Session session2) {
 		Pair newPair = new Pair();
     	newPair.setPair(cinemaCode, session2);
+    	return newPair;
+	}
+    
+    private Pair PairTwo(ArrayList<Integer> seatChoices, double totalTicketPrice) {
+		Pair newPair = new Pair();
+    	newPair.setPair(seatChoices, totalTicketPrice);
+    	return newPair;
+	}
+    
+    private Pair PairParent(Pair pairOne, Pair pairTwo) {
+		Pair newPair = new Pair();
+    	newPair.setPair(pairOne, pairTwo);
     	return newPair;
 	}
 
