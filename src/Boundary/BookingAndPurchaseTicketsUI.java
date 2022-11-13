@@ -152,7 +152,7 @@ public class BookingAndPurchaseTicketsUI {
     }
     
     public void regularPriceMenu() {
-        System.out.println("\nRegular Ticket Pricing based on MovieType and CinemaType: ");
+        System.out.println("\n▫️Regular Ticket Pricing based on MovieType and CinemaType: ");
         System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
         
         String outputString = "";
@@ -390,7 +390,7 @@ public class BookingAndPurchaseTicketsUI {
     }
    
     public void weekdayHolidayPriceMenu() {
-        System.out.println("\nWeekday (Holiday) Ticket Pricing based on MovieType and CinemaType: ");
+        System.out.println("\n🟪Weekday (Holiday) Ticket Pricing based on MovieType and CinemaType: ");
         System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
         
         String outputString = "";
@@ -628,7 +628,7 @@ public class BookingAndPurchaseTicketsUI {
     }
     
     public void weekendNonHolidayPriceMenu() {
-        System.out.println("\nWeekend (Non-holiday) Ticket Pricing based on MovieType and CinemaType: ");
+        System.out.println("\n⭕Weekend (Non-holiday) Ticket Pricing based on MovieType and CinemaType: ");
         System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
         
         String outputString = "";
@@ -866,7 +866,7 @@ public class BookingAndPurchaseTicketsUI {
     }
     
     public void weekendHolidayPriceMenu() {
-        System.out.println("\nWeekend (Holiday) Ticket Pricing based on MovieType and CinemaType: ");
+        System.out.println("\n🔴Weekend (Holiday) Ticket Pricing based on MovieType and CinemaType: ");
         System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
         
         String outputString = "";
