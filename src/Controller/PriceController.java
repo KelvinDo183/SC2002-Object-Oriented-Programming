@@ -2,6 +2,7 @@ package Controller;
 
 import model_Classes.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,11 +19,11 @@ public class PriceController {
     private void populateDefaultPrices(Map<PriceChanger,Double> priceMap) {
         priceMap.put(MovieType.TWO_D, 0.0);
         priceMap.put(MovieType.THREE_D, 3.0);
-        priceMap.put(MovieType.BLOCKBUSTER, 3.0);
+        priceMap.put(MovieType.BLOCKBUSTER, 4.0);
         priceMap.put(CinemaType.PREMIUM, 1.0);
         priceMap.put(CinemaType.STANDARD, 0.0);
         priceMap.put(PriceType.STUDENT, 8.0);
-        priceMap.put(PriceType.HOLIDAY, 12.0);
+        priceMap.put(PriceType.HOLIDAY, 14.0);
         priceMap.put(PriceType.NORMAL, 10.0);
         priceMap.put(PriceType.SENIOR_CITIZEN, 6.0);
         priceMap.put(PriceType.WEEKEND, 3.0);
@@ -69,6 +70,39 @@ public class PriceController {
         else{
             return getPrice(priceType) + addToPrice;
         }
+    }
+    
+    public double queryTicketPrice (MovieType movieType, CinemaType cinemaType, boolean isWeekend, boolean isHoliday, PriceType ageGroup){
+    	double addToPrice = getPrice(movieType)
+    						+ getPrice(cinemaType);
+    	
+    	if (isWeekend) 
+		{
+    		addToPrice += 2.0;
+		}
+    	    	
+//    	if (holidayCtrl.isHoliday(LocalDate.parse("2022-11-20")))
+//    	{
+//    		addToPrice += getPrice(PriceType.HOLIDAY);
+//    	}
+    	
+    	if (isHoliday)
+    	{
+    		addToPrice += getPrice(PriceType.HOLIDAY);
+    	}
+    	
+    	else 
+    	{
+    		// final component of price depends on whether ticket is sold as STUDENT, SENIOR or STANDARD ticket
+//    		if (ageGroup.equals(PriceType.STUDENT))
+//    		{
+//    			addToPrice += getPrice(PriceType.STUDENT);
+//    		}
+    		
+    		addToPrice += getPrice(ageGroup);
+    	}
+    	
+    	return addToPrice;
     }
 
 }

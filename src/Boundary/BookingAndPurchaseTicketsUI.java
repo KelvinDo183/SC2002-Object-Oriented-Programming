@@ -12,8 +12,10 @@ import Controller.PriceController;
 import Controller.SessionController;
 import exceptions.InvalidTxnException;
 import model_Classes.Cinema;
+import model_Classes.CinemaType;
 import model_Classes.Cineplex;
 import model_Classes.Movie;
+import model_Classes.MovieType;
 import model_Classes.Session;
 import model_Classes.Pair;
 import model_Classes.PriceType;
@@ -137,18 +139,973 @@ public class BookingAndPurchaseTicketsUI {
     
     
     public void priceCalculationMenu() {
+
+        System.out.println("\n--------------------------------------------------");
+        System.out.println("Displaying table for all possible ticket prices: ");
+        System.out.println("--------------------------------------------------\n");
         
-        double price = 0;
-        System.out.print("Enter the amount of tickets: ");
-        noOfTickets = InputController.getPositiveIntFromUser();
-        Cinema requestedCinema = cinemaCtrl.readByCinemaName("BBB");
-//        Session weekdaySession = new Session();
+        regularPriceMenu();
+        weekdayHolidayPriceMenu();
+        weekendNonHolidayPriceMenu();
+        weekendHolidayPriceMenu();
         
-//        price = priceCalculation(sessionCtrl noOfTickets);
-        
-        
-//        System.out.println("Total price is equal: " + price + " SGD");
     }
+    
+    public void regularPriceMenu() {
+        System.out.println("\nRegular Ticket Pricing based on MovieType and CinemaType: ");
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
+        
+        String outputString = "";
+        // 3 rows for MovieType
+        for (int i = 0; i <= 4; i ++)
+        {
+        		// 6 columns for two CinemaType multiplied by three ticket prices based on age
+        		if (i == 0)
+        		{
+            		// headings for 'outer' columns
+            		outputString += "            |          NORMAL          |      SENIOR CITIZEN      |         STUDENT         ";
+        		}
+        	
+        		if (i == 1)
+            	{
+            		// headings for 'inner' columns
+            		outputString += "\n            |  STANDARD  |   PREMIUM   |  STANDARD  |   PREMIUM   |  STANDARD  |   PREMIUM   ";
+            		}
+            	if (i == 2)
+            	{
+            		outputString += "\n   2D Movie |";
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, false, false, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, false, false, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, false, false, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, false, false, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |      " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += "   " + premiumPrice + "   |    ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, false, false, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, false, false, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += " " + standardPrice + "   |   ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += "  " + premiumPrice;
+            		}
+            		
+            		
+            	}
+            	if (i == 3)
+            	{
+            		outputString += "\n   3D Movie |";
+
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, false, false, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, false, false, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, false, false, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, false, false, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |    " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice + "    |    ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, false, false, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, false, false, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "" + standardPrice + "    |  ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += "  " + premiumPrice;
+            		}
+            		
+            	}
+            	if (i == 4)
+            	{
+            		outputString += "\nBLOCKBUSTER |";
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, false, false, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, false, false, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, false, false, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, false, false, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |    " + standardPrice + "    |    ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice + "    |   ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, false, false, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, false, false, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += " " + standardPrice + "    |   ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            	}
+        }
+        System.out.println(outputString);
+        System.out.println("\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
+    }
+   
+    public void weekdayHolidayPriceMenu() {
+        System.out.println("\nWeekday (Holiday) Ticket Pricing based on MovieType and CinemaType: ");
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
+        
+        String outputString = "";
+        // 3 rows for MovieType
+        for (int i = 0; i <= 4; i ++)
+        {
+        		// 6 columns for two CinemaType multiplied by three ticket prices based on age
+        		if (i == 0)
+        		{
+            		// headings for 'outer' columns
+            		outputString += "            |          NORMAL          |      SENIOR CITIZEN      |         STUDENT         ";
+        		}
+        	
+        		if (i == 1)
+            	{
+            		// headings for 'inner' columns
+            		outputString += "\n            |  STANDARD  |   PREMIUM   |  STANDARD  |   PREMIUM   |  STANDARD  |   PREMIUM   ";
+            		}
+            	if (i == 2)
+            	{
+            		outputString += "\n   2D Movie |";
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, false, true, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, false, true, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, false, true, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, false, true, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |    " + standardPrice + "    |   ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice + "     |    ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, false, true, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, false, true, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "" + standardPrice + "    |    ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += "" + premiumPrice;
+            		}
+            		
+            		
+            	}
+            	if (i == 3)
+            	{
+            		outputString += "\n   3D Movie |";
+
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, false, true, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, false, true, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, false, true, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, false, true, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |    " + standardPrice + "    |    ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += "" + premiumPrice + "     |    ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, false, true, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, false, true, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "" + standardPrice + "    |  ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += "  " + premiumPrice;
+            		}
+            		
+            	}
+            	if (i == 4)
+            	{
+            		outputString += "\nBLOCKBUSTER |";
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, false, true, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, false, true, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, false, true, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, false, true, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |    " + standardPrice + "    |    ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += "" + premiumPrice + "     |   ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, false, true, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, false, true, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += " " + standardPrice + "    |   ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            	}
+        }
+        System.out.println(outputString);
+        System.out.println("\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
+    }
+    
+    public void weekendNonHolidayPriceMenu() {
+        System.out.println("\nWeekend (Non-holiday) Ticket Pricing based on MovieType and CinemaType: ");
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
+        
+        String outputString = "";
+        // 3 rows for MovieType
+        for (int i = 0; i <= 4; i ++)
+        {
+        		// 6 columns for two CinemaType multiplied by three ticket prices based on age
+        		if (i == 0)
+        		{
+            		// headings for 'outer' columns
+            		outputString += "            |          NORMAL          |      SENIOR CITIZEN      |         STUDENT         ";
+        		}
+        	
+        		if (i == 1)
+            	{
+            		// headings for 'inner' columns
+            		outputString += "\n            |  STANDARD  |   PREMIUM   |  STANDARD  |   PREMIUM   |  STANDARD  |   PREMIUM   ";
+            		}
+            	if (i == 2)
+            	{
+            		outputString += "\n   2D Movie |";
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, true, false, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, true, false, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, true, false, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, true, false, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |      " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += "   " + premiumPrice + "   |    ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, true, false, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, true, false, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += " " + standardPrice + "    |  ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += "  " + premiumPrice;
+            		}
+            		
+            		
+            	}
+            	if (i == 3)
+            	{
+            		outputString += "\n   3D Movie |";
+
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, true, false, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, true, false, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, true, false, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, true, false, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |    " + standardPrice + "    |    ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice + "    |    ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, true, false, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, true, false, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "" + standardPrice + "    |  ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += "  " + premiumPrice;
+            		}
+            		
+            	}
+            	if (i == 4)
+            	{
+            		outputString += "\nBLOCKBUSTER |";
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, true, false, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, true, false, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, true, false, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, true, false, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |    " + standardPrice + "    |    ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice + "    |   ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, true, false, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, true, false, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += " " + standardPrice + "    |   ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            	}
+        }
+        System.out.println(outputString);
+        System.out.println("\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
+    }
+    
+    public void weekendHolidayPriceMenu() {
+        System.out.println("\nWeekend (Holiday) Ticket Pricing based on MovieType and CinemaType: ");
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
+        
+        String outputString = "";
+        // 3 rows for MovieType
+        for (int i = 0; i <= 4; i ++)
+        {
+        		// 6 columns for two CinemaType multiplied by three ticket prices based on age
+        		if (i == 0)
+        		{
+            		// headings for 'outer' columns
+            		outputString += "            |          NORMAL          |      SENIOR CITIZEN      |         STUDENT         ";
+        		}
+        	
+        		if (i == 1)
+            	{
+            		// headings for 'inner' columns
+            		outputString += "\n            |  STANDARD  |   PREMIUM   |  STANDARD  |   PREMIUM   |  STANDARD  |   PREMIUM   ";
+            		}
+            	if (i == 2)
+            	{
+            		outputString += "\n   2D Movie |";
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, true, true, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, true, true, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, true, true, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, true, true, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |    " + standardPrice + "    |   ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += "  " + premiumPrice + "    |    ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.STANDARD, true, true, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.TWO_D, CinemaType.PREMIUM, true, true, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "" + standardPrice + "    |   ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		
+            		
+            	}
+            	if (i == 3)
+            	{
+            		outputString += "\n   3D Movie |";
+
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, true, true, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, true, true, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, true, true, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, true, true, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |    " + standardPrice + "    |   ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += "  " + premiumPrice + "    |    ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.STANDARD, true, true, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.THREE_D, CinemaType.PREMIUM, true, true, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "" + standardPrice + "    |  ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += "  " + premiumPrice;
+            		}
+            		
+            	}
+            	if (i == 4)
+            	{
+            		outputString += "\nBLOCKBUSTER |";
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary
+            		double standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, true, true, PriceType.NORMAL);
+            		double premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, true, true, PriceType.NORMAL);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "     " + standardPrice + "   |      ";
+            		}
+            		else
+            		{
+            			outputString += "     " + standardPrice + "   |     ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += premiumPrice;
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Senior Citizen)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, true, true, PriceType.SENIOR_CITIZEN);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, true, true, PriceType.SENIOR_CITIZEN);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "    |     " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += "    |    " + standardPrice + "    |    ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += "  " + premiumPrice + "    |   ";
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice + "    |   ";
+            		}
+            		
+            		// Formatting spaces when displaying ticket prices depending on $10.0 boundary (Student)
+            		standardPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.STANDARD, true, true, PriceType.STUDENT);
+            		premiumPrice = priceCtrl.queryTicketPrice(MovieType.BLOCKBUSTER, CinemaType.PREMIUM, true, true, PriceType.STUDENT);
+            		
+            		if (standardPrice < 10)
+            		{
+            			outputString += "  " + standardPrice + "    |    ";
+            		}
+            		else
+            		{
+            			outputString += " " + standardPrice + "    |   ";
+            		}
+            		
+            		if (premiumPrice < 10)
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            		else
+            		{
+            			outputString += " " + premiumPrice;
+            		}
+            	}
+            	
+            	
+        }
+        System.out.println(outputString);
+        System.out.println("\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
+    }
+    
+    
 
     public double priceCalculation(Session session, Cinema cinema, int noOfTickets) {
         double returnPrice = 0;
