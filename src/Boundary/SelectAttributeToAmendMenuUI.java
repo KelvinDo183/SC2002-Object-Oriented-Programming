@@ -26,6 +26,7 @@ public class SelectAttributeToAmendMenuUI {
 	public Movie main() throws NoSuchAlgorithmException {
 		
 		Scanner sc = new Scanner(System.in);
+		Scanner string_scanner = new Scanner(System.in).useDelimiter("\n");
         int menuChoice;
     	
     	System.out.println("--------------------------------------------------");
@@ -100,7 +101,7 @@ public class SelectAttributeToAmendMenuUI {
                 System.out.println("--------------------------------------------------");
                 System.out.println("");
                 System.out.print("Enter movie synopsis to amend to: ");
-                String newDescription = sc.next();
+                String newDescription = string_scanner.next();
                 
         		m.setDescription(newDescription);
         		System.out.println("Movie listing has new synopsis: \n" + m.getDescription());
