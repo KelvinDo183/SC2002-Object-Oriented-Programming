@@ -62,10 +62,22 @@ public class ViewBookingAndPurchasedHistoryUI {
     public void retrieve() {
         System.out.println("\nEnter transaction ID: ");
         int txnID = sc.nextInt();
+        System.out.println("Enter your mobile number to verify your identity: ");
+        String mobileNum = sc.next();
+        
         Transaction txn = txnCtrl.readByTID(String.valueOf(txnID));
-        System.out.println("The total price paid = " + txn.getTotalPrice());
-        System.out.printf(txn.toStringTransaction());
-        System.out.println("");
+        if (txn.getMobileNumber().equalsIgnoreCase(mobileNum))
+        {
+            System.out.println("The total price paid = " + txn.getTotalPrice());
+            System.out.printf(txn.toStringTransaction());
+            System.out.println("");        	
+        }
+        else
+        {
+            System.out.println("Identity verification failed. You are not able to view this transaction.");
+        }
+        
+
     }
 
     public void displayHistory() { 
@@ -74,17 +86,38 @@ public class ViewBookingAndPurchasedHistoryUI {
     	System.out.print("Enter your email: ");
     	String email = InputController.getStringFromUser();
     	ArrayList<Transaction> allUserTxn = txnCtrl.readByMovieGoerUsername(email);
-
-    	System.out.println("\nHistorical Transactions ");
-        System.out.println("::::::::::::::::::::::::::::::");
-    	for (int i = 0; i < allUserTxn.size(); i++)
+    	boolean matchingMobile = false;
+        System.out.println("Enter your mobile number to verify your identity: ");
+        String mobileNum = sc.next();
+    	
+    	// first for loop to check if there is matching email & mobile number (at least 1 coinciding record)
+    	for (int j = 0; j < allUserTxn.size(); j++)
     	{
-    		Transaction txn = allUserTxn.get(i);
-            System.out.printf(txn.toStringTransaction());
-            System.out.println("");
+    		Transaction txn = allUserTxn.get(j);
+    		if (txn.getMobileNumber().equalsIgnoreCase(mobileNum))
+    		{
+    			// update matchingMobile to true and then break out of loop
+    			matchingMobile = true;
+    			break;
+    		}    		
     	}
     	
-
+    	if (matchingMobile)
+    	{
+        	System.out.println("\nHistorical Transactions ");
+            System.out.println("::::::::::::::::::::::::::::::");
+        	for (int i = 0; i < allUserTxn.size(); i++)
+        	{
+        		Transaction txn = allUserTxn.get(i);
+                System.out.printf(txn.toStringTransaction());
+                System.out.println("");
+        	}	
+    	}
+    	else
+    	{
+            System.out.println("Identity verification failed. You are not able to view transactions associated with this email address.");
+    	}
+    	
     	System.out.println("");
     }
     
