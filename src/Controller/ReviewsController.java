@@ -19,6 +19,7 @@ import model_Classes.Review;
 public class ReviewsController {
 
 	private MovieController movieController;
+	private TransactionController txnController;
 	public String FILENAME;
 
 	public ReviewsController() {
@@ -39,15 +40,34 @@ public class ReviewsController {
 	public void setMovieController(MovieController movieController) {
 		this.movieController = movieController;
 	}
+	
+	public int countReviewsWithTitleAndTID(String title, String TID) throws FileNotFoundException {
+		// Finds the movie with title in database
+		Movie movie = MovieController.findExistingMovie(title);
+		ArrayList<Review> reviews = movie.getReviews();
+		Review curReview;
+		int count=0;
+		/*
+		 * Checks for all reviews made under the TID passed into the function
+		 */
+		for (int i = 0; i < reviews.size(); i++) {
+			curReview = reviews.get(i);
+			if (curReview.getTID() == TID) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
 
-	public void create(Movie movie, String title, float rating, String comment) throws FileNotFoundException {
+	public void create(Movie movie, String title, float rating, String comment, String TID) throws FileNotFoundException {
 		// Call the constructor for Review entity
-		Review review = new Review(title, rating, comment);
+		Review review = new Review(title, rating, comment, TID);
 
 		// Reads the current ArrayList of movies stored in movielisting.txt
 		ArrayList<Movie> allData = MovieController.read();
 
-		// Initialises an ArrayList of Movie object to be returned, stores only the
+		// Initializes an ArrayList of Movie object to be returned, stores only the
 		// modified Movie object with the newly added review
 		ArrayList<Movie> returnData = new ArrayList<Movie>();
 		/*

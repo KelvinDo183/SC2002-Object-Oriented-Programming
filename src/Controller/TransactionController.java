@@ -149,8 +149,60 @@ public class TransactionController{
         }
         return returnData;
     }
+    
+    
+  //VERIFICATION METHODS used in MovieReviewUI
+    public boolean verifyEmailandTID(String TID, String email) {
+    	ArrayList<Transaction> allData = read();
+        Transaction transaction = null;
+        String dbTID = null;
+        String dbEmail = null;
 
+        for (int i=0; i<allData.size(); i++){
+            transaction = allData.get(i);
+            dbTID = transaction.getTID();
+            dbEmail = transaction.getEmail();
+            if (dbTID.equals(TID) && dbEmail.equals(email))
+                return true;
+        }
+    	return false;
+    }
+    
+    public boolean verifyPhoneandTID(String TID, String number) {
+    	ArrayList<Transaction> allData = read();
+        Transaction transaction = null;
+        String dbTID = null;
+        String dbNumber = null;
 
+        for (int i=0; i<allData.size(); i++){
+            transaction = allData.get(i);
+            dbTID = transaction.getTID();
+            dbNumber = transaction.getMobileNumber();
+            if (dbTID.equals(TID) && dbNumber.equals(number))
+                return true;
+        }
+    	return false;
+    }
+
+    public int numberOfPeople(String TID) {
+    	ArrayList<Transaction> allData = read();
+        Transaction transaction = null;
+        String dbTID = null;
+        ArrayList<Integer> seatArray;
+        int headCount = -1;
+
+        for (int i=0; i<allData.size(); i++){
+            transaction = allData.get(i);
+            dbTID = transaction.getTID();
+            if (dbTID.equals(TID)) {
+                seatArray = transaction.getSeatsSelected();
+                headCount = seatArray.size();
+            }
+        }
+    	return headCount;
+    }
+    
+    
     public void delete(String TID, String username) {
         ArrayList<Transaction> allData = read();
         Transaction transaction = null;

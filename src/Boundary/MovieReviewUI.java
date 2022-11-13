@@ -17,42 +17,122 @@ public class MovieReviewUI {
 
     private MovieController moviesController = new MovieController();
     private SearchMovieUI searchMovieUI = new SearchMovieUI();
+    private TransactionController txnController = new TransactionController();
     private ReviewsController reviewsController = new ReviewsController();
+    String email;
+    String number;
+    String tid;
+    String title;
+    Movie movie;
 
-    public void main() throws FileNotFoundException {
-        System.out.println("--------------------------------------------------");
-        System.out.println("------------------ Review Movie ------------------");
-        System.out.println("--------------------------------------------------");
+    public void main() throws FileNotFoundException{
+    	boolean exitMenu = false;
+		do {
+			System.out.println("--------------------------------------------------");
+	        System.out.println("------------------ Review Movie ------------------");
+	        System.out.println("--------------------------------------------------");
+	        System.out.println("(1) Verify via email");
+	        System.out.println("(2) Verify via mobile number");
+	        System.out.println("(3) Return to menu");
+	        int choice = sc.nextInt();
+	        switch (choice) {
+	        case 1:
+	            if(verifyByMail()) {
+	            	if(checkExistingMovie() && isMaxReviews()) {
+	            		createReview();
+	            	}
+	            }
+	            break;
+	
+	        case 2:
+	            if(verifyByNum()) {
+	            	createReview();
+	            }
+	            break;
+	
+	        case 3:
+	            exitMenu = true;
+	            System.out.println("Returning to Movie Goer menu...");
+	            System.out.println("");
+	            break;
+	
+	        default:
+	            System.out.println("Please enter a correct number");
+	            System.out.println("");
+	
+	        }
+		}while (!exitMenu);
+        
+        
+    }
+    
+    public boolean verifyByMail() {
+    	email = null;
+    	tid = null;
+    	System.out.println("Enter email: ");
+        email = sc.nextLine();
         System.out.println("Enter transaction ID: ");
-        int tid = sc.nextInt();
-        System.out.println("Enter email: ");
-        String email = sc.nextLine();
-        // TODO Implement check for validity of transaction ID and email
-
-        /*
-         * Lists all screening movies to the user, if any, and lets them name a movie to
-         * give a rating and comment for. Else "No movies found" is
-         * printed and the user is sent back to MainMenuUI. Also sent back when movie
-         * title does not exist.
+        tid = sc.nextLine();
+        
+    	if(!txnController.verifyEmailandTID(tid, email)) {
+        	System.out.println("Invalid email and/or transaction ID!");
+        	return false;
+        }
+        else {
+        	return true;
+        }
+    }
+    
+    public boolean verifyByNum() {
+    	number = null;
+    	tid = null;
+    	System.out.println("Enter mobile number: ");
+        number = sc.nextLine();
+        System.out.println("Enter transaction ID: ");
+        tid = sc.nextLine();
+        
+        if(!txnController.verifyPhoneandTID(tid, number)) {
+        	System.out.println("Invalid email and/or transaction ID!");
+        	return false;
+        }
+        else {
+        	return true;
+        }
+    }
+    
+    public boolean checkExistingMovie() throws FileNotFoundException {
+    	movie = null;
+    	if (searchMovieUI.listAvailableScreeningMovies()) {
+            System.out.print("Name the title of the movie to be reviewed: ");
+            title = sc.nextLine();
+            movie = MovieController.findExistingMovie(title);
+    	}
+            
+        if (movie == null) {
+            System.out.println("\nMovie " + title + " doesn't exist!");
+            return false;
+        }
+        return true;
+    
+    }
+    
+    public boolean isMaxReviews() throws FileNotFoundException {
+    	/* Takes in the TID and title and checks if that TID has made the maximum number of Reviews(based on their number of tickets)
+    	 * If the transaction happens to not have any seats, it returns -1 so it will always return false.
+    	 * */
+    	if(reviewsController.countReviewsWithTitleAndTID(title, tid) >= txnController.numberOfPeople(tid)) {
+    		return false;
+    	}
+    	return true;
+    }
+    
+    public void createReview() throws FileNotFoundException {
+    	/* 
          */
-        if (searchMovieUI.listAvailableScreeningMovies()) {
-            System.out.print("Name the title of the movie to be reviewed(case sensitive): ");
-
-            String title = sc.nextLine();
-            Movie movie = MovieController.findExistingMovie(title);
-
-            if (movie == null) {
-                System.out.println("\nMovie " + title + " doesn't exist!");
-                System.out.println("Returning to menu...\n");
-                return;
-            }
-
             System.out.println("Input rating(from 0.0 to 5.0):");
             float rating = sc.nextFloat();
             System.out.println("Input additional comment");
             String comment = sc.nextLine();
-
-            reviewsController.create(movie, title, rating, comment);
-        }
+            reviewsController.create(movie, title, rating, comment, tid);
     }
 }

@@ -15,6 +15,7 @@ public class Review implements Serializable {
     private String title;
 	private float rating;
 	private String comment;
+	private String TID;
 
 	public String getTitle() {
 		return this.title;
@@ -27,7 +28,12 @@ public class Review implements Serializable {
 	public String getComment() {
 		return this.comment;
 	}
-
+	
+	public String getTID() {
+		return this.TID;
+	}
+	
+	//TID will not be displayed
 	public String toString() {
 		String out = "";
 		out     += "        Movie title: " + getTitle() + "\n"
@@ -45,14 +51,18 @@ public class Review implements Serializable {
 		// TODO - implement Review.setComment
 		this.comment = comment;
 	}
+	
+	public void setTID(String TID) {
+		this.TID = TID;
+	}
 
 	/**
 	 * 
 	 * @param review
 	 */
 	public boolean equals(Review review) {
-		// TODO - implement Review.equals
-		if(this.getTitle() == review.getTitle() && this.getRating() == review.getRating() && this.getComment() == review.getComment() ) {
+		if(this.getTitle() == review.getTitle() && this.getRating() == review.getRating() &&
+				this.getComment() == review.getComment() && this.getTID() == review.getTID() ) {
 			return true;
 		}
 		else {
@@ -66,13 +76,14 @@ public class Review implements Serializable {
 	 * @param rating
 	 * @param comment
 	 */
-	public Review(String title, Float rating, String comment) {
+	public Review(String title, Float rating, String comment, String TID) {
 		// TODO - implement Review.Review
 		this.title = title;
 
 //		throw new UnsupportedOperationException();
 		this.rating = rating;
 		this.comment = comment;
+		this.TID = TID;
 	}
 
 }
