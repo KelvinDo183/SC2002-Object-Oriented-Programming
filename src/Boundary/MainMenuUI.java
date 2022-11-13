@@ -21,10 +21,9 @@ import model_Classes.*;
  * 1) Search Movie Listing
  * 2) View Top 5 Movies (varies depending on Admin's configuration ー by ratings or ticket sales)
  * 3) View Movie Details
- * 4) Check Available Seats
- * 5) Book Tickets
- * 6) View Booking History
- * 7) Rate/Review Movie
+ * 4) Book Tickets
+ * 5) View Booking History
+ * 6) Rate/Review Movie
  * */
 
 public class MainMenuUI {
@@ -41,7 +40,7 @@ public class MainMenuUI {
 
         do {
             System.out.println("--------------------------------------------------");
-            System.out.println("------------------ MOBLIMA MENU ------------------");
+            System.out.println("------------------ MOBLIMA MAIN MENU ------------------");
             System.out.println("--------------------------------------------------");
             System.out.println("(1) Admin ");
             System.out.println("(2) Movie Goer");
@@ -183,11 +182,10 @@ public class MainMenuUI {
             System.out.println("(1) Search Movie Listings");
             System.out.println("(2) View Top 5 Movies");
             System.out.println("(3) View Movie Details");
-            System.out.println("(4) Check Available Seats");
-            System.out.println("(5) Book Tickets");
-            System.out.println("(6) View Booking History");
-            System.out.println("(7) Review(rate) Movie");
-            System.out.println("(8) Exit");
+            System.out.println("(4) Book Tickets");
+            System.out.println("(5) View Booking History");
+            System.out.println("(6) Review(rate) Movie");
+            System.out.println("(7) Exit");
             System.out.println("");
             System.out.print("Select choice: ");
 
@@ -212,26 +210,21 @@ public class MainMenuUI {
                     break;
 
                 case 4:
-                    ViewAvailableSeatsUI viewAvailableSeats = new ViewAvailableSeatsUI();
-                    viewAvailableSeats.main();
-                    break;
-
-                case 5:
                     BookingAndPurchaseTicketsUI bookingAndPurchaseTickets = new BookingAndPurchaseTicketsUI();
                     bookingAndPurchaseTickets.main();
                     break;
 
-                case 6:
+                case 5:
                     ViewBookingAndPurchasedHistoryUI viewBookingAndPurchasedHistory = new ViewBookingAndPurchasedHistoryUI();
                     viewBookingAndPurchasedHistory.main();
                     break;
 
-                case 7:
+                case 6:
                     MovieReviewUI reviewUI = new MovieReviewUI();
                     reviewUI.main();
                     break;
 
-                case 8:
+                case 7:
                     exitMenu = true;
                     System.out.println("Exiting...");
                     System.out.println("");
