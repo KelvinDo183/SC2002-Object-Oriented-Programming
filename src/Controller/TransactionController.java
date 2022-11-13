@@ -1,5 +1,7 @@
 package Controller;
 
+import static Controller.CinemaController.SESSIONS;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -26,6 +28,9 @@ public class TransactionController{
     public final static int SEATS_SELECTED = 6;
     public final static int TOTAL_PRICE = 7;
     
+    private CinemaController cinemaCtrl = new CinemaController();
+    private CineplexeController cineplexCtrl = new CineplexeController();
+    
    
     
     public void create(String cinemaCode, String name, String email, String mobileNumber, Session session, ArrayList<Integer> seatsSelected, Double totalPrice) throws FileNotFoundException, InvalidTxnException {
@@ -47,6 +52,42 @@ public class TransactionController{
 	                
 	                Transaction txn = new Transaction(Integer.toString(TID), cinemaCode, name, email, mobileNumber, session, seatsSelected, totalPrice);
 	                
+	                // assume that transaction is successful
+	                // proceed to update seat availability so selected seats are not subsequently sold
+	                ArrayList<Cineplex> allCineplexes = this.cineplexCtrl.read();
+	                
+	                for (int i = 0; i < allCineplexes.size(); i++) {
+	                	ArrayList<Cinema> cinemaList = allCineplexes.get(i).getCinemas();
+
+	                	for (int j = 0; j < cinemaList.size(); j++)
+	                	{
+	                		if (cinemaList.get(j).getCode().equals(cinemaCode))
+	                		{
+	                			Cinema selectedCinema = cinemaList.get(j);
+	                            ArrayList<Session> sessions = selectedCinema.getSessions();
+	                            for (int k = 0; k < sessions.size(); k++)
+	                            {
+	                            	if (sessions.get(k).getStringSessionDateTime().equals(session.getStringSessionDateTime()))
+	                            	{
+	                            		Session existingSession = sessions.get(k);
+	                            		// update seatsAvailability with one line?
+	                            		existingSession.setSeatsAvailability(session.getSeatsAvailability());
+	                            		
+	                            	}
+	                            	
+	                            }
+	                            
+//	                            sessions.add(session);
+//	                            selectedCinema.setSessions(sessions);
+	                            this.cinemaCtrl.updateByAttribute(SESSIONS, cinemaCode, sessions);
+//	                            sessions.clear();
+	                            break;
+	                		}
+	                		
+	                	}
+	                }
+	                
+	                System.out.println("Cinema Control updated. Seating arrangement should reflect this transaction. ");
 	            	
 	        		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILENAME));
 	                allTxnData.add(txn);

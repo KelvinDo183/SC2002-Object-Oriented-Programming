@@ -26,7 +26,6 @@ public class Session implements Serializable {
 		this.sessionID = sessionID;
 		this.sessionDateTime = sessionDateTime;
 		this.seatsAvailability = seatingPlan;
-		// System.out.printf("\nThe sessionID is =", sessionID);
 	}
 
 	public Movie getMovie() {

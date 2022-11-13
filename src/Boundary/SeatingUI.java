@@ -52,6 +52,10 @@ public class SeatingUI {
         System.out.print("Enter cinema code: ");
         String cinemaCode = InputController.getStringFromUser();
 
+        // retrieve session controller based on cinema controller
+        cinemasCtrl = new CinemaController(cineplexesCtrl);
+        sessionsCtrl = new SessionController(cinemasCtrl);   
+//        Session session =         
         Session session = sessionsCtrl.readBySession(cinemaCode, sessionDateTime);
         if(session == null){
             System.out.println("Incorrect input...");
@@ -74,16 +78,26 @@ public class SeatingUI {
             do{
                 System.out.println("To exit SeatingUI, input -1 ...");
                 
-                // functionality to add/remove to ArrayList based on whether it is already included
-                if (seatChoices.contains(seatChoice)) 
-            	{
-                	int indexFirstOccurrence = seatChoices.indexOf(seatChoice);
-                	seatChoices.remove(indexFirstOccurrence);
-                	}
+                // if user selects a seat that is indicated with X, then prompt them that it is an invalid selection
+
+                if (seatsAvailability.checkSeats(seatChoice))
+                {
+                	System.out.println("This seat is already occupied. Please select another seat. ");
+                }
                 else
                 {
-                    seatChoices.add(seatChoice);	
+                    // functionality to add/remove to ArrayList based on whether it is already included
+                    if (seatChoices.contains(seatChoice)) 
+                	{
+                    	int indexFirstOccurrence = seatChoices.indexOf(seatChoice);
+                    	seatChoices.remove(indexFirstOccurrence);
+                    	}
+                    else
+                    {
+                        seatChoices.add(seatChoice);	
+                    }                	
                 }
+
                 
                 System.out.println("After update ... seatChoicesArray = " + seatChoices.toString());
                 
@@ -104,6 +118,19 @@ public class SeatingUI {
             
             double totalTicketPrice = bookingTicketsUI.priceCalculation(session, requestedCinema, seatChoices.size());
             System.out.println("Total price of tickets = " + totalTicketPrice + " SGD.");
+          
+            /** Method 1
+            // use session to update sessionsCtrl
+            
+            // use sessionsCtrl to update cinemasCtrl
+            
+            // use cinemasCtrl to update cineplexesCtrl
+            **/
+            
+            /** Method 2 in seatsAvailability.printlayout() **/
+            
+            
+            
             
             Pair cinemaSessionPair = PairOne(cinemaCode, session);
             Pair seatChoicePricePair = PairTwo(seatChoices, totalTicketPrice);

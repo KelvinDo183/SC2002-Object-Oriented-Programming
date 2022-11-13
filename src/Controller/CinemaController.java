@@ -140,7 +140,7 @@ public class CinemaController {
             Cineplex cineplex_i = allData.get(i);
 
             ArrayList<Cinema> cinemas = cineplex_i.getCinemas();
-            ArrayList<Cinema> cinemaLiisting = new ArrayList<Cinema>();
+            ArrayList<Cinema> cinemaListing = new ArrayList<Cinema>();
 
             // Check if there's a match for cinema based on cinema's code
             for (int j = 0; j < cinemas.size(); j++) {
@@ -157,10 +157,10 @@ public class CinemaController {
                             break;
                     }
                 }
-                cinemaLiisting.add(cinema_j);
+                cinemaListing.add(cinema_j);
             }
 
-            cineplex_i.setCinemas(cinemaLiisting);
+            cineplex_i.setCinemas(cinemaListing);
             returnData.add(cineplex_i);
         }
         this.cineplexCtrl.replaceExistingFile(FILENAME, returnData);
