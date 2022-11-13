@@ -3,10 +3,7 @@ package Controller;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-/* ReviewsController is a controller class for communicating between the reviews.txt file in datastorage and 
- * the user who is running the code in MovieReviewUI.
- * 
- * */
+ 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -15,6 +12,11 @@ import model_Classes.*;
 import Controller.*;
 import model_Classes.Movie;
 import model_Classes.Review;
+
+/* ReviewsController is a controller class that mainly makes changes to the rating and ArrayList of Reviews of Movies
+ * within the movielisting.txt file in datastorage and the user uses most of the functions here in MovieReviewUI.
+ * 
+ * */
 
 public class ReviewsController {
 

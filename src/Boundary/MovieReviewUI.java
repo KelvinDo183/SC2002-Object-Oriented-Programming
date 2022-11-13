@@ -11,6 +11,8 @@ import model_Classes.*;
  * They can leave a rating and an additional comment(or left blank) to be recorded as a MovieReview(controlled by ReviewsController), the rating
  * recorded will affect a Movie's rating variable. Each transaction ID/email can leave the same number of reviews(one review per user per movie)
  * as the number of seats(ie. tickets) bought.
+ * 
+ * Mainly uses the ReviewsController class
  * */
 
 public class MovieReviewUI {
