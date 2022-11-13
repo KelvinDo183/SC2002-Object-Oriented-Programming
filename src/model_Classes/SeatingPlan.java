@@ -24,11 +24,11 @@ public class SeatingPlan implements Serializable {
 		for (int i = 0; i < row; i++) {
 			if (i == 0)
 			{
-				System.out.print("Seats 0" + (i * column) + " - 0" + ((i + 1) * column - 1) + ":\t");
+				System.out.print("Seat # " + (i * column) + " to  " + ((i + 1) * column - 1) + ":\t");
 			}
 			else
 			{
-				System.out.print("Seats " + (i * column) + " - " + ((i + 1) * column - 1) + ":\t");	
+				System.out.print("Seat #" + (i * column) + " to " + ((i + 1) * column - 1) + ":\t");	
 			}
 			for (int j = 0; j < column; j++) {
 				if(layout[i][j].isOccupied()) System.out.print("[ X] ");
@@ -36,7 +36,7 @@ public class SeatingPlan implements Serializable {
 				{
 					if (i == 0)
 					{
-						System.out.print("[0" + (i * 10 + j) +"] ");
+						System.out.print("[ " + (i * 10 + j) +"] ");
 					}
 					else
 					{
