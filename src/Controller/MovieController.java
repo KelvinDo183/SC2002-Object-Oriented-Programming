@@ -29,7 +29,14 @@ import java.util.Scanner;
 
 public class MovieController {
 
+	/**
+	 * The file name of the database file that this controller will access
+	 */
 	public final static String FILENAME = "src/datastorage/movielisting.txt";
+
+	/**
+	 * Some constants
+	 */
 	public final static int ID = 0;
 	public final static int TITLE = 1;
 	public final static int TYPE = 2;
@@ -42,20 +49,30 @@ public class MovieController {
 	public final static int CAST_MEMBERS = 9;
 	public final static int REVIEWS = 10;
 
-	// controller for each new session by users
+	/**
+	 * The Review Controller that this controller will reference
+	 */
 	public SessionController sessionController;
 
-	// Constructor for MovieController
+	/**
+	 * Default Constructor
+	 */
 	public MovieController() {
 		this.sessionController = new SessionController();
 	}
 
-	// Constructor including parameter for session
+	/**
+	 * Parameterized constructor with user-defined Session Controller
+	 * 
+	 * @param sessionsCtrl Non-default Session Controller to be referenced instead
+	 */
 	public MovieController(SessionController sessionController) {
 		this.sessionController = sessionController;
 	}
-	
-	// To print the following menu options upon loading of menu
+
+	/**
+	 * Main function to execute
+	 */
 	public void main() throws IOException, NoSuchAlgorithmException, FileNotFoundException {
 
 		// display menu UI for Admin to interact with Movie Listing System
@@ -70,8 +87,25 @@ public class MovieController {
 	 * (3) Delete/Remove
 	 */
 
-	// To append new movie to database of movies if it is valid
-	// For the first movie created, a new file is also created to save it
+	/**
+	 * CREATE a new Movie and add it into the database file
+	 * Attributes are validated before creation
+	 * If attributes are not allowed, throw error and do nothing
+	 * If Database file exist, existing records are read and new Movie object is
+	 * aopended before saving
+	 * If Database file does not exist, Movie object will be written to a new file
+	 * and saved
+	 * 
+	 * @param title            This movie's title
+	 * @param type             This movie's type
+	 * @param description      This movie's description
+	 * @param rating           This movie's rating
+	 * @param duration         This movie's duration
+	 * @param movieReleaseDate This movie's release date
+	 * @param movieEndDate     This movie's end date
+	 * @param directorName     This movie's director
+	 * @param castMembers      This movie's list of cast
+	 */
 	public void create(String title, MovieType type, String description, double duration, float rating,
 			LocalDate releaseDate, LocalDate endDate, String directorName, ArrayList<String> castMembers)
 			throws FileNotFoundException {
@@ -101,6 +135,9 @@ public class MovieController {
 		}
 	}
 
+	/**
+	 * UPDATE a Movie by ID
+	 */
 	@SuppressWarnings("unchecked")
 	public void updateById() throws NoSuchAlgorithmException, FileNotFoundException {
 
@@ -109,25 +146,28 @@ public class MovieController {
 		replaceExistingFile(FILENAME, updatedMovieListing);
 	}
 
+	/**
+	 * Delete a Movie in the Database file, based on the ID attribute passed
+	 * 
+	 * @param id ID of Movie which will be deleted
+	 */
 	public void deleteById(int ID) throws FileNotFoundException {
 		ArrayList<Movie> allMovies = read();
 		ArrayList<Movie> remainingMovies = new ArrayList<Movie>();
-
-		// invoke deleteByMovie() method in sessionController
-		// sessionController.deleteByMovie(ID);
 
 		for (int i = 0; i < allMovies.size(); i++) {
 			Movie m = allMovies.get(i);
 			if (!(m.getID() == ID))
 				remainingMovies.add(m);
 		}
-
-		// update text file of movie listings to reflect latest deletion of movie
 		replaceExistingFile(FILENAME, remainingMovies);
 	}
 
-	// this method reads the entire database of movie listings (including movies
-	// past their screening date)
+	/**
+	 * READ and return every Movies in the Database file
+	 * 
+	 * @return Movie Return list of Movies if found, else empty list
+	 */
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Movie> read() throws FileNotFoundException {
 		try {
@@ -157,9 +197,11 @@ public class MovieController {
 		return new ArrayList<Movie>();
 	}
 
-	// this method lists all movies in database (including title & ID so it is
-	// easier for user to identify movies)
-	// which are currently screening
+	/**
+	 * READ and return every Movies which are screening in the Database file
+	 * 
+	 * @return Movie Return list of Movies if found, else empty list
+	 */
 	public static ArrayList<Movie> readAllScreeningMovies() throws FileNotFoundException {
 		ArrayList<Movie> allMovies = read();
 		ArrayList<Movie> allScreeningMovies = new ArrayList<Movie>();
@@ -175,6 +217,12 @@ public class MovieController {
 
 		return allScreeningMovies;
 	}
+
+	/**
+	 * READ and return every Movie of specific type
+	 * 
+	 * @return Movie Return list of Movies if found, else empty list
+	 */
 
 	public static ArrayList<Movie> readAllMoviesOfType(String type) throws FileNotFoundException {
 		ArrayList<Movie> allMovies = read();
@@ -193,6 +241,12 @@ public class MovieController {
 	}
 
 	// this method returns a particular movie specified by the ID provided by user
+	/**
+	 * READ and returns a particular movie specified by the ID provided by user
+	 * 
+	 * @return Movie Movie
+	 */
+
 	public Movie readSpecificID(int movieID) throws FileNotFoundException {
 		ArrayList<Movie> allMovies = read();
 		for (int i = 0; i < allMovies.size(); i++) {
@@ -207,6 +261,11 @@ public class MovieController {
 	}
 
 	// Supporting functions below
+	/**
+	 * Verify a movie
+	 * 
+	 * @return boolean
+	 */
 	public static boolean isValidMovie(
 			String title, MovieType type, String description, double duration, float rating, LocalDate releaseDate,
 			LocalDate endDate, String directorName, ArrayList<String> castMembers) {
@@ -238,18 +297,23 @@ public class MovieController {
 		return isValid;
 	}
 
+	/**
+	 * Verify existence of movie
+	 * 
+	 * @return boolean
+	 */
 	public static boolean isExistingMovie(String title) {
 		ArrayList<Movie> allMovies;
 		try {
-			
+
 			allMovies = MovieController.read();
-			
+
 			for (Movie movie : allMovies) {
 				String titleData = movie.getTitle();
 				if (titleData.trim().equalsIgnoreCase(title.trim())) {
 					System.out.println("This is an existing movie! " + title);
 					return true;
-				}				
+				}
 			}
 
 		} catch (Exception e) {
@@ -259,6 +323,11 @@ public class MovieController {
 	}
 
 	// returns movie that have a title as per the parameter
+	/**
+	 * Find existing movie
+	 * 
+	 * @return Movie
+	 */
 	public static Movie findExistingMovie(String title) throws FileNotFoundException {
 
 		ArrayList<Movie> allMovies;
@@ -269,7 +338,7 @@ public class MovieController {
 				String titleData = movie.getTitle();
 				if (titleData.trim().equalsIgnoreCase(title.trim())) {
 					return movie;
-				}				
+				}
 			}
 
 		} catch (Exception e) {
@@ -278,6 +347,11 @@ public class MovieController {
 		return null;
 	}
 
+	/**
+	 * Verify screening date
+	 * 
+	 * @return boolean
+	 */
 	public static boolean isValidScreeningDate(LocalDate releaseDate, LocalDate endDate) {
 		if (releaseDate.isBefore(endDate)) {
 			return true;
@@ -291,6 +365,11 @@ public class MovieController {
 		}
 	}
 
+	/**
+	 * Get last movie ID
+	 * 
+	 * @return int
+	 */
 	public static int getLatestId() throws FileNotFoundException {
 		int movieID;
 		int latestId = -1;
@@ -304,6 +383,12 @@ public class MovieController {
 		return latestId;
 	}
 
+	/**
+	 * Overwrite Database file with new data of list of Admin
+	 * 
+	 * @param filename Filename to check for
+	 * @param data     New ArrayList of Movies to be written to the file
+	 */
 	public void replaceExistingFile(String filename, ArrayList<Movie> data) {
 		File file = new File(filename);
 		if (file.exists())
@@ -318,11 +403,17 @@ public class MovieController {
 		}
 	}
 
+	/**
+	 * UI to movie listing system
+	 */
 	public void adminMovieListingSystemMenuUI() throws NoSuchAlgorithmException, FileNotFoundException {
 		AdminMovieListingSystemMenuUI adminSystemMenu = new AdminMovieListingSystemMenuUI();
 		adminSystemMenu.main();
 	}
 
+	/**
+	 * UI to update movie listing
+	 */
 	public ArrayList<Movie> updateMovieListingMenuUI() throws NoSuchAlgorithmException, FileNotFoundException {
 		UpdateMovieListingMenuUI updateML_UI = new UpdateMovieListingMenuUI();
 		ArrayList<Movie> updatedML_AL = updateML_UI.main();

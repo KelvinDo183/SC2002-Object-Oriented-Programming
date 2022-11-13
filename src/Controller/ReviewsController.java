@@ -18,35 +18,69 @@ import model_Classes.Review;
 
 public class ReviewsController {
 
+	/**
+	 * The Movie Controller that this controller will reference
+	 */
 	private MovieController movieController;
+
+	/**
+	 * The Transaction Controller that this controller will refer
+	 */
 	private TransactionController txnController;
+
+	/**
+	 * The file name of the database file that this controller will access
+	 */
 	public String FILENAME;
 
+	/**
+	 * Default constructor
+	 */
 	public ReviewsController() {
 		this.movieController = new MovieController();
 		this.FILENAME = movieController.FILENAME;
 	}
 
+	/**
+	 * Parameterized constructor with user-defined Movie Controller
+	 * 
+	 * @param movieController Non-default Movie Controller to be referenced instead
+	 */
 	public ReviewsController(MovieController movieController) {
 		this.movieController = movieController;
 		this.FILENAME = movieController.FILENAME;
 	}
 
-	/* Get/Set methods for MovieController */
+	/**
+	 * Gets the Movie Controller that this controller is referencing
+	 * 
+	 * @return MoviesController This controller's Movie Controller
+	 */
 	public MovieController getMovieController() {
 		return this.movieController;
 	}
 
+	/**
+	 * Change the Movie Controller that this controller is referencing
+	 * 
+	 * @param movieController This controller's new Movie Controller
+	 */
 	public void setMovieController(MovieController movieController) {
 		this.movieController = movieController;
 	}
-	
+
+	/**
+	 * Count the Review with title and transaction ID
+	 * 
+	 * @param title title of that review to be counted
+	 * @param TID   transaction ID
+	 */
 	public int countReviewsWithTitleAndTID(String title, String TID) throws FileNotFoundException {
 		// Finds the movie with title in database
 		Movie movie = MovieController.findExistingMovie(title);
 		ArrayList<Review> reviews = movie.getReviews();
 		Review curReview;
-		int count=0;
+		int count = 0;
 		/*
 		 * Checks for all reviews made under the TID passed into the function
 		 */
@@ -58,9 +92,24 @@ public class ReviewsController {
 		}
 		return count;
 	}
-	
 
-	public void create(Movie movie, String title, float rating, String comment, String TID) throws FileNotFoundException {
+	/**
+	 * CREATE a new Review and add it into the database file
+	 * Attributes are validated before creation
+	 * If attributes are not allowed, throw error and do nothing
+	 * If Database file exist, existing records are read and new Review object is
+	 * aopended before saving
+	 * If Database file does not exist, Review object will be written to a new file
+	 * and saved
+	 * 
+	 * @param movie   Movie that this Review will be added to
+	 * @param title   Title of that review
+	 * @param rating  Number of stars given by reviewer, between 0 - 5
+	 * @param comment comment of that review
+	 * @param TID     transaction ID of that review
+	 */
+	public void create(Movie movie, String title, float rating, String comment, String TID)
+			throws FileNotFoundException {
 		// Call the constructor for Review entity
 		Review review = new Review(title, rating, comment, TID);
 
