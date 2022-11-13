@@ -103,18 +103,10 @@ public class MovieReviewUI {
         }
     }
     
-    public boolean checkExistingMovie() throws FileNotFoundException {
+    public boolean checkExistingMovie(){
     	movie = null;
-    	if (searchMovieUI.listAvailableScreeningMovies()) {
-            System.out.print("Name the title of the movie to be reviewed: ");
-            title = InputController.getStringFromUser();
-            movie = MovieController.findExistingMovie(title);
-    	}
-            
-        if (movie == null) {
-            System.out.println("\nMovie " + title + " doesn't exist!");
-            return false;
-        }
+        Transaction txn = txnController.readByTID(tid);
+        movie = txn.getSession().getMovie();
         return true;
     
     }
@@ -123,6 +115,7 @@ public class MovieReviewUI {
     	/* Takes in the TID and title and checks if that TID has made the maximum number of Reviews(based on their number of tickets)
     	 * If the transaction happens to not have any seats, it returns -1 so it will always return false.
     	 * */
+    	System.out.println(reviewsController.countReviewsWithTitleAndTID(title, tid)+" >= "+txnController.numberOfPeople(tid));
     	if(reviewsController.countReviewsWithTitleAndTID(title, tid) >= txnController.numberOfPeople(tid)) {
     		return false;
     	}

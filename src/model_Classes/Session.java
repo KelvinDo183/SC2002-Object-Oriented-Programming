@@ -69,7 +69,7 @@ public class Session implements Serializable {
 	/**
 	 * Get the date and time which the screening session will begin
 	 * 
-	 * @return LocalDateTime Date and timm of the screening session
+	 * @return LocalDateTime Date and time of the screening session
 	 */
 	public LocalDateTime getSessionDateTime() {
 		return sessionDateTime;

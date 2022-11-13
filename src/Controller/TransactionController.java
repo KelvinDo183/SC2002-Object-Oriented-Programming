@@ -194,7 +194,7 @@ public class TransactionController{
         for (int i=0; i<allData.size(); i++){
             transaction = allData.get(i);
             dbTID = transaction.getTID();
-            if (dbTID.equals(TID)) {
+            if (dbTID.trim().equalsIgnoreCase(TID)) {
                 seatArray = transaction.getSeatsSelected();
                 headCount = seatArray.size();
             }
