@@ -107,6 +107,7 @@ public class MovieReviewUI {
     	movie = null;
         Transaction txn = txnController.readByTID(tid);
         movie = txn.getSession().getMovie();
+        title = movie.getTitle();
         return true;
     
     }
@@ -115,8 +116,8 @@ public class MovieReviewUI {
     	/* Takes in the TID and title and checks if that TID has made the maximum number of Reviews(based on their number of tickets)
     	 * If the transaction happens to not have any seats, it returns -1 so it will always return false.
     	 * */
-    	System.out.println(reviewsController.countReviewsWithTitleAndTID(title, tid)+" >= "+txnController.numberOfPeople(tid));
     	if(reviewsController.countReviewsWithTitleAndTID(title, tid) >= txnController.numberOfPeople(tid)) {
+    		System.out.println("You can only leave one review per ticket/person.");
     		return false;
     	}
     	return true;
@@ -126,7 +127,7 @@ public class MovieReviewUI {
     	/* 
          */
             System.out.println("Input rating(from 0.0 to 5.0):");
-            float rating = sc.nextFloat();
+            float rating = sc.nextFloat(); //will throw an error if not a float
             System.out.println("Input additional comment");
             String comment = InputController.getStringFromUser();
             reviewsController.create(movie, title, rating, comment, tid);

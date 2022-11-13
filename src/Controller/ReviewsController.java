@@ -52,7 +52,7 @@ public class ReviewsController {
 		 */
 		for (int i = 0; i < reviews.size(); i++) {
 			curReview = reviews.get(i);
-			if (curReview.getTID() == TID) {
+			if (curReview.getTID().trim().equalsIgnoreCase(TID)) {
 				count++;
 			}
 		}
