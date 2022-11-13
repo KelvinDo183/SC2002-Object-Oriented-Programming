@@ -47,7 +47,9 @@ public class MovieReviewUI {
 	
 	        case 2:
 	            if(verifyByNum()) {
-	            	createReview();
+	            	if(checkExistingMovie() && isMaxReviews()) {
+	            		createReview();
+	            	}
 	            }
 	            break;
 	

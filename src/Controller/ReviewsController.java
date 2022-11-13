@@ -76,10 +76,8 @@ public class ReviewsController {
 		 * to the movie, then add the modified movie to the returned data.
 		 */
 		for (int i = 0; i < allData.size(); i++) {
-			System.out.println("For:"+i);
 			Movie m = allData.get(i);
 			if (m.getTitle().trim().equalsIgnoreCase(title)) {
-				System.out.println("In If Statement");
 				// Appends new review into the ArrayList
 				ArrayList<Review> reviews = m.getReviews();
 				reviews.add(review);
@@ -91,7 +89,6 @@ public class ReviewsController {
 				m.setRating(newRating);
 				System.out.println("Rating updated adding "+ rating +" to get " + newRating);
 			}
-			System.out.println("Added movie at index:"+i);
 			returnData.add(m);
 		}
 		
